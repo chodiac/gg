@@ -1043,12 +1043,13 @@
         gap: 24px;
       }
 
-      .product-card {
-        background: #101010;
-        border: 1px solid var(--line);
-        overflow: hidden;
-        transition: transform .3s, border-color .3s;
-      }
+      .product-card{
+    flex:0 0 350px;
+
+    background:#101010;
+    border:1px solid var(--line);
+    overflow:hidden;
+}
 
       .product-card:hover {
         transform: translateY(-6px);
@@ -1118,9 +1119,97 @@
         height: 430px;
         background: #0b0b0b;
       }
+
+
+
+.tire-carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.tire-products-grid {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 6px 0 16px;
+}
+
+.tire-products-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.tire-products-grid .product-card {
+  flex: 0 0 calc((100% - 48px) / 3);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.tire-arrow {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  z-index: 20;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--yellow);
+  background: rgba(10, 10, 10, .92);
+  color: var(--yellow);
+
+  font-size: 24px;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.tire-arrow:hover {
+  background: var(--yellow);
+  color: #111;
+}
+
+.tire-arrow-left {
+  left: -24px;
+}
+
+.tire-arrow-right {
+  right: -24px;
+}
+
+@media (max-width: 1000px) {
+  .tire-products-grid .product-card {
+    flex: 0 0 calc((100% - 24px) / 2);
+  }
+
+  .tire-arrow-left {
+    left: 8px;
+  }
+
+  .tire-arrow-right {
+    right: 8px;
+  }
+}
+
+@media (max-width: 650px) {
+  .tire-products-grid .product-card {
+    flex: 0 0 88%;
+  }
+
+  .tire-arrow {
+    width: 42px;
+    height: 42px;
+  }
+}
+
 .tire-products-grid .product-img{
     display:flex;
-    align-items:flex-end;
+    align-items:center;
     justify-content:center;
     background:#fff;
 }
@@ -1129,7 +1218,24 @@
     width:88%;
     height:auto;
     object-fit:contain;
+    object-position:center;
     margin-bottom:-12px;
+}
+
+.tire-products-grid .product-img img.goodyear-img{
+    width: 90%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+}
+
+
+.tire-products-grid .product-img img.kumho-img{
+    width: 200%;
+}
+
+.tire-products-grid .product-img img.dunlop-img{
+    width:114%;
 }
 
       .tire-products-grid .product-img::after {
@@ -1178,9 +1284,18 @@
 
       @media(max-width:880px) {
 
-        .tire-products-grid {
-          grid-template-columns: 1fr;
-        }
+       .tire-products-grid{
+    display:flex;
+    gap:24px;
+
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    scrollbar-width:none;
+}
+
+.tire-products-grid::-webkit-scrollbar{
+    display:none;
+}
 
         .tire-benefits {
           grid-template-columns: 1fr;
@@ -1905,6 +2020,37 @@
           transition-duration: 0ms !important;
         }
       }
+
+.tire-products-grid .product-img img.kumho-img {
+  transform: scale(1.22);
+  margin: 0;
+}
+
+.tire-products-grid .product-img img.dunlop-img {
+  transform: scale(1.18);
+  margin: 0;
+}
+
+.tire-products-grid .product-img img.goodyear-img {
+  transform: scale(1.22);
+  margin: 0;
+}
+
+.tire-products-grid .product-img img.viking-img {
+  transform: scale(1.18);
+  margin: 0;
+}
+
+.viking-img{
+    width: 120% !important;
+}
+
+.goodyear-img{
+    width: 90%;
+    margin-top: 16px;
+}
+
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
@@ -1990,7 +2136,7 @@
               nastala.</p>
           </div>
           <div class="about-img rv">
-            <img src="images/about-before-after.png"
+            <img src="images/about-before.png"
               alt="Giga Centar auto servis" loading="lazy">
 
           </div>
@@ -2035,7 +2181,13 @@
         </div>
 
 
-        <div class="products-grid tire-products-grid">
+        <div class="tire-carousel-wrapper">
+
+  <button class="tire-arrow tire-arrow-left" id="tirePrev" type="button">
+    &#10094;
+  </button>
+
+  <div class="products-grid tire-products-grid" id="tireCarousel">
 
           <!-- CONTINENTAL -->
           <article class="product-card rv">
@@ -2158,10 +2310,185 @@
             </div>
 
           </article>
+<!-- GOODYEAR -->
+          <article class="product-card rv">
+
+            <div class="product-img">
+
+            
+
+<img
+  src="images/goodyear guma.png"
+  alt="Goodyear gume"
+  loading="lazy"
+  class="goodyear-img"
+>
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-cat">
+                Premium gume
+              </div>
+
+              <h3 class="product-name">
+                Goodyear
+              </h3>
+
+              <p class="product-note">
+                Pouzdane performanse i odlično prijanjanje na mokrim i snežnim putevima. 
+                Idealan izbor za vozače koji traže sigurnost i preciznu kontrolu.
+              </p>
+
+              <div class="product-foot">
+
+                <span class="product-price-tag">
+                  Ponuda na upit
+                </span>
+
+                <a href="#tire-form" class="mini-btn">
+                  Pošalji upit
+                </a>
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <!-- KUMHO -->
+          <article class="product-card rv">
+
+            <div class="product-img">
+
+           <img src="images/kumho guma.png" class="kumho-img">
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-cat">
+                Premium gume
+              </div>
+
+              <h3 class="product-name">
+                Kumho
+              </h3>
+
+              <p class="product-note">
+                Pouzdane performanse i odlično prijanjanje na mokrim i snežnim putevima. 
+                Idealan izbor za vozače koji traže sigurnost i preciznu kontrolu.
+              </p>
+
+              <div class="product-foot">
+
+                <span class="product-price-tag">
+                  Ponuda na upit
+                </span>
+
+                <a href="#tire-form" class="mini-btn">
+                  Pošalji upit
+                </a>
+
+              </div>
+
+            </div>
+
+
+            
+          </article>
+
+          <!-- DUNLOP -->
+          <article class="product-card rv">
+
+            <div class="product-img">
+
+              <img src="images/dunlop guma.png" class="dunlop-img">
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-cat">
+                Premium gume
+              </div>
+
+              <h3 class="product-name">
+                Dunlop
+              </h3>
+
+              <p class="product-note">
+                Pouzdane performanse i odlično prijanjanje na mokrim i snežnim putevima. 
+                Idealan izbor za vozače koji traže sigurnost i preciznu kontrolu.
+              </p>
+
+              <div class="product-foot">
+
+                <span class="product-price-tag">
+                  Ponuda na upit
+                </span>
+
+                <a href="#tire-form" class="mini-btn">
+                  Pošalji upit
+                </a>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- VIKING -->
+          <article class="product-card rv">
+
+            <div class="product-img">
+
+              <img src="images/viking guma.png" class="viking-img" alt="Viking">
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-cat">
+                Premium gume
+              </div>
+
+              <h3 class="product-name">
+                Viking
+              </h3>
+
+              <p class="product-note">
+                Pouzdane performanse i odlično prijanjanje na mokrim i snežnim putevima. 
+                Idealan izbor za vozače koji traže sigurnost i preciznu kontrolu.
+              </p>
+
+              <div class="product-foot">
+
+                <span class="product-price-tag">
+                  Ponuda na upit
+                </span>
+
+                <a href="#tire-form" class="mini-btn">
+                  Pošalji upit
+                </a>
+
+              </div>
+
+            </div>
+
+
+            
+          </article>
 
         </div>
 
+  <button class="tire-arrow tire-arrow-right" id="tireNext" type="button">
+    &#10095;
+  </button>
 
+</div>
 
 
       </div>
@@ -3598,6 +3925,41 @@
       );
 
     </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const carousel = document.getElementById("tireCarousel");
+  const prevButton = document.getElementById("tirePrev");
+  const nextButton = document.getElementById("tireNext");
+
+  if (!carousel || !prevButton || !nextButton) return;
+
+  function getScrollAmount() {
+    const card = carousel.querySelector(".product-card");
+
+    if (!card) return 350;
+
+    const gap = parseFloat(getComputedStyle(carousel).gap) || 24;
+
+    return card.getBoundingClientRect().width + gap;
+  }
+
+  nextButton.addEventListener("click", function () {
+    carousel.scrollBy({
+      left: getScrollAmount(),
+      behavior: "smooth"
+    });
+  });
+
+  prevButton.addEventListener("click", function () {
+    carousel.scrollBy({
+      left: -getScrollAmount(),
+      behavior: "smooth"
+    });
+  });
+});
+</script>
+
   </body>
 
   </html>
