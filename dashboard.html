@@ -679,7 +679,7 @@ tbody tr:hover{
                     class="copy-button"
                     onclick="copyReferralLink()"
                 >
-                    Kopiraj link
+                    Kopiraj kod
                 </button>
 
             </div>
@@ -802,13 +802,8 @@ if(!influencer){
     document.getElementById("refCode").textContent =
     influencer.ref_code || "-";
 
-    const referralLink =
-    window.location.origin +
-    "/?ref=" +
-    encodeURIComponent(influencer.ref_code || "");
-
-    document.getElementById("referralLink").value =
-    referralLink;
+   document.getElementById("referralLink").value =
+    influencer.ref_code || "";
 
     loadReferrals();
 
@@ -1040,7 +1035,7 @@ async function copyReferralLink(){
         );
 
         copyMessage.textContent =
-        "Referral link je kopiran.";
+        "Referral kod je kopiran.";
 
     }catch(error){
 
@@ -1049,7 +1044,7 @@ async function copyReferralLink(){
         document.execCommand("copy");
 
         copyMessage.textContent =
-        "Referral link je kopiran.";
+        "Referral kod je kopiran.";
 
     }
 

@@ -1848,7 +1848,7 @@ console.log("LOGIN ERROR:", error);
                 error: influencerError
             } = await supabaseClient
                 .from("influencers")
-                .select("id, name, email")
+                .select("id, name, email, ref_code")
                 .eq("email", data.user.email)
                 .maybeSingle();
 
