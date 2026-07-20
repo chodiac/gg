@@ -2540,14 +2540,20 @@
               <div class="field"><label class="field-label" for="tireMessage">Poruka</label><input type="text"
                   id="tireMessage" placeholder="Opciono"></div>
             </div>
-           <div class="field">
+          <div class="field">
   <label class="field-label" for="referralCode">
-    Kod influensera (opciono)
+    Influenser kod *
   </label>
-  <input
-    type="text"
-    id="referralCode"
-    placeholder="Unesite kod ako ga imate">
+
+  <select id="referralCode" required>
+    <option value="" selected disabled>
+      Izaberite influensera
+    </option>
+
+    <option value="none">
+      Nemam influenser kod
+    </option>
+  </select>
 </div>
             <button type="submit" class="form-submit">Pošalji upit</button>
             <div class="form-success" id="tireFormSuccess">Hvala! Vaš upit je zabeležen - javljamo se uskoro sa ponudom.
@@ -2829,9 +2835,20 @@
               <div class="ck-field"><label for="scentEmail">Email adresa *</label><input type="email" id="scentEmail"
                   required></div>
               <div class="ck-field">
-                <label for="scentReferralCode">Kod influensera *</label>
-                <input type="text" id="scentReferralCode" placeholder="Unesite kod influensera" required>
-              </div>
+  <label for="scentReferralCode">
+    Preporuka influensera *
+  </label>
+
+  <select id="scentReferralCode" required>
+    <option value="" selected disabled>
+      Izaberite influensera
+    </option>
+
+    <option value="none">
+      Nemam influenser kod
+    </option>
+  </select>
+</div>
               <div class="ck-field"><label for="scentNote">Napomena za porudžbinu</label><textarea id="scentNote"
                   rows="3"></textarea></div>
               <label class="ck-check"><input type="checkbox" id="scentNewsletter" style="margin-top:3px"> Želim da budem
@@ -3202,6 +3219,52 @@
       }
       setupToggle('seasonToggle');
       setupToggle('vehicleToggle');
+      async function loadInfluencerOptions() {
+  const tireSelect = document.getElementById('referralCode');
+  const scentSelect = document.getElementById('scentReferralCode');
+
+  const { data: influencers, error } = await supabaseClient
+    .from('influencers')
+    .select('name, ref_code')
+    .order('name', { ascending: true });
+
+  if (error) {
+    console.error('Greška pri učitavanju influensera:', error);
+    return;
+  }
+
+  influencers.forEach(influencer => {
+    const label = influencer.name || influencer.ref_code;
+
+    const tireOption = document.createElement('option');
+    tireOption.value = influencer.ref_code;
+    tireOption.textContent = label;
+    tireSelect.appendChild(tireOption);
+
+    const scentOption = document.createElement('option');
+    scentOption.value = influencer.ref_code;
+    scentOption.textContent = label;
+    scentSelect.appendChild(scentOption);
+  });
+
+  // Ako je kupac došao preko influencer linka ?ref=kod,
+  // taj influencer se automatski bira u obe forme.
+  if (ref) {
+    const normalizedRef = ref.trim().toLowerCase();
+
+    const matchingInfluencer = influencers.find(
+      influencer =>
+        influencer.ref_code.toLowerCase() === normalizedRef
+    );
+
+    if (matchingInfluencer) {
+      tireSelect.value = matchingInfluencer.ref_code;
+      scentSelect.value = matchingInfluencer.ref_code;
+    }
+  }
+}
+
+loadInfluencerOptions();
 
       document.getElementById('tireForm').addEventListener('submit', async e => {
         e.preventDefault();
@@ -3222,17 +3285,24 @@
 
         if (!name || !email || !phone) { return; }
 
-        const { data: influencer, error: influencerError } =
-          await supabaseClient
-            .from("influencers")
-            .select("id, ref_code")
-            .ilike("ref_code", referralCode)
-            .single();
+        if (!referralCode) {
+  alert("Izaberite preporuku influensera.");
+  return;
+}
 
-        if (influencerError || !influencer) {
-          alert("Kod influensera nije ispravan.");
-          return;
-        }
+if (referralCode !== 'none') {
+  const { data: influencer, error: influencerError } =
+    await supabaseClient
+      .from('influencers')
+      .select('id, ref_code')
+      .ilike('ref_code', referralCode)
+      .single();
+
+  if (influencerError || !influencer) {
+    alert('Izabrani influenser nije pronađen.');
+    return;
+  }
+}
 
         const payload = { season, vehicle, tire_width: width, tire_height: height, tire_diameter: diameter, name, email, phone, message };
 

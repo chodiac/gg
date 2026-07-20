@@ -1805,6 +1805,9 @@ loginForm.addEventListener(
 
         try{
 
+console.log("LOGIN EMAIL:", email);
+console.log("LOGIN PASSWORD:", password);
+
             const {
                 data,
                 error
@@ -1815,9 +1818,19 @@ loginForm.addEventListener(
                     password
                 });
 
-            if(error){
-                throw error;
-            }
+    console.log("LOGIN DATA:", data);
+console.log("LOGIN ERROR:", error);
+
+           if(error){
+    console.error(error);
+    showMessage(
+    "Prijava nije uspela. Proverite email i lozinku.",
+    "error"
+);
+    throw error;
+
+
+}
 
             if(!data.user){
                 throw new Error(

@@ -808,7 +808,7 @@ async function changeApplicationStatus(
         } = await supabaseClient
             .functions
             .invoke(
-                "approve-partner",
+                "rapid-responder",
                 {
                     body:{
                         applicationId:
