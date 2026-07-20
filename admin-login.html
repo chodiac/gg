@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Giga Centar — Admin prijava</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root{
+    --black:#080808;
+    --black-soft:#111111;
+    --card:#151515;
+    --yellow:#e3b73a;
+    --yellow-light:#f4d35e;
+    --white:#ffffff;
+    --muted:rgba(255,255,255,.56);
+    --border:rgba(255,255,255,.10);
+    --danger:#ff8383;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    height:100%;
+}
+
+body{
+    min-height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    overflow-x:hidden;
+    background:
+        radial-gradient(circle at 50% 0%,rgba(227,183,58,.14),transparent 34%),
+        radial-gradient(circle at 100% 100%,rgba(227,183,58,.07),transparent 28%),
+        #080808;
+    color:var(--white);
+    font-family:"Inter",sans-serif;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.34;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:52px 52px;
+    mask-image:linear-gradient(to bottom,black,transparent 78%);
+}
+
+.admin-login{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:440px;
+    padding:44px 40px 38px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.01)),
+        rgba(17,17,17,.94);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.55),
+        0 0 0 1px rgba(227,183,58,.025);
+    backdrop-filter:blur(16px);
+}
+
+.admin-login::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:3px;
+    background:linear-gradient(90deg,transparent,var(--yellow),transparent);
+}
+
+.admin-login::after{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    right:-75px;
+    bottom:-85px;
+    border-radius:50%;
+    background:rgba(227,183,58,.11);
+    filter:blur(20px);
+    pointer-events:none;
+}
+
+.logo{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:28px;
+    color:#fff;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:31px;
+    letter-spacing:1.4px;
+}
+
+.logo::before{
+    content:"GC";
+    width:46px;
+    height:46px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:0 0 auto;
+    border-radius:5px;
+    background:var(--yellow);
+    color:#090909;
+    font-size:25px;
+    letter-spacing:1px;
+    transform:skew(-5deg);
+    box-shadow:0 10px 30px rgba(227,183,58,.18);
+}
+
+.logo span{
+    color:var(--yellow);
+}
+
+.login-label{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:10px;
+    color:var(--yellow);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.login-label::before,
+.login-label::after{
+    content:"";
+    width:26px;
+    height:1px;
+    background:rgba(227,183,58,.5);
+}
+
+h2{
+    position:relative;
+    z-index:1;
+    margin-bottom:10px;
+    text-align:center;
+    color:#fff;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:46px;
+    line-height:1;
+    letter-spacing:1px;
+}
+
+.subtitle{
+    position:relative;
+    z-index:1;
+    max-width:320px;
+    margin:0 auto 30px;
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.65;
+}
+
+.field{
+    position:relative;
+    z-index:1;
+    margin-bottom:16px;
+}
+
+.field label{
+    display:block;
+    margin-bottom:8px;
+    color:rgba(255,255,255,.68);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+}
+
+input{
+    width:100%;
+    height:52px;
+    padding:0 16px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    outline:none;
+    background:#0d0d0d;
+    color:#fff;
+    font-size:14px;
+    transition:.2s ease;
+}
+
+input::placeholder{
+    color:rgba(255,255,255,.28);
+}
+
+input:hover{
+    border-color:rgba(255,255,255,.17);
+}
+
+input:focus{
+    border-color:var(--yellow);
+    box-shadow:0 0 0 3px rgba(227,183,58,.10);
+    background:#101010;
+}
+
+button{
+    position:relative;
+    z-index:1;
+    width:100%;
+    height:52px;
+    margin-top:4px;
+    border:1px solid var(--yellow);
+    border-radius:6px;
+    background:var(--yellow);
+    color:#090909;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.7px;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:.22s ease;
+}
+
+button:hover{
+    background:var(--yellow-light);
+    border-color:var(--yellow-light);
+    transform:translateY(-1px);
+    box-shadow:0 12px 28px rgba(227,183,58,.16);
+}
+
+button:active{
+    transform:translateY(0);
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+    transform:none;
+    box-shadow:none;
+}
+
+#message{
+    position:relative;
+    z-index:1;
+    min-height:20px;
+    margin-top:17px;
+    text-align:center;
+    color:var(--danger);
+    font-size:12px;
+    line-height:1.5;
+}
+
+.security-note{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    margin-top:20px;
+    color:rgba(255,255,255,.32);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+
+.security-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--yellow);
+    box-shadow:0 0 10px rgba(227,183,58,.55);
+}
+
+@media(max-width:520px){
+
+    body{
+        padding:16px;
+    }
+
+    .admin-login{
+        padding:36px 22px 30px;
+    }
+
+    .logo{
+        font-size:27px;
+    }
+
+    .logo::before{
+        width:42px;
+        height:42px;
+        font-size:23px;
+    }
+
+    h2{
+        font-size:40px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="admin-login">
+
+    <div class="logo">
+        GIGA <span>CENTAR</span>
+    </div>
+
+    <div class="login-label">
+        Zaštićeni pristup
+    </div>
+
+    <h2>Admin prijava</h2>
+
+    <p class="subtitle">
+        Pristup administrativnom panelu namenjen je samo ovlašćenim korisnicima.
+    </p>
+
+    <div class="field">
+        <label for="adminEmail">Email adresa</label>
+
+        <input
+            type="email"
+            id="adminEmail"
+            placeholder="Unesite admin email"
+            autocomplete="email"
+        >
+    </div>
+
+    <div class="field">
+        <label for="adminPassword">Lozinka</label>
+
+        <input
+            type="password"
+            id="adminPassword"
+            placeholder="Unesite admin lozinku"
+            autocomplete="current-password"
+        >
+    </div>
+
+    <button id="loginButton" onclick="loginAdmin()">
+        Uloguj se
+    </button>
+
+    <p id="message"></p>
+
+    <div class="security-note">
+        <span class="security-dot"></span>
+        Sigurna admin zona
+    </div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+"https://chbtavedibqievvnpydb.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_BuU1ofP6YcAae8-R7fBLpA_6Qy1ctYS";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+async function loginAdmin(){
+
+    const email =
+    document.getElementById("adminEmail").value.trim();
+
+    const password =
+    document.getElementById("adminPassword").value;
+
+    const message =
+    document.getElementById("message");
+
+    const loginButton =
+    document.getElementById("loginButton");
+
+
+    message.textContent = "";
+
+
+    if(!email || !password){
+
+        message.textContent =
+        "Unesi admin email i lozinku.";
+
+        return;
+
+    }
+
+
+    loginButton.disabled = true;
+    loginButton.textContent = "Prijavljivanje...";
+
+
+    const { data, error } =
+    await supabaseClient.auth.signInWithPassword({
+
+        email:email,
+        password:password
+
+    });
+
+
+    if(error || !data.session){
+
+        console.error("Admin login greška:", error);
+
+        message.textContent =
+        "Pogrešan email ili lozinka.";
+
+        loginButton.disabled = false;
+        loginButton.textContent = "Uloguj se";
+
+        return;
+
+    }
+
+
+    window.location.href = "admin-dashboard.html";
+
+}
+
+
+document
+.getElementById("adminPassword")
+.addEventListener("keydown", function(event){
+
+    if(event.key === "Enter"){
+        loginAdmin();
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>

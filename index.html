@@ -1,0 +1,3603 @@
+  <!DOCTYPE html>
+  <html lang="sr">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giga Centar — Gume i GG Private Scents</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+    <style>
+      :root {
+        --black: #0a0a0a;
+        --black-soft: #151515;
+        --black-card: #1c1c1c;
+        --yellow: #e3b73a;
+        --yellow-bright: #f4d35e;
+        --white: #ffffff;
+        --off: #f3f1ec;
+        --muted: rgba(255, 255, 255, .55);
+        --muted-dark: rgba(10, 10, 10, .6);
+        --line: rgba(255, 255, 255, .1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--black);
+        color: var(--white);
+        font-family: 'Inter', sans-serif;
+        font-weight: 300;
+        overflow-x: hidden;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .wrap {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 0 60px;
+      }
+
+      .eyebrow {
+        font-size: .72rem;
+        letter-spacing: .25em;
+        text-transform: uppercase;
+        color: var(--yellow);
+        margin-bottom: 14px;
+        display: block;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: 'Bebas Neue', sans-serif;
+        letter-spacing: .03em;
+        line-height: 1;
+      }
+
+      .headline {
+        font-size: clamp(2.6rem, 4.6vw, 4.2rem);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 32px;
+        font-size: .78rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+        text-decoration: none;
+        transition: transform .25s, background .25s, color .25s;
+      }
+
+      .btn-yellow {
+        background: var(--yellow);
+        color: #1a1300;
+      }
+
+      .btn-yellow:hover {
+        background: var(--yellow-bright);
+        transform: translateY(-2px);
+      }
+
+      .btn-outline {
+        border: 1px solid rgba(255, 255, 255, .35);
+        color: var(--white);
+        background: transparent;
+      }
+
+      .btn-outline:hover {
+        border-color: var(--yellow);
+        color: var(--yellow);
+        transform: translateY(-2px);
+      }
+
+      .btn-outline-dark {
+        border: 1px solid rgba(10, 10, 10, .35);
+        color: var(--black);
+        background: transparent;
+      }
+
+      .btn-outline-dark:hover {
+        border-color: var(--black);
+        background: var(--black);
+        color: var(--white);
+      }
+
+      .influencer-link {
+        border: 1px solid var(--yellow);
+        color: var(--yellow) !important;
+        padding: 10px 16px;
+        border-radius: 4px;
+      }
+
+      .influencer-link:hover {
+        background: var(--yellow);
+        color: #111 !important;
+      }
+
+      .rv {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity .7s cubic-bezier(.16, 1, .3, 1), transform .7s cubic-bezier(.16, 1, .3, 1);
+      }
+
+      .rv.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 18px 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: background .4s, padding .4s, border-color .4s;
+        border-bottom: 1px solid transparent;
+      }
+
+      header.scrolled {
+        background: rgba(10, 10, 10, .92);
+        backdrop-filter: blur(16px);
+        padding: 10px 60px;
+        border-color: var(--line);
+      }
+
+  .site-logo{
+    height:70px;
+    width:auto;
+    display:block;
+}
+
+      .logo-mark {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid var(--yellow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1rem;
+        color: var(--yellow);
+      }
+
+      .logo-text {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: .1em;
+      }
+
+      .logo-text span {
+        color: var(--yellow);
+      }
+
+
+      
+      nav.nav-links {
+        display: flex;
+        gap: 34px;
+        align-items: center;
+      }
+
+      nav.nav-links a {
+        color: rgba(255, 255, 255, .75);
+        text-decoration: none;
+        font-size: .78rem;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        transition: color .25s;
+      }
+
+      nav.nav-links a:hover {
+        color: var(--yellow);
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+
+      .cart-btn {
+        position: relative;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--white);
+        display: flex;
+        align-items: center;
+      }
+
+      .cart-btn svg {
+        width: 23px;
+        height: 23px;
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        background: var(--yellow);
+        color: #1a1300;
+        font-size: .65rem;
+        font-weight: 700;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .burger {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--white);
+        cursor: pointer;
+      }
+
+      @media (max-width:880px) {
+        nav.nav-links {
+          position: fixed;
+          top: 64px;
+          left: 0;
+          right: 0;
+          background: rgba(10, 10, 10, .97);
+          flex-direction: column;
+          padding: 30px;
+          gap: 22px;
+          transform: translateY(-110%);
+          transition: transform .4s;
+          border-bottom: 1px solid var(--line);
+        }
+
+        nav.nav-links.open {
+          transform: translateY(0);
+        }
+
+        .burger {
+          display: block;
+        }
+
+        header,
+        header.scrolled {
+          padding: 18px 24px;
+        }
+      }
+
+      #hero {
+        height: 100vh;
+        min-height: 640px;
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+      }
+
+      .hero-half {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        text-decoration: none;
+        color: var(--white);
+      }
+
+      .hero-half > img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 70% center;
+        ;
+        transition: transform .9s cubic-bezier(.16, 1, .3, 1);
+        transform: translateY(var(--py, 0px)) scale(var(--sc, 1.02));
+      }
+
+      .hero-half:hover > img {
+  --sc: 1.09;
+}
+
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, .35) 0%, rgba(0, 0, 0, .65) 100%);
+        transition: background .4s;
+      }
+
+      .hero-left .hero-overlay {
+        background: linear-gradient(180deg, rgba(8, 8, 8, .3) 0%, rgba(8, 8, 8, .75) 100%);
+      }
+
+      .hero-right .hero-overlay {
+        background: linear-gradient(180deg, rgba(8, 8, 8, .4) 0%, rgba(8, 8, 8, .8) 100%);
+      }
+
+      .hero-half:hover .hero-overlay {
+        background: linear-gradient(180deg, rgba(8, 8, 8, .15) 0%, rgba(8, 8, 8, .6) 100%);
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        padding: 0 8%;
+      }
+
+      .hero-left .hero-content {
+        padding-left: 8%;
+        padding-right: 14%;
+      }
+
+      .hero-right .hero-content {
+        padding-right: 8%;
+        padding-left: 14%;
+        text-align: right;
+      }
+
+      .hero-tag {
+        font-size: .75rem;
+        letter-spacing: .25em;
+        text-transform: uppercase;
+        color: var(--yellow);
+        margin-bottom: 14px;
+      }
+
+      .hero-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(3.2rem, 7vw, 5.6rem);
+        line-height: .95;
+        margin-bottom: 18px;
+      }
+
+      .hero-sub {
+        font-size: .92rem;
+        color: rgba(255, 255, 255, .7);
+        margin-bottom: 22px;
+      }
+
+      .hero-price {
+        display: inline-block;
+        background: var(--yellow);
+        color: #1a1300;
+        font-weight: 700;
+        font-size: .85rem;
+        letter-spacing: .05em;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+      }
+
+      .hero-brands {
+        display: flex;
+        gap: 12px;
+        margin-top: 6px;
+      }
+
+      .hero-right .hero-brands {
+        justify-content: flex-end;
+      }
+
+      .hero-brand-logo{
+      height:28px;
+      width:auto;
+      background:rgba(255,255,255,.95);
+      padding:8px 14px;
+      border-radius:4px;
+      object-fit:contain;
+      transition:.3s;
+  }
+
+  .hero-brand-logo:hover{
+      transform:translateY(-3px);
+      background:#fff;
+  }
+
+      .hero-divider-logo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+        width: 108px;
+        height: 108px;
+        border-radius: 50%;
+        background: var(--black);
+        border: 2px solid var(--yellow);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero-divider-logo .gg {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.9rem;
+        color: var(--white);
+        letter-spacing: .04em;
+      }
+
+      .hero-divider-logo .est {
+        font-size: .55rem;
+        letter-spacing: .18em;
+        color: var(--yellow);
+        margin-top: 2px;
+      }
+
+      .hero-scroll {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 6;
+        font-size: .65rem;
+        letter-spacing: .2em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, .55);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .hero-scroll .ln {
+        width: 1px;
+        height: 34px;
+        background: linear-gradient(to bottom, var(--yellow), transparent);
+      }
+
+      @media (max-width:880px) {
+        #hero {
+          grid-template-columns: 1fr;
+          height: auto;
+        }
+
+        .hero-half {
+          height: 62vh;
+          min-height: 420px;
+        }
+
+        .hero-left .hero-content,
+        .hero-right .hero-content {
+          padding: 0 7%;
+          text-align: left;
+        }
+
+        .hero-divider-logo {
+          top: 62vh;
+        }
+      }
+
+      section {
+        padding: 120px 0;
+        position: relative;
+      }
+
+      .section-head {
+        margin-bottom: 60px;
+      }
+
+      .section-head.center {
+        text-align: center;
+      }
+
+      #about {
+        background: var(--black);
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .about-text p {
+        font-size: .95rem;
+        line-height: 1.85;
+        color: rgba(255, 255, 255, .6);
+        max-width: 460px;
+      }
+
+      .about-text p+p {
+        margin-top: 16px;
+      }
+
+      .about-img {
+        position: relative;
+        height: 440px;
+        overflow: hidden;
+      }
+
+      .about-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(.85) brightness(.85);
+      }
+
+      .about-badge {
+        position: absolute;
+        bottom: -24px;
+        left: -24px;
+        background: var(--yellow);
+        color: #1a1300;
+        padding: 20px 26px;
+        text-align: center;
+      }
+
+      .about-badge .num {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 2.4rem;
+        line-height: 1;
+      }
+
+      .about-badge .lbl {
+        font-size: .62rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      .stats-row {
+        margin-top: 90px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+
+      .stat-cell {
+        padding: 36px 32px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stat-num {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 3rem;
+        color: var(--yellow);
+      }
+
+      .stat-lbl {
+        margin-top: 6px;
+        font-size: .7rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, .45);
+      }
+
+      @media (max-width:880px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 50px;
+        }
+
+        .stats-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      #tires {
+        background: var(--black-soft);
+      }
+
+      .tires-grid {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 70px;
+        align-items: center;
+      }
+
+      .tires-img {
+        position: relative;
+        height: 480px;
+        overflow: hidden;
+        background: #0d0d0d;
+      }
+
+      .tires-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .tires-text p {
+        font-size: .92rem;
+        line-height: 1.85;
+        color: rgba(255, 255, 255, .55);
+        max-width: 440px;
+        margin-bottom: 30px;
+      }
+
+      .feature-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 36px;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: .86rem;
+        color: rgba(255, 255, 255, .8);
+      }
+
+      .feature-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--yellow);
+        flex-shrink: 0;
+      }
+
+      @media (max-width:880px) {
+        .tires-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      #tire-form {
+        background: var(--black);
+        background-image: radial-gradient(ellipse 70% 60% at 70% 20%, rgba(227, 183, 58, .08), transparent 60%);
+      }
+
+      .form-card {
+        background: var(--off);
+        color: #111;
+        border-radius: 6px;
+        padding: 54px;
+        display: grid;
+        grid-template-columns: .85fr 1.15fr;
+        gap: 50px;
+      }
+
+      .form-pitch h3 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 2.2rem;
+        color: #111;
+        margin-bottom: 10px;
+      }
+
+      .form-pitch p {
+        font-size: .85rem;
+        color: #555;
+        margin-bottom: 26px;
+      }
+
+      .pitch-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--yellow);
+        color: #1a1300;
+        font-size: .82rem;
+        font-weight: 600;
+        padding: 13px 18px;
+        border-radius: 30px;
+        margin-bottom: 14px;
+      }
+
+      .toggle-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 22px;
+        flex-wrap: wrap;
+      }
+
+      .toggle-btn {
+        flex: 1;
+        min-width: 90px;
+        border: 1.5px solid #cfcabd;
+        background: #fff;
+        padding: 13px 10px;
+        text-align: center;
+        font-size: .8rem;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background .2s, border-color .2s, color .2s;
+        color: #333;
+      }
+
+      .toggle-btn.active {
+        background: var(--yellow);
+        border-color: var(--yellow);
+        color: #1a1300;
+      }
+
+      .field-label {
+        font-size: .74rem;
+        font-weight: 600;
+        color: #444;
+        margin-bottom: 6px;
+        display: block;
+      }
+
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+
+      .field-row.cols2 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+      }
+
+      select,
+      input,
+      textarea {
+        font-family: 'Inter', sans-serif;
+        font-size: .86rem;
+        padding: 12px 14px;
+        border: 1.5px solid #cfcabd;
+        border-radius: 4px;
+        background: #fff;
+        color: #111;
+      }
+
+      select:focus,
+      input:focus,
+      textarea:focus {
+        outline: 2px solid var(--yellow);
+        border-color: var(--yellow);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .form-submit {
+        width: 100%;
+        margin-top: 6px;
+        padding: 16px;
+        background: #161616;
+        color: var(--yellow);
+        font-weight: 700;
+        font-size: .82rem;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background .25s;
+      }
+
+      .form-submit:hover {
+        background: #000;
+      }
+
+      .form-note {
+        font-size: .72rem;
+        color: #777;
+        margin-top: 10px;
+      }
+
+      .form-success {
+        display: none;
+        background: #1d3b1f;
+        color: #bdf2c0;
+        padding: 14px 16px;
+        border-radius: 4px;
+        font-size: .82rem;
+        margin-top: 14px;
+      }
+
+      @media (max-width:880px) {
+        .form-card {
+          grid-template-columns: 1fr;
+          padding: 30px;
+        }
+
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      #brands {
+        background: var(--black-soft);
+        overflow: hidden;
+      }
+
+      .brands-marquee {
+        width: 100%;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      }
+
+    .brands-track {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: max-content;
+    animation: marquee 20s linear infinite;
+  }
+
+      .brands-track:hover {
+        animation-play-state: paused;
+      }
+
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+    .brand-card{
+      width:220px;
+      height:120px;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      border:1px solid rgba(255,255,255,.08);
+      background:#121212;
+
+      transition:.3s;
+      flex-shrink:0;
+  }
+
+  .brand-card img{
+      max-width:160px;
+      max-height:60px;
+      object-fit:contain;
+
+      filter:grayscale(100%);
+      opacity:.75;
+
+      transition:.3s;
+  }
+
+  .brand-card:hover{
+      background:#ececec;
+      border-color:var(--yellow);
+      transform:translateY(-4px);
+  }
+
+  .brand-card:hover img{
+      filter:none;
+      opacity:1;
+      transform:scale(1.05);
+  }
+
+  .brands-note {
+    text-align: center;
+    margin-top: 30px;
+    font-size: .85rem;
+    color: rgba(255, 255, 255, .45);
+  }
+    
+
+      #scents-intro {
+        background: #060606;
+        padding-bottom: 20px;
+      }
+
+      .scents-intro-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .scents-intro-text p {
+        font-size: .92rem;
+        line-height: 1.9;
+        color: rgba(255, 255, 255, .5);
+        max-width: 420px;
+        margin-bottom: 30px;
+      }
+
+      .scents-tagline {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+        color: var(--yellow);
+        margin-bottom: 6px;
+      }
+
+      .scents-img {
+        position: relative;
+        height: 480px;
+        overflow: hidden;
+      }
+
+      .scents-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      @media (max-width:880px) {
+        .scents-intro-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      #scents-shop {
+        background: #060606;
+        padding-top: 20px;
+      }
+
+      .bundle-banner {
+        position: relative;
+        border-radius: 6px;
+        overflow: hidden;
+        margin-bottom: 80px;
+        min-height: 440px;
+        display: flex;
+        align-items: center;
+      }
+
+      .bundle-banner img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .bundle-banner-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(0, 0, 0, .88) 30%, rgba(0, 0, 0, .25) 100%);
+      }
+
+      .bundle-banner-content {
+        position: relative;
+        z-index: 2;
+        padding: 0 60px;
+        max-width: 560px;
+      }
+
+      .bundle-banner-content h3 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+        color: var(--yellow);
+        line-height: 1.15;
+        margin-bottom: 18px;
+      }
+
+      .bundle-banner-content p {
+        font-size: .85rem;
+        color: rgba(255, 255, 255, .7);
+        margin-bottom: 28px;
+        max-width: 380px;
+      }
+
+      .bundle-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .qty-box {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, .3);
+        border-radius: 3px;
+      }
+
+      .qty-box button {
+        background: none;
+        border: none;
+        color: var(--white);
+        width: 34px;
+        height: 42px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .qty-box span {
+        min-width: 34px;
+        text-align: center;
+        font-size: .9rem;
+      }
+
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .product-card {
+        background: #101010;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        transition: transform .3s, border-color .3s;
+      }
+
+      .product-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(227, 183, 58, .4);
+      }
+
+     .product-img {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  background: #080808;
+}
+
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .8s cubic-bezier(.16, 1, .3, 1);
+}
+
+      .product-img::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0) 65%,
+            rgba(0, 0, 0, .35) 100%);
+        pointer-events: none;
+      }
+
+      .product-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .mini-btn-outline {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, .25);
+      }
+
+      .mini-btn-outline:hover {
+        border-color: var(--yellow);
+        color: var(--yellow);
+      }
+
+    
+
+      #tires .section-head {
+        max-width: 760px;
+      }
+
+      .tires-section-text {
+        max-width: 650px;
+        margin-top: 22px;
+        color: rgba(255, 255, 255, .55);
+        font-size: .92rem;
+        line-height: 1.85;
+      }
+
+      .tire-products-grid .product-img {
+        height: 430px;
+        background: #0b0b0b;
+      }
+.tire-products-grid .product-img{
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    background:#fff;
+}
+
+.tire-products-grid .product-img img{
+    width:88%;
+    height:auto;
+    object-fit:contain;
+    margin-bottom:-12px;
+}
+
+      .tire-products-grid .product-img::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom,
+            rgba(0, 0, 0, .02) 55%,
+            rgba(0, 0, 0, .48) 100%);
+        pointer-events: none;
+      }
+
+      .tire-products-grid .mini-btn {
+        text-decoration: none;
+      }
+
+      .tire-benefits {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        margin-top: 42px;
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+
+      .tire-benefit {
+        padding: 28px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: #101010;
+      }
+
+      .tire-benefit strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--yellow);
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.35rem;
+        letter-spacing: .04em;
+      }
+
+      .tire-benefit span {
+        color: rgba(255, 255, 255, .52);
+        font-size: .78rem;
+        line-height: 1.6;
+      }
+
+      @media(max-width:880px) {
+
+        .tire-products-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .tire-benefits {
+          grid-template-columns: 1fr;
+        }
+
+      }
+
+      .product-card:hover .product-img img {
+        transform: scale(1.06);
+      }
+
+      .product-body{
+    padding:24px 24px 28px;
+
+    display:flex;
+    flex-direction:column;
+    height:220px;   /* po potrebi 210-230px */
+}
+
+      .product-cat {
+        font-size: .70rem;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+        color: var(--yellow);
+        margin-bottom: 8px;
+      }
+
+      .product-name {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.8rem;
+        letter-spacing: .04em;
+        margin-bottom: 6px;
+      }
+
+      .product-note {
+        font-size: .90rem;
+        color: rgba(255, 255, 255, .4);
+        margin-bottom: 16px;
+      }
+
+     .product-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+
+    margin-top:auto;
+}
+
+      .product-price-tag {
+        font-size: .76rem;
+        color: rgba(255, 255, 255, .55);
+      }
+
+      .mini-btn {
+        background: none;
+        border: 1px solid var(--yellow);
+        color: var(--yellow);
+        font-size: .68rem;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        padding: 9px 14px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background .25s, color .25s;
+      }
+
+      .mini-btn:hover {
+        background: var(--yellow);
+        color: #1a1300;
+      }
+
+      .product-card:nth-child(1) {
+        transition-delay: 0s;
+      }
+
+      .product-card:nth-child(2) {
+        transition-delay: .12s;
+      }
+
+      .product-card:nth-child(3) {
+        transition-delay: .24s;
+      }
+
+      @media (max-width:880px) {
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .bundle-banner-content {
+          padding: 0 28px;
+        }
+      }
+
+      .cart-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .6);
+        z-index: 1998;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .3s;
+      }
+
+      .cart-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .cart-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 400px;
+        max-width: 92vw;
+        background: #111;
+        z-index: 1999;
+        transform: translateX(100%);
+        transition: transform .4s cubic-bezier(.16, 1, .3, 1);
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid var(--line);
+      }
+
+      .cart-drawer.open {
+        transform: translateX(0);
+      }
+
+      .cart-head {
+        padding: 24px 26px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .cart-head h4 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: .05em;
+      }
+
+      .cart-close {
+        background: none;
+        border: none;
+        color: var(--white);
+        font-size: 1.3rem;
+        cursor: pointer;
+      }
+
+      .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 26px;
+      }
+
+      .cart-empty {
+        color: rgba(255, 255, 255, .4);
+        font-size: .85rem;
+        text-align: center;
+        margin-top: 60px;
+      }
+
+      .cart-line {
+        display: flex;
+        gap: 14px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .cart-line img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+
+      .cart-line-info {
+        flex: 1;
+      }
+
+      .cart-line-name {
+        font-size: .85rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .cart-line-price {
+        font-size: .78rem;
+        color: rgba(255, 255, 255, .5);
+      }
+
+      .cart-line-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .cart-line-actions button {
+        background: none;
+        border: 1px solid rgba(255, 255, 255, .3);
+        color: var(--white);
+        width: 24px;
+        height: 24px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: .8rem;
+      }
+
+      .cart-remove {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, .4);
+        font-size: .72rem;
+        text-decoration: underline;
+        cursor: pointer;
+        margin-left: auto;
+      }
+
+      .cart-foot {
+        padding: 22px 26px;
+        border-top: 1px solid var(--line);
+      }
+
+      .cart-total-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: .95rem;
+        margin-bottom: 16px;
+      }
+
+      .cart-total-row strong {
+        color: var(--yellow);
+      }
+
+      #scents-form {
+        background: #060606;
+      }
+
+      .checkout-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 40px;
+      }
+
+      .checkout-card {
+        background: #111;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 40px;
+      }
+
+      .checkout-card h4 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.4rem;
+        letter-spacing: .04em;
+        margin-bottom: 26px;
+      }
+
+      .ck-field {
+        margin-bottom: 18px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .ck-field label {
+        font-size: .72rem;
+        letter-spacing: .06em;
+        color: rgba(255, 255, 255, .55);
+        margin-bottom: 7px;
+      }
+
+      .ck-field input,
+      .ck-field select,
+      .ck-field textarea {
+        background: #1c1c1c;
+        border: 1px solid rgba(255, 255, 255, .15);
+        color: var(--white);
+      }
+
+      .ck-field input:focus,
+      .ck-field select:focus,
+      .ck-field textarea:focus {
+        border-color: var(--yellow);
+        outline: none;
+      }
+
+      .ck-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .ck-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: .78rem;
+        color: rgba(255, 255, 255, .6);
+        margin-top: 6px;
+      }
+
+      .summary-card {
+        background: #111;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 32px;
+        align-self: start;
+      }
+
+      .summary-card h4 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+      }
+
+      .summary-line {
+        display: flex;
+        justify-content: space-between;
+        font-size: .84rem;
+        color: rgba(255, 255, 255, .7);
+        padding: 8px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .summary-line.total {
+        color: var(--white);
+        font-weight: 600;
+        border-bottom: none;
+        margin-top: 6px;
+        font-size: .95rem;
+      }
+
+      .payment-box {
+        margin-top: 24px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 16px;
+      }
+
+      .payment-box .pb-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: .85rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .pb-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--yellow);
+      }
+
+      .payment-box p {
+        font-size: .76rem;
+        color: rgba(255, 255, 255, .45);
+      }
+
+      @media (max-width:880px) {
+        .checkout-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .checkout-card {
+          padding: 26px;
+        }
+
+        .ck-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      #gallery {
+        background: var(--black);
+      }
+
+      .carousel {
+        position: relative;
+        overflow: hidden;
+        border-radius: 6px;
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+        will-change: transform;
+        cursor: grab;
+      }
+
+      .carousel-track.dragging {
+        transition: none;
+        cursor: grabbing;
+      }
+
+      .g-item {
+        position: relative;
+        overflow: hidden;
+        flex: 0 0 calc(33.333% - 14px);
+        margin-right: 14px;
+        height: 380px;
+        border-radius: 6px;
+      }
+
+      .g-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1s cubic-bezier(.16, 1, .3, 1);
+        filter: saturate(.9) brightness(.88);
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+
+      .g-item:hover img {
+        transform: scale(1.07);
+        filter: saturate(1) brightness(1);
+      }
+
+      .g-item-cap {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        padding: 16px 18px;
+        background: linear-gradient(to top, rgba(0, 0, 0, .75), transparent);
+        font-size: .74rem;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, .85);
+      }
+
+      .carousel-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .carousel-arrow {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--white);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: border-color .25s, color .25s, transform .2s;
+      }
+
+      .carousel-arrow:hover {
+        border-color: var(--yellow);
+        color: var(--yellow);
+        transform: scale(1.08);
+      }
+
+      .carousel-dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .25);
+        border: none;
+        cursor: pointer;
+        transition: background .25s, transform .25s;
+      }
+
+      .carousel-dot.active {
+        background: var(--yellow);
+        transform: scale(1.25);
+      }
+
+      @media (max-width:880px) {
+        .g-item {
+          flex: 0 0 calc(85% - 14px);
+          height: 300px;
+        }
+      }
+
+      #testimonials {
+  background: var(--black-soft);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.testimonial-card {
+  background: #181818;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 22px;
+  padding: 32px;
+  transition: .3s;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--yellow);
+}
+
+.stars {
+  color: var(--yellow);
+  font-size: 22px;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+.testimonial-card p {
+  color: rgba(255,255,255,.72);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.author strong {
+  display: block;
+  color: #fff;
+}
+
+.author span {
+  color: rgba(255,255,255,.45);
+  font-size: .9rem;
+}
+
+@media (max-width: 980px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+      
+
+      @media (max-width:880px) {
+        .why-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      #contact {
+        background: var(--black);
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 60px;
+      }
+
+      .contact-map {
+        position: relative;
+        min-height: 340px;
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #141414, #0a0a0a);
+      }
+
+      .contact-map-inner {
+        text-align: center;
+      }
+
+      .contact-method {
+        display: flex;
+        gap: 18px;
+        align-items: flex-start;
+        margin-bottom: 26px;
+      }
+
+      .cm-icon {
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--yellow);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--yellow);
+        flex-shrink: 0;
+      }
+
+      .cm-label {
+        font-size: .7rem;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, .4);
+        margin-bottom: 4px;
+      }
+
+      .cm-val {
+        font-size: .95rem;
+        color: var(--white);
+      }
+
+      @media (max-width:880px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      footer {
+        background: #060606;
+        padding: 80px 0 30px;
+        border-top: 1px solid var(--line);
+      }
+
+      .footer-top {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+        gap: 50px;
+        margin-bottom: 60px;
+      }
+
+      .footer-tagline {
+        font-size: .84rem;
+        color: rgba(255, 255, 255, .45);
+        margin-top: 14px;
+        max-width: 300px;
+        line-height: 1.7;
+      }
+
+      .footer-social {
+        display: flex;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .footer-social a {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, .6);
+        text-decoration: none;
+        font-size: .72rem;
+        transition: border-color .25s, color .25s;
+      }
+
+      .footer-social a:hover {
+        border-color: var(--yellow);
+        color: var(--yellow);
+      }
+
+      .footer-col-title {
+        font-size: .72rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, .4);
+        margin-bottom: 18px;
+      }
+
+      .footer-col a {
+        display: block;
+        color: rgba(255, 255, 255, .65);
+        text-decoration: none;
+        font-size: .86rem;
+        margin-bottom: 12px;
+        transition: color .25s;
+      }
+
+      .footer-col a:hover {
+        color: var(--yellow);
+      }
+
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 14px;
+        padding-top: 26px;
+        border-top: 1px solid var(--line);
+        font-size: .76rem;
+        color: rgba(255, 255, 255, .35);
+      }
+
+      @media (max-width:880px) {
+        .footer-top {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .wrap {
+          padding: 0 24px;
+        }
+      }
+
+      @media (max-width:600px) {
+        .footer-top {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width:880px) {
+        section {
+          padding: 80px 0;
+        }
+
+        .form-card,
+        .checkout-card {
+          padding: 26px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0ms !important;
+          transition-duration: 0ms !important;
+        }
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <header id="mainHeader">
+      <a href="#hero" class="logo">
+    <img src="images/cropped-logo-png.webp" alt="Giga Centar" class="site-logo">
+</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#tires">Gume</a>
+        <a href="#scents-intro">Parfemi</a>
+        <a href="#about">O nama</a>
+        <a href="#contact">Kontakt</a>
+        <a href="influencer-login.html" class="influencer-link">Influencer panel</a>
+      </nav>
+      <div class="header-right">
+        <button class="cart-btn" id="cartBtn" aria-label="Korpa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M3 4h2l2.4 12.4a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.2L21 8H6" />
+            <circle cx="9" cy="20" r="1.4" />
+            <circle cx="17" cy="20" r="1.4" />
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="burger" id="burgerBtn" aria-label="Meni">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 6h18M3 12h18M3 18h18" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="hero">
+      <a href="#tires" class="hero-half hero-left">
+        <img src="images/hero-guma2.png" alt="Gume - auto servis Giga Centar" loading="eager">
+        <div class="hero-overlay"></div>
+        <div class="hero-content rv">
+          
+          <h1 class="hero-title">GUME</h1>
+          <p class="hero-sub">Letnje, zimske i all season gume za sva vozila.</p>
+          <span class="hero-price">POGLEDAJ</span>
+        <div class="hero-brands">
+      <img src="images/continental.svg" alt="Continental" class="hero-brand-logo">
+      <img src="images/lassa.svg" alt="Lassa" class="hero-brand-logo">
+      <img src="images/viking.svg" alt="Viking" class="hero-brand-logo">
+      <img src="images/michelin.svg" alt="Michelin" class="hero-brand-logo">
+  </div>
+        </div>
+      </a>
+      <a href="#scents-intro" class="hero-half hero-right">
+        <img src="images/HERO-DESKTOP-1.webp" alt="GG Private Scents parfemi" loading="eager">
+        <div class="hero-overlay"></div>
+        <div class="hero-content rv">
+        
+          <h1 class="hero-title">PARFEMI</h1>
+          <p class="hero-sub">GG Private Scents - definicija premium mirisa.</p>
+          <span class="hero-price">POGLEDAJ</span>
+        
+        </div>
+      </a>
+     <div class="hero-divider-logo">
+    <img src="images/cropped-logo-png.webp" alt="Giga Centar" class="hero-logo">
+</div>
+      <div class="hero-scroll"><span>Skroluj</span>
+        <div class="ln"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="wrap">
+        <div class="about-grid">
+          <div class="about-text rv">
+            <span class="eyebrow">O Giga Centru</span>
+            <h2 class="headline" style="margin-bottom:24px">Iz porodične<br>ljubavi prema<br>automobilima.</h2>
+            <p>Ovo nije samo firma. Ovo je porodična priča koja traje u Despotovcu od 1988. godine. Deda je postavio prve
+              temelje, a otac je svojim radom, znanjem i upornošću firmu postavio na zdrave noge. Danas je moja
+              odgovornost da nastavim ono što su oni započeli i da tu priču razvijam dalje, uz iste vrednosti na kojima je
+              nastala.</p>
+          </div>
+          <div class="about-img rv">
+            <img src="images/about-before-after.png"
+              alt="Giga Centar auto servis" loading="lazy">
+
+          </div>
+        </div>
+        <div class="stats-row rv">
+          <div class="stat-cell">
+            <div class="stat-num counter" data-target="1988" data-suffix=".">0</div>
+            <div class="stat-lbl">Godina osnivanja</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num counter" data-target="2" data-suffix="">0</div>
+            <div class="stat-lbl">Brenda pod istim krovom</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">Continental / Lassa</div>
+            <div class="stat-lbl">Partner brendovi guma</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIRES -->
+    <section id="tires">
+
+      <div class="wrap">
+
+        <div class="section-head rv">
+
+          <span class="eyebrow">
+            Gume i auto program
+          </span>
+
+          <h2 class="headline">
+            Pravu gumu za svako vozilo.
+          </h2>
+
+          <p class="tires-section-text">
+            Letnje, zimske i all season gume za putnička vozila, SUV, kombije i kamione. Nakon upita vas pozivamo i pomažemo
+            da pronađete najbolju opciju.
+          </p>
+
+        </div>
+
+
+        <div class="products-grid tire-products-grid">
+
+          <!-- CONTINENTAL -->
+          <article class="product-card rv">
+
+            <div class="product-img">
+
+              <img src="images/continental guma2.png" alt="Continental gume" loading="lazy">
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-cat">
+                Premium gume
+              </div>
+
+              <h3 class="product-name">
+                Continental
+              </h3>
+
+              <p class="product-note">
+                Pouzdane performanse i odlično prijanjanje na mokrim i snežnim putevima. 
+                Idealan izbor za vozače koji traže sigurnost i preciznu kontrolu.
+              </p>
+
+              <div class="product-foot">
+
+                <span class="product-price-tag">
+                  Ponuda na upit
+                </span>
+
+                <a href="#tire-form" class="mini-btn">
+                  Pošalji upit
+                </a>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- TRIANGLE -->
+          <article class="product-card rv">
+
+            <div class="product-img">
+
+              <img src="images/triangle guma.png" alt="Triangle gume" loading="lazy">
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-cat">
+                Odličan odnos cene i kvaliteta
+              </div>
+
+              <h3 class="product-name">
+                Triangle
+              </h3>
+
+              <p class="product-note">
+                Odličan odnos cene i kvaliteta uz pouzdane performanse u svakodnevnoj vožnji. 
+                Pravi izbor za vozače koji žele sigurnost po pristupačnoj ceni.
+              </p>
+
+              <div class="product-foot">
+
+                <span class="product-price-tag">
+                  Ponuda na upit
+                </span>
+
+                <a href="#tire-form" class="mini-btn">
+                  Pošalji upit
+                </a>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- MICHELIN -->
+          <article class="product-card rv">
+
+            <div class="product-img">
+
+              <img src="images/michelin guma.png" alt="Ostali brendovi guma" loading="lazy">
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-cat">
+                Više premium brendova
+              </div>
+
+              <h3 class="product-name">
+                Michelin
+              </h3>
+
+              <p class="product-note">
+                Premium izbor sa izuzetnim komforom, dugim vekom trajanja i vrhunskim performansama. 
+                Dizajnirana za sigurnu i stabilnu vožnju u svim uslovima.
+              </p>
+
+              <div class="product-foot">
+
+                <span class="product-price-tag">
+                  Ponuda na upit
+                </span>
+
+                <a href="#tire-form" class="mini-btn">
+                  Pošalji upit
+                </a>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+
+
+
+      </div>
+
+    </section>
+
+    <!-- TIRE INQUIRY FORM -->
+    <section id="tire-form">
+      <div class="wrap">
+        <div class="form-card rv">
+          <div class="form-pitch">
+            <span class="pitch-chip">🔍 Pronalazimo najbolju cenu</span><br>
+            <span class="pitch-chip">🚚 Besplatna dostava na sve gume</span><br>
+            <span class="pitch-chip">📞 Pozivamo vas nakon upita</span>
+            <h3 style="margin-top:26px">Pronalazimo najbolju ponudu za tebe</h3>
+            <p>Pošalji dimenzije, mi ti šaljemo najbolju ponudu za tvoje vozilo - bez obaveze kupovine.</p>
+          </div>
+          <form id="tireForm">
+
+            <label class="field-label">Sezona</label>
+            <div class="toggle-row" id="seasonToggle">
+              <button type="button" class="toggle-btn active" data-val="Letnje">☀️ Letnje</button>
+              <button type="button" class="toggle-btn" data-val="Zimske">❄️ Zimske</button>
+              <button type="button" class="toggle-btn" data-val="All season">🌤️ All season</button>
+            </div>
+            <label class="field-label">Tip vozila</label>
+            <div class="toggle-row" id="vehicleToggle">
+              <button type="button" class="toggle-btn active" data-val="Auto">🚗 Auto</button>
+              <button type="button" class="toggle-btn" data-val="SUV">SUV</button>
+              <button type="button" class="toggle-btn" data-val="Kombi">🚐 Kombi</button>
+              <button type="button" class="toggle-btn" data-val="Kamion">🚛 Kamion</button>
+            </div>
+            <div class="field-row">
+              <div class="field"><label class="field-label" for="tireWidth">Širina</label><select id="tireWidth"></select>
+              </div>
+              <div class="field"><label class="field-label" for="tireHeight">Visina</label><select
+                  id="tireHeight"></select></div>
+              <div class="field"><label class="field-label" for="tireDiameter">Prečnik</label><select
+                  id="tireDiameter"></select></div>
+            </div>
+            <div class="field-row cols2">
+              <div class="field"><label class="field-label" for="tireNameInput">Vaše ime i prezime *</label><input
+                  type="text" id="tireNameInput" required></div>
+              <div class="field"><label class="field-label" for="tireEmailInput">Vaš email *</label><input type="email"
+                  id="tireEmailInput" required></div>
+            </div>
+            <div class="field-row cols2">
+              <div class="field"><label class="field-label" for="tirePhoneInput">Vaš broj telefona *</label><input
+                  type="tel" id="tirePhoneInput" required></div>
+              <div class="field"><label class="field-label" for="tireMessage">Poruka</label><input type="text"
+                  id="tireMessage" placeholder="Opciono"></div>
+            </div>
+           <div class="field">
+  <label class="field-label" for="referralCode">
+    Kod influensera (opciono)
+  </label>
+  <input
+    type="text"
+    id="referralCode"
+    placeholder="Unesite kod ako ga imate">
+</div>
+            <button type="submit" class="form-submit">Pošalji upit</button>
+            <div class="form-success" id="tireFormSuccess">Hvala! Vaš upit je zabeležen - javljamo se uskoro sa ponudom.
+            </div>
+            <p class="form-note">* obavezna polja. Ne naplaćujemo ništa za upit - samo vam šaljemo ponudu.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  <!-- BRANDS -->
+  <section id="brands">
+    <div class="wrap">
+
+      <div class="section-head center rv">
+        <span class="eyebrow">Istaknuti brendovi</span>
+        <h2 class="headline">Marke kojima verujemo.</h2>
+      </div>
+
+      <div class="brands-marquee rv">
+        <div class="brands-track">
+
+          <div class="brand-card">
+            <img src="images/continental.svg" alt="Continental">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/lassa.svg" alt="Lassa">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/michelin.svg" alt="Michelin">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/viking.svg" alt="Viking">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/kumho.svg" alt="Kumho">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/triangle.svg" alt="Triangle">
+          </div>
+
+          <!-- Duplikati su potrebni za neprekidnu marquee animaciju -->
+
+          <div class="brand-card">
+            <img src="images/continental.svg" alt="Continental">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/lassa.svg" alt="Lassa">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/michelin.svg" alt="Michelin">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/viking.svg" alt="Viking">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/kumho.svg" alt="Kumho">
+          </div>
+
+          <div class="brand-card">
+            <img src="images/triangle.svg" alt="Triangle">
+          </div>
+
+        </div>
+      </div>
+
+      <p class="brands-note">
+        Radimo i sa drugim premium proizvođačima guma - pitajte nas za marku koja vam treba.
+      </p>
+
+    </div>
+  </section>
+
+    <!-- SCENTS INTRO -->
+    <section id="scents-intro">
+      <div class="wrap">
+        <div class="scents-intro-grid">
+          <div class="scents-intro-text rv">
+            <span class="eyebrow">GG Private Scents</span>
+            <h2 class="scents-tagline">Trag koji ostaje.</h2>
+            <p>Definicija premium mirisa. Iz porodične ljubavi prema automobilima - od 1988. GG Private Scents je naša
+              linija parfema, rođena iz iste posvećenosti detaljima koju ulažemo u svaki auto program.</p>
+            <a href="#scents-shop" class="btn btn-outline">Pogledaj kolekciju</a>
+          </div>
+          <div class="bundle-banner rv">
+            <img src="images/HERO-DESKTOP-1.webp" alt="GIGA Bundle - 3 parfema">
+            <div class="bundle-banner-overlay"></div>
+            <div class="bundle-banner-content">
+              <span class="eyebrow">GIGA Bundle</span>
+              <h3>3 različita parfema za samo 2.490 RSD!</h3>
+              <p>Crown, Steel Throne i Royal Milk - tri karaktera, jedna kolekcija. Najpovoljniji način da otkrijete GG
+                Private Scents.</p>
+              <div class="bundle-actions">
+                <div class="qty-box">
+                  <button type="button" id="bundleMinus">–</button>
+                  <span id="bundleQty">1</span>
+                  <button type="button" id="bundlePlus">+</button>
+                </div>
+                <button class="btn btn-yellow" id="bundleAddBtn">Dodaj u korpu</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </section>
+
+    <!-- SCENTS SHOP / BUNDLE -->
+    <section id="scents-shop">
+      <div class="wrap">
+
+
+        <div class="section-head rv">
+          <span class="eyebrow">Mirisi u bundle-u</span>
+          <h2 class="headline">Crown · Steel Throne · Royal Milk</h2>
+        </div>
+        <div class="products-grid rv">
+          <div class="product-card rv">
+            <div class="product-img"><img src="images/crown-featured2.png" alt="Crown parfem" loading="lazy"></div>
+            <div class="product-body">
+              <div class="product-cat">GG Private Scents</div>
+              <div class="product-name">Crown</div>
+              <div class="product-note">Deo GIGA Bundle ponude</div>
+              <div class="product-foot">
+                <span class="product-price-tag">U bundle-u</span>
+
+                <div class="product-actions">
+                  <a href="crown.html" class="mini-btn mini-btn-outline">
+                    Pogledaj
+                  </a>
+
+                  <button class="mini-btn" data-add="bundle">
+                    Dodaj
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- STEEL THRONE -->
+  <div class="product-card rv">
+
+    <div class="product-img">
+      <img
+        src="images/steel-throne-featured2.png"
+        alt="Steel Throne parfem"
+        loading="lazy"
+      >
+    </div>
+
+    <div class="product-body">
+
+      <div class="product-cat">GG Private Scents</div>
+
+      <div class="product-name">Steel Throne</div>
+
+      <div class="product-note">Deo GIGA Bundle ponude</div>
+
+      <div class="product-foot">
+
+        <span class="product-price-tag">U bundle-u</span>
+
+        <div class="product-actions">
+
+          <a
+            href="steel-throne.html"
+            class="mini-btn mini-btn-outline"
+          >
+            Pogledaj
+          </a>
+
+          <button class="mini-btn" data-add="bundle">
+            Dodaj
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ROYAL MILK -->
+  <div class="product-card rv">
+
+    <div class="product-img">
+      <img
+        src="images/royal-milk-featured2.png"
+        alt="Royal Milk parfem"
+        loading="lazy"
+      >
+    </div>
+
+    <div class="product-body">
+
+      <div class="product-cat">GG Private Scents</div>
+
+      <div class="product-name">Royal Milk</div>
+
+      <div class="product-note">Deo GIGA Bundle ponude</div>
+
+      <div class="product-foot">
+
+        <span class="product-price-tag">U bundle-u</span>
+
+        <div class="product-actions">
+
+          <a
+            href="royal-milk.html"
+            class="mini-btn mini-btn-outline"
+          >
+            Pogledaj
+          </a>
+
+          <button class="mini-btn" data-add="bundle">
+            Dodaj
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+      </div>
+    </section>
+
+    <!-- CHECKOUT / FORMA ZA PARFEME -->
+    <section id="scents-form">
+      <div class="wrap">
+        <div class="section-head rv">
+          <span class="eyebrow">Poruči</span>
+          <h2 class="headline">Završi porudžbinu.</h2>
+        </div>
+        <div class="checkout-grid rv">
+          <div class="checkout-card">
+            <h4>Informacije za plaćanje</h4>
+            <form id="scentForm">
+              <div class="ck-row">
+                <div class="ck-field"><label for="scentFirstName">Ime *</label><input type="text" id="scentFirstName"
+                    required></div>
+                <div class="ck-field"><label for="scentLastName">Prezime *</label><input type="text" id="scentLastName"
+                    required></div>
+              </div>
+              <div class="ck-field"><label for="scentCountry">Država / Region *</label>
+                <select id="scentCountry" required>
+                  <option>Srbija</option>
+                  <option>Crna Gora</option>
+                  <option>Bosna i Hercegovina</option>
+                  <option>Ostalo</option>
+                </select>
+              </div>
+              <div class="ck-field"><label for="scentAddress">Ulica i kućni broj *</label><input type="text"
+                  id="scentAddress" required></div>
+              <div class="ck-row">
+                <div class="ck-field"><label for="scentCity">Grad *</label><input type="text" id="scentCity" required>
+                </div>
+                <div class="ck-field"><label for="scentDistrict">Okrug (opciono)</label><input type="text"
+                    id="scentDistrict"></div>
+              </div>
+              <div class="ck-row">
+                <div class="ck-field"><label for="scentZip">Poštanski broj *</label><input type="text" id="scentZip"
+                    required></div>
+                <div class="ck-field"><label for="scentPhone">Telefon *</label><input type="tel" id="scentPhone" required>
+                </div>
+              </div>
+              <div class="ck-field"><label for="scentEmail">Email adresa *</label><input type="email" id="scentEmail"
+                  required></div>
+              <div class="ck-field">
+                <label for="scentReferralCode">Kod influensera *</label>
+                <input type="text" id="scentReferralCode" placeholder="Unesite kod influensera" required>
+              </div>
+              <div class="ck-field"><label for="scentNote">Napomena za porudžbinu</label><textarea id="scentNote"
+                  rows="3"></textarea></div>
+              <label class="ck-check"><input type="checkbox" id="scentNewsletter" style="margin-top:3px"> Želim da budem
+                obavešten o novim akcijama i kolekcijama (opciono)</label>
+              <button type="submit" class="form-submit"
+                style="margin-top:22px;background:var(--yellow);color:#1a1300;">Naručite</button>
+              <div class="form-success" id="scentFormSuccess">Hvala na porudžbini! Kontaktiraćemo vas radi potvrde.</div>
+            </form>
+          </div>
+          <div class="summary-card">
+            <h4>Vaša porudžbina</h4>
+            <div id="summaryLines">
+              <div class="summary-line"><span>Korpa je trenutno prazna</span></div>
+            </div>
+            <div class="payment-box">
+              <div class="pb-title"><span class="pb-dot"></span> Plaćanje pouzećem</div>
+              <p>Platite kada vam kurir dostavi paket.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery">
+      <div class="wrap">
+        <div class="section-head center rv">
+          <span class="eyebrow">Galerija</span>
+          <h2 class="headline">Pogledajte naš svet.</h2>
+        </div>
+        <div class="carousel rv">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="g-item"><img src="images/hero-guma2.png"
+                alt="Gume na paleti" loading="lazy" draggable="false">
+              <div class="g-item-cap">Gume</div>
+            </div>
+            <div class="g-item"><img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=700&q=80"
+                alt="Auto servis" loading="lazy" draggable="false">
+              <div class="g-item-cap">Auto servis</div>
+            </div>
+            <div class="g-item"><img src="images/HERO-DESKTOP-1.webp" alt="GG parfem" loading="lazy" draggable="false">
+              <div class="g-item-cap">GG Private Scents</div>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="carousel-nav rv">
+          <button class="carousel-arrow" id="carPrev" aria-label="Prethodna">‹</button>
+          <div class="carousel-dots" id="carDots"></div>
+          <button class="carousel-arrow" id="carNext" aria-label="Sledeća">›</button>
+        </div>
+      </div>
+    </section>
+
+   <!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="section-head center rv">
+      <span class="eyebrow">Iskustva kupaca</span>
+      <h2 class="headline">Šta naši kupci kažu o nama.</h2>
+    </div>
+
+    <div class="testimonials-grid rv">
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>
+          Svaka preporuka za saradnju! 
+          Toliko ljubaznosti, posvećenosti i poštenja za svaku pohvalu!
+        </p>
+        <div class="author">
+          <strong>Marko</strong>
+          <span>Google recenzija</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>
+          Profesionalni i efikasni. U roku od 24h sam dobio gume na kućnu adresu!
+          Svaka čast!
+        </p>
+        <div class="author">
+          <strong>Đorđe</strong>
+          <span>Google recenzija</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>
+          Svaka preporuka za Giga-Giga Centar.
+          Ispoštovano sve do detalja 🥰
+        </p>
+        <div class="author">
+          <strong>Dalibor</strong>
+          <span>Google recenzija</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-head rv">
+          <span class="eyebrow">Kontakt</span>
+          <h2 class="headline">Posetite nas.</h2>
+        </div>
+        <div class="contact-grid rv">
+          <div class="contact-map">
+            <div class="contact-map-inner">
+
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5049.990935519345!2d21.4222245!3d44.116440499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4756cb04fd154439%3A0x610ff708a8eb2848!2sAuto%20Gumi%20Centar%20GIGA%20%E2%80%93%20GIGA%20CENTAR!5e1!3m2!1sen!2srs!4v1784468578233!5m2!1sen!2srs"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </div>
+          <div class="contact-info">
+            <div class="contact-method">
+              <div class="cm-icon">📞</div>
+              <div>
+                <div class="cm-label">Telefon</div>
+                <div class="cm-val">069 / 611-403</div>
+              </div>
+            </div>
+            <div class="contact-method">
+              <div class="cm-icon">✉️</div>
+              <div>
+                <div class="cm-label">Email</div>
+                <div class="cm-val">ggtyres@gmail.com</div>
+              </div>
+            </div>
+            <div class="contact-method">
+              <div class="cm-icon">🕐</div>
+              <div>
+                <div class="cm-label">Radno vreme</div>
+                <div class="cm-val">Pon – Pet: 07:00 – 17:00<br><span
+                    style="font-size:.8rem;color:rgba(255,255,255,.4)">Subota: 07:00 – 16:00</span></div>
+              </div>
+            </div>
+            <a href="#tire-form" class="btn btn-yellow" style="margin-top:10px">Pošalji upit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="wrap">
+        <div class="footer-top">
+          <div>
+            <div class="logo">
+  <img src="images/cropped-logo-png.webp" alt="Giga Centar" class="site-logo">
+</div>
+            <p class="footer-tagline">Gume i auto program, i GG Private Scents - premium mirisi. Od 1988.</p>
+          <div class="footer-social">
+    <a href="https://www.instagram.com/gigacentar.rs/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+
+    <a href="https://www.facebook.com/p/Auto-gumi-centar-GIGA-61579321546491/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
+
+  
+</div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Navigacija</div>
+            <a href="#tires">Gume</a>
+            <a href="#scents-intro">Parfemi</a>
+            <a href="#about">O nama</a>
+            <a href="#contact">Kontakt</a>
+            <a href="influencer-login.html">Influencer panel</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Gume</div>
+            <a href="#tire-form">Pošalji upit</a>
+            <a href="#brands">Brendovi</a>
+            <a href="#tires">Auto program</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">GG Private Scents</div>
+            <a href="#scents-shop">GIGA Bundle</a>
+            <a href="#scents-form">Naruči</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>© 2026 Giga Centar. Sva prava zadržana.</div>
+          <div>Kragujevac, Srbija</div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- CART DRAWER -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-drawer" id="cartDrawer">
+      <div class="cart-head">
+        <h4>Vaša korpa</h4><button class="cart-close" id="cartCloseBtn">✕</button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <div class="cart-empty">Korpa je trenutno prazna.</div>
+      </div>
+      <div class="cart-foot">
+        <div class="cart-total-row"><span>Ukupno</span><strong id="cartTotal">0 RSD</strong></div>
+        <a href="#scents-form" class="btn btn-yellow" style="width:100%;justify-content:center"
+          id="cartCheckoutBtn">Naručite</a>
+      </div>
+    </div>
+
+    <script>
+      const SUPABASE_URL = "https://chbtavedibqievvnpydb.supabase.co";
+      const SUPABASE_KEY = "sb_publishable_BuU1ofP6YcAae8-R7fBLpA_6Qy1ctYS";
+
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      // ================================
+      // INFLUENCER CLICK TRACKING
+      // ================================
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const ref = urlParams.get("ref");
+
+
+      async function trackInfluencerClick() {
+
+        if (!ref) {
+          return;
+        }
+
+
+        // napravi jedinstveni ID posetioca
+
+        let visitorId = localStorage.getItem("visitor_id");
+
+
+        if (!visitorId) {
+
+          visitorId = crypto.randomUUID();
+
+          localStorage.setItem(
+            "visitor_id",
+            visitorId
+          );
+
+        }
+
+
+
+        // pronadji influensera
+
+        const { data: influencer, error } = await supabaseClient
+
+          .from("influencers")
+
+          .select("id")
+
+          .eq("ref_code", ref)
+
+          .single();
+
+
+
+        if (error || !influencer) {
+
+          console.log("Influencer not found");
+
+          return;
+
+        }
+
+
+
+        // proveri dupli klik
+
+        const { data: existing } = await supabaseClient
+
+          .from("clicks")
+
+          .select("id")
+
+          .eq("visitor_id", visitorId)
+
+          .eq("influencer_id", influencer.id);
+
+
+
+        if (existing && existing.length > 0) {
+
+          console.log("Already tracked");
+
+          return;
+
+        }
+
+
+
+        // sacuvaj klik
+
+        const { error: insertError } = await supabaseClient
+
+          .from("clicks")
+
+          .insert([{
+
+            influencer_id: influencer.id,
+
+            visitor_id: visitorId,
+
+            page: window.location.pathname
+
+          }]);
+
+
+
+        if (insertError) {
+
+          console.log("Click error:", insertError);
+
+        } else {
+
+          console.log("Click saved:", ref);
+
+        }
+
+
+      }
+
+
+      trackInfluencerClick();
+
+      const header = document.getElementById('mainHeader');
+      window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 40));
+      const navLinks = document.getElementById('navLinks');
+      document.getElementById('burgerBtn').addEventListener('click', () => navLinks.classList.toggle('open'));
+      navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+      const revealEls = document.querySelectorAll('.rv');
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+      }, { threshold: .12 });
+      revealEls.forEach(el => io.observe(el));
+
+      const widths = [135, 145, 155, 165, 175, 185, 195, 205, 215, 225, 235, 245, 255, 265, 275, 285, 295, 305, 315];
+      const heights = [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
+      const diameters = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+      function fillSelect(id, arr, suffix) {
+        const sel = document.getElementById(id);
+        sel.innerHTML = '<option value="">—</option>' + arr.map(v => '<option value="' + v + '">' + v + (suffix || '') + '</option>').join('');
+      }
+      fillSelect('tireWidth', widths);
+      fillSelect('tireHeight', heights);
+      fillSelect('tireDiameter', diameters, '"');
+
+      function setupToggle(id) {
+        document.querySelectorAll('#' + id + ' .toggle-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('#' + id + ' .toggle-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+          });
+        });
+      }
+      setupToggle('seasonToggle');
+      setupToggle('vehicleToggle');
+
+      document.getElementById('tireForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const season = document.querySelector('#seasonToggle .toggle-btn.active').dataset.val;
+        const vehicle = document.querySelector('#vehicleToggle .toggle-btn.active').dataset.val;
+        const width = document.getElementById('tireWidth').value;
+        const height = document.getElementById('tireHeight').value;
+        const diameter = document.getElementById('tireDiameter').value;
+        const name = document.getElementById('tireNameInput').value.trim();
+        const email = document.getElementById('tireEmailInput').value.trim();
+        const phone = document.getElementById('tirePhoneInput').value.trim();
+        const message = document.getElementById('tireMessage').value.trim();
+        const referralCode = document
+          .getElementById("referralCode")
+          .value
+          .trim()
+          .toLowerCase();
+
+        if (!name || !email || !phone) { return; }
+
+        const { data: influencer, error: influencerError } =
+          await supabaseClient
+            .from("influencers")
+            .select("id, ref_code")
+            .ilike("ref_code", referralCode)
+            .single();
+
+        if (influencerError || !influencer) {
+          alert("Kod influensera nije ispravan.");
+          return;
+        }
+
+        const payload = { season, vehicle, tire_width: width, tire_height: height, tire_diameter: diameter, name, email, phone, message };
+
+        console.log("Payload:", payload);
+
+        const { error } = await supabaseClient
+          .from("tire_inquiries")
+          .insert([payload]);
+
+
+        if (error) {
+          console.error("Tire inquiry error:", error);
+          return;
+        }
+
+        const {
+          data: referralResult,
+          error: referralError
+        } = await supabaseClient.functions.invoke(
+          "create-referral",
+          {
+            body: {
+              referral_code: referralCode,
+              referral_type: "tire",
+              customer_email: email,
+              customer_phone: phone
+            }
+          }
+        );
+
+        if (referralError) {
+          console.error(
+            "Greška pri upisu preporuke:",
+            referralError
+          );
+
+          alert("Preporuka nije evidentirana.");
+          return;
+        }
+
+        if (referralResult?.error) {
+          alert(referralResult.error);
+          return;
+        }
+        await fetch(
+          "https://chbtavedibqievvnpydb.supabase.co/functions/v1/send-inquiry-email",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`
+            },
+            body: JSON.stringify(payload)
+          }
+        );
+        document.getElementById('tireFormSuccess').style.display = 'block';
+        e.target.reset();
+        document.querySelectorAll('#seasonToggle .toggle-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+        document.querySelectorAll('#vehicleToggle .toggle-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+      });
+
+      const BUNDLE_PRICE = 2490;
+      const SHIPPING = 360;
+      let bundleQty = 1;
+      let cart = [];
+
+      const bundleQtyEl = document.getElementById('bundleQty');
+      document.getElementById('bundlePlus').addEventListener('click', () => { bundleQty++; bundleQtyEl.textContent = bundleQty; });
+      document.getElementById('bundleMinus').addEventListener('click', () => { if (bundleQty > 1) bundleQty--; bundleQtyEl.textContent = bundleQty; });
+
+      function addBundleToCart(qty) {
+        const existing = cart.find(i => i.id === 'bundle');
+        if (existing) existing.qty += qty;
+        else cart.push({ id: 'bundle', name: 'GIGA Bundle (Crown, Steel Throne, Royal Milk)', price: BUNDLE_PRICE, qty: qty });
+        renderCart();
+        openCart();
+      }
+      document.getElementById('bundleAddBtn').addEventListener('click', () => addBundleToCart(bundleQty));
+      document.querySelectorAll('[data-add="bundle"]').forEach(btn => btn.addEventListener('click', () => addBundleToCart(1)));
+
+      function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function renderCart() {
+        const itemsEl = document.getElementById('cartItems');
+        const countEl = document.getElementById('cartCount');
+        const totalEl = document.getElementById('cartTotal');
+        const summaryEl = document.getElementById('summaryLines');
+        const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+        countEl.textContent = totalQty;
+
+        if (cart.length === 0) {
+          itemsEl.innerHTML = '<div class="cart-empty">Korpa je trenutno prazna.</div>';
+          totalEl.textContent = '0 RSD';
+          summaryEl.innerHTML = '<div class="summary-line"><span>Korpa je trenutno prazna</span></div>';
+          return;
+        }
+
+        itemsEl.innerHTML = cart.map(item => {
+          const safeName = escapeHtml(item.name);
+          return '<div class="cart-line"><div class="cart-line-info"><div class="cart-line-name">' + safeName + '</div><div class="cart-line-price">' + item.price.toLocaleString('sr-RS') + ' RSD × ' + item.qty + '</div><div class="cart-line-actions"><button data-act="minus" data-id="' + escapeHtml(item.id) + '">–</button><span>' + item.qty + '</span><button data-act="plus" data-id="' + escapeHtml(item.id) + '">+</button><button class="cart-remove" data-act="remove" data-id="' + escapeHtml(item.id) + '">Ukloni</button></div></div></div>';
+        }).join('');
+
+        const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        const total = subtotal + SHIPPING;
+        totalEl.textContent = total.toLocaleString('sr-RS') + ' RSD';
+
+        summaryEl.innerHTML = cart.map(i => '<div class="summary-line"><span>' + escapeHtml(i.name) + ' × ' + i.qty + '</span><span>' + (i.price * i.qty).toLocaleString('sr-RS') + ' RSD</span></div>').join('') +
+          '<div class="summary-line"><span>Dostava</span><span>' + SHIPPING.toLocaleString('sr-RS') + ' RSD</span></div>' +
+          '<div class="summary-line total"><span>Ukupno za plaćanje</span><span>' + total.toLocaleString('sr-RS') + ' RSD</span></div>';
+
+        itemsEl.querySelectorAll('button[data-act]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.id, act = btn.dataset.act;
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+            if (act === 'plus') item.qty++;
+            if (act === 'minus') item.qty = Math.max(1, item.qty - 1);
+            if (act === 'remove') cart = cart.filter(i => i.id !== id);
+            renderCart();
+          });
+        });
+      }
+      renderCart();
+
+      const cartDrawer = document.getElementById('cartDrawer');
+      const cartOverlay = document.getElementById('cartOverlay');
+      function openCart() { cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); }
+      function closeCart() { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); }
+      document.getElementById('cartBtn').addEventListener('click', openCart);
+      document.getElementById('cartCloseBtn').addEventListener('click', closeCart);
+      cartOverlay.addEventListener('click', closeCart);
+      document.getElementById('cartCheckoutBtn').addEventListener('click', closeCart);
+
+      function animateCounter(el) {
+        const target = parseInt(el.dataset.target, 10);
+        const suffix = el.dataset.suffix || '';
+        const dur = 1400;
+        const start = performance.now();
+        function step(now) {
+          const p = Math.min((now - start) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.floor(eased * target) + suffix;
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = target + suffix;
+        }
+        requestAnimationFrame(step);
+      }
+      const counterIO = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterIO.unobserve(e.target); } });
+      }, { threshold: .5 });
+      document.querySelectorAll('.counter').forEach(el => counterIO.observe(el));
+
+      const heroImgs = document.querySelectorAll('.hero-half img');
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y < window.innerHeight) {
+          heroImgs.forEach(img => img.style.setProperty('--py', (y * .12) + 'px'));
+        }
+      });
+
+      (function () {
+        const track = document.getElementById('carouselTrack');
+        const items = Array.from(track.children);
+        const dotsWrap = document.getElementById('carDots');
+        const prevBtn = document.getElementById('carPrev');
+        const nextBtn = document.getElementById('carNext');
+        let perView = window.innerWidth <= 880 ? 1 : 3;
+        let index = 0;
+        let autoplayTimer;
+
+        function maxIndex() { return Math.max(0, items.length - perView); }
+        function itemWidth() { return items[0].getBoundingClientRect().width + 14; }
+        function update() {
+          track.style.transform = 'translateX(-' + index * itemWidth() + 'px)';
+          Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('active', i === index));
+        }
+        function buildDots() {
+          dotsWrap.innerHTML = '';
+          for (let i = 0; i <= maxIndex(); i++) {
+            const d = document.createElement('button');
+            d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            d.addEventListener('click', () => { index = i; update(); restartAutoplay(); });
+            dotsWrap.appendChild(d);
+          }
+        }
+        function go(dir) {
+          index = Math.min(maxIndex(), Math.max(0, index + dir));
+          update();
+        }
+        prevBtn.addEventListener('click', () => { go(-1); restartAutoplay(); });
+        nextBtn.addEventListener('click', () => { go(1); restartAutoplay(); });
+
+        function autoplay() {
+          autoplayTimer = setInterval(() => {
+            index = index >= maxIndex() ? 0 : index + 1;
+            update();
+          }, 4000);
+        }
+        function restartAutoplay() { clearInterval(autoplayTimer); autoplay(); }
+
+        let isDown = false, startX = 0, startTranslate = 0;
+        track.addEventListener('pointerdown', e => {
+          isDown = true; track.classList.add('dragging');
+          startX = e.clientX; startTranslate = -index * itemWidth();
+          clearInterval(autoplayTimer);
+        });
+        window.addEventListener('pointermove', e => {
+          if (!isDown) return;
+          const dx = e.clientX - startX;
+          track.style.transform = 'translateX(' + (startTranslate + dx) + 'px)';
+        });
+        window.addEventListener('pointerup', e => {
+          if (!isDown) return;
+          isDown = false; track.classList.remove('dragging');
+          const dx = e.clientX - startX;
+          if (dx < -50) go(1); else if (dx > 50) go(-1); else update();
+          restartAutoplay();
+        });
+
+        window.addEventListener('resize', () => {
+          perView = window.innerWidth <= 880 ? 1 : 3;
+          index = Math.min(index, maxIndex());
+          buildDots(); update();
+        });
+
+        buildDots(); update(); autoplay();
+      })();
+
+      document.getElementById('scentForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const referralCode = document
+          .getElementById('scentReferralCode')
+          .value
+          .trim()
+          .toLowerCase();
+
+        const { data: influencer, error: influencerError } =
+          await supabaseClient
+            .from('influencers')
+            .select('id, ref_code')
+            .ilike('ref_code', referralCode)
+            .single();
+
+        if (influencerError || !influencer) {
+          alert('Kod influensera nije ispravan.');
+          return;
+        }
+        const payload = {
+          first_name: document.getElementById('scentFirstName').value.trim(),
+          last_name: document.getElementById('scentLastName').value.trim(),
+          country: document.getElementById('scentCountry').value,
+          address: document.getElementById('scentAddress').value.trim(),
+          city: document.getElementById('scentCity').value.trim(),
+          district: document.getElementById('scentDistrict').value.trim(),
+          zip: document.getElementById('scentZip').value.trim(),
+          phone: document.getElementById('scentPhone').value.trim(),
+          email: document.getElementById('scentEmail').value.trim(),
+          note: document.getElementById('scentNote').value.trim(),
+          newsletter: document.getElementById('scentNewsletter').checked,
+          items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty })),
+          total: cart.reduce((s, i) => s + i.price * i.qty, 0) + SHIPPING
+        };
+
+        const { error } = await supabaseClient
+          .from("scent_orders")
+          .insert([payload]);
+
+
+        if (error) {
+          console.error("Order error:", error);
+          return;
+        }
+
+        const {
+          data: referralResult,
+          error: referralError
+        } = await supabaseClient.functions.invoke(
+          "create-referral",
+          {
+            body: {
+              referral_code: referralCode,
+              referral_type: "scent",
+              customer_email: payload.email,
+              customer_phone: payload.phone
+            }
+          }
+        );
+
+        if (referralError) {
+          console.error(
+            "Greška pri upisu preporuke:",
+            referralError
+          );
+
+          alert("Preporuka nije evidentirana.");
+          return;
+        }
+
+        if (referralResult?.error) {
+          alert(referralResult.error);
+          return;
+        }
+
+        if (referralError) {
+          console.error(
+            "Greška pri upisu preporuke:",
+            referralError
+          );
+
+          throw new Error(
+            referralError.message ||
+            "Preporuka nije evidentirana."
+          );
+        }
+
+        if (referralResult?.error) {
+          throw new Error(referralResult.error);
+        }
+
+        if (referralError) {
+          console.error('Referral error:', referralError);
+          alert('Porudžbina je sačuvana, ali preporuka nije evidentirana.');
+          return;
+        }
+
+        await fetch(
+          "https://chbtavedibqievvnpydb.supabase.co/functions/v1/send-order-email",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`
+            },
+            body: JSON.stringify(payload)
+          }
+        );
+        document.getElementById('scentFormSuccess').style.display = 'block';
+        e.target.reset();
+        cart = [];
+        renderCart();
+      });
+
+      /* ==================================================
+        PARTNER PROGRAM
+      ================================================== */
+
+      const partnerPanel =
+        document.getElementById("partnerPanel");
+
+      const partnerIntro =
+        document.getElementById("partnerIntro");
+
+      const partnerFormPanel =
+        document.getElementById("partnerFormPanel");
+
+      const openPartnerFormButton =
+        document.getElementById("openPartnerForm");
+
+      const closePartnerFormButton =
+        document.getElementById("closePartnerForm");
+
+      const partnerApplicationForm =
+        document.getElementById("partnerApplicationForm");
+
+      const partnerSubmitButton =
+        document.getElementById("partnerSubmitBtn");
+
+      const partnerSubmitText =
+        document.getElementById("partnerSubmitText");
+
+      const partnerFormMessage =
+        document.getElementById("partnerFormMessage");
+
+
+      /* OTVARANJE FORME */
+
+      openPartnerFormButton.addEventListener(
+        "click",
+        () => {
+
+          partnerIntro.classList.add(
+            "hidden-panel"
+          );
+
+          partnerFormPanel.classList.add(
+            "active-panel"
+          );
+
+          partnerPanel.classList.add(
+            "form-open"
+          );
+
+          window.setTimeout(
+            () => {
+              document
+                .getElementById("partnerName")
+                .focus();
+            },
+            450
+          );
+        }
+      );
+
+
+      /* POVRATAK NA POČETNI SADRŽAJ */
+
+      closePartnerFormButton.addEventListener(
+        "click",
+        () => {
+
+          partnerFormPanel.classList.remove(
+            "active-panel"
+          );
+
+          partnerIntro.classList.remove(
+            "hidden-panel"
+          );
+
+          partnerPanel.classList.remove(
+            "form-open"
+          );
+
+          partnerFormMessage.className =
+            "partner-form-message";
+
+          partnerFormMessage.textContent = "";
+        }
+      );
+
+
+      /* PORUKA FORME */
+
+      function showPartnerMessage(
+        message,
+        type
+      ) {
+        partnerFormMessage.textContent =
+          message;
+
+        partnerFormMessage.className =
+          `partner-form-message ${type}`;
+      }
+
+
+      /* LOADING STANJE */
+
+      function setPartnerLoading(
+        isLoading
+      ) {
+        partnerSubmitButton.disabled =
+          isLoading;
+
+        partnerSubmitButton.classList.toggle(
+          "loading",
+          isLoading
+        );
+
+        partnerSubmitText.textContent =
+          isLoading
+            ? "Slanje prijave..."
+            : "Pošalji prijavu";
+      }
+
+
+      /* NORMALIZACIJA PROFILA */
+
+      function normalizeSocialProfile(
+        value
+      ) {
+        const cleanedValue =
+          value.trim();
+
+        if (!cleanedValue) {
+          return null;
+        }
+
+        return cleanedValue;
+      }
+
+
+      /* SLANJE PRIJAVE */
+
+      partnerApplicationForm.addEventListener(
+        "submit",
+        async event => {
+
+          event.preventDefault();
+
+          partnerFormMessage.className =
+            "partner-form-message";
+
+          partnerFormMessage.textContent = "";
+
+          /*
+            Honeypot zaštita.
+            Normalan korisnik ne vidi niti popunjava ovo polje.
+          */
+
+          const website =
+            document
+              .getElementById("partnerWebsite")
+              .value
+              .trim();
+
+          if (website) {
+            return;
+          }
+
+          const fullName =
+            document
+              .getElementById("partnerName")
+              .value
+              .trim();
+
+          const email =
+            document
+              .getElementById("partnerEmail")
+              .value
+              .trim()
+              .toLowerCase();
+
+          const phone =
+            document
+              .getElementById("partnerPhone")
+              .value
+              .trim();
+
+          const city =
+            document
+              .getElementById("partnerCity")
+              .value
+              .trim();
+
+          const instagramUrl =
+            normalizeSocialProfile(
+              document
+                .getElementById(
+                  "partnerInstagram"
+                )
+                .value
+            );
+
+          const tiktokUrl =
+            normalizeSocialProfile(
+              document
+                .getElementById(
+                  "partnerTikTok"
+                )
+                .value
+            );
+
+          const followersCount =
+            document
+              .getElementById(
+                "partnerFollowers"
+              )
+              .value
+              .trim();
+
+          const contentCategory =
+            document
+              .getElementById(
+                "partnerCategory"
+              )
+              .value;
+
+          const message =
+            document
+              .getElementById(
+                "partnerMessage"
+              )
+              .value
+              .trim();
+
+          const consent =
+            document
+              .getElementById(
+                "partnerConsent"
+              )
+              .checked;
+
+
+          if (
+            !fullName ||
+            !email ||
+            !phone
+          ) {
+            showPartnerMessage(
+              "Unesite ime, email adresu i broj telefona.",
+              "error"
+            );
+
+            return;
+          }
+
+          if (
+            !instagramUrl &&
+            !tiktokUrl
+          ) {
+            showPartnerMessage(
+              "Unesite bar Instagram ili TikTok profil.",
+              "error"
+            );
+
+            return;
+          }
+
+          if (!consent) {
+            showPartnerMessage(
+              "Potrebno je da prihvatite saglasnost za obradu podataka.",
+              "error"
+            );
+
+            return;
+          }
+
+          setPartnerLoading(true);
+
+          try {
+
+            const {
+              error
+            } = await supabaseClient
+              .from(
+                "partner_applications"
+              )
+              .insert({
+                full_name:
+                  fullName,
+
+                email:
+                  email,
+
+                phone:
+                  phone,
+
+                city:
+                  city || null,
+
+                instagram_url:
+                  instagramUrl,
+
+                tiktok_url:
+                  tiktokUrl,
+
+                followers_count:
+                  followersCount || null,
+
+                content_category:
+                  contentCategory || null,
+
+                message:
+                  message || null,
+
+                status:
+                  "pending"
+              });
+
+            if (error) {
+              throw error;
+            }
+
+            showPartnerMessage(
+              "Prijava je uspešno poslata. Giga Centar tim će vas kontaktirati nakon pregleda.",
+              "success"
+            );
+
+            partnerApplicationForm.reset();
+
+          } catch (error) {
+
+            console.error(
+              "Greška pri slanju partner prijave:",
+              error
+            );
+
+            showPartnerMessage(
+              "Prijava trenutno nije poslata. Proverite podatke i pokušajte ponovo.",
+              "error"
+            );
+
+          } finally {
+
+            setPartnerLoading(false);
+
+          }
+        }
+      );
+
+    </script>
+  </body>
+
+  </html>

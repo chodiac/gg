@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Influencer panel — Giga Centar</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+    --black:#080808;
+    --black-soft:#111111;
+    --card:#171717;
+    --border:rgba(255,255,255,.1);
+    --yellow:#e3b73a;
+    --yellow-light:#f4d35e;
+    --white:#ffffff;
+    --muted:rgba(255,255,255,.58);
+    --danger:#ff7777;
+    --success:#79e69c;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:var(--black);
+    color:var(--white);
+    font-family:"Inter", sans-serif;
+}
+
+.login-page{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+}
+
+/* LEVA STRANA */
+
+.login-visual{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:32px 55px 40px;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(5,5,5,.66),
+            rgba(5,5,5,.82)
+        ),
+        linear-gradient(
+            0deg,
+            rgba(5,5,5,.92),
+            rgba(5,5,5,.05)
+        ),
+        url("images/influencer-bg.jpg")
+        center/cover no-repeat;
+}
+
+.login-visual::before{
+    content:"";
+    position:absolute;
+    width:520px;
+    height:520px;
+    left:-220px;
+    bottom:-250px;
+    border-radius:50%;
+    background:rgba(227,183,58,.2);
+    filter:blur(90px);
+}
+
+.login-visual::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+    background-size:55px 55px;
+    pointer-events:none;
+}
+
+.brand{
+    position:relative;
+    z-index:2;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    color:#fff;
+    text-decoration:none;
+    width:max-content;
+}
+
+.brand-mark{
+    width:42px;
+    height:42px;
+    background:var(--yellow);
+    color:#090909;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Bebas Neue", sans-serif;
+    font-size:25px;
+    letter-spacing:1px;
+    border-radius:4px;
+    transform:skew(-5deg);
+}
+
+.brand-text{
+    font-family:"Bebas Neue", sans-serif;
+    font-size:28px;
+    letter-spacing:1.5px;
+}
+
+.brand-text span{
+    color:var(--yellow);
+}
+
+.visual-content{
+    position:relative;
+    z-index:2;
+    max-width:660px;
+    margin-top:auto;
+    margin-bottom:60px;
+}
+
+.eyebrow{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:var(--yellow-light);
+    text-transform:uppercase;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:2.5px;
+    margin-bottom:20px;
+}
+
+.eyebrow::before{
+    content:"";
+    width:38px;
+    height:2px;
+    background:var(--yellow);
+}
+
+.visual-content h1{
+    font-family:"Bebas Neue", sans-serif;
+    font-size:clamp(60px, 7vw, 105px);
+    line-height:.88;
+    letter-spacing:1px;
+    max-width:700px;
+    margin-bottom:25px;
+}
+
+.visual-content h1 span{
+    color:var(--yellow);
+}
+
+.visual-content p{
+    max-width:550px;
+    color:rgba(255,255,255,.72);
+    font-size:16px;
+    line-height:1.8;
+}
+
+
+.visual-stat strong{
+    display:block;
+    color:var(--yellow);
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.visual-stat span{
+    color:rgba(255,255,255,.55);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.visual-footer{
+    position:absolute;
+    z-index:3;
+    left:55px;
+    bottom:28px;
+    color:rgba(255,255,255,.3);
+    font-size:11px;
+}
+
+/* DESNA STRANA */
+
+.login-section{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:50px;
+    position:relative;
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(227,183,58,.11),
+            transparent 32%
+        ),
+        var(--black-soft);
+}
+
+.back-link{
+    position:absolute;
+    top:35px;
+    right:40px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--muted);
+    text-decoration:none;
+    font-size:13px;
+    transition:.25s ease;
+}
+
+.back-link:hover{
+    color:var(--yellow);
+}
+
+.login-container{
+    width:100%;
+    max-width:440px;
+}
+
+.brand-logo{
+    height: 80px;
+    width:auto;
+    display:block;
+}
+
+.mobile-brand{
+    display:none;
+    margin-bottom:42px;
+}
+
+.login-label{
+    color:var(--yellow);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:14px;
+}
+
+.login-container h2{
+    font-family:"Bebas Neue", sans-serif;
+    font-size:52px;
+    line-height:1;
+    letter-spacing:1px;
+    margin-bottom:14px;
+}
+
+.login-description{
+    color:var(--muted);
+    line-height:1.7;
+    font-size:14px;
+    margin-bottom:35px;
+}
+
+.login-form{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.form-group label{
+    color:rgba(255,255,255,.82);
+    font-size:13px;
+    font-weight:600;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+.input-wrap input{
+    width:100%;
+    height:56px;
+    padding:0 48px 0 17px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    outline:none;
+    background:#0d0d0d;
+    color:#fff;
+    font-family:"Inter", sans-serif;
+    font-size:14px;
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.input-wrap input::placeholder{
+    color:rgba(255,255,255,.28);
+}
+
+.input-wrap input:hover{
+    border-color:rgba(255,255,255,.2);
+}
+
+.input-wrap input:focus{
+    border-color:var(--yellow);
+    background:#101010;
+    box-shadow:0 0 0 3px rgba(227,183,58,.1);
+}
+
+.input-icon{
+    position:absolute;
+    right:16px;
+    top:50%;
+    transform:translateY(-50%);
+    color:rgba(255,255,255,.34);
+    pointer-events:none;
+}
+
+.password-toggle{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    width:30px;
+    height:30px;
+    border:none;
+    background:transparent;
+    color:rgba(255,255,255,.42);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.2s ease;
+}
+
+.password-toggle:hover{
+    color:var(--yellow);
+}
+
+.form-options{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-top:-3px;
+}
+
+.remember{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:var(--muted);
+    font-size:12px;
+    cursor:pointer;
+}
+
+.remember input{
+    width:15px;
+    height:15px;
+    accent-color:var(--yellow);
+}
+
+.support-link{
+    color:var(--yellow);
+    font-size:12px;
+    text-decoration:none;
+}
+
+.support-link:hover{
+    text-decoration:underline;
+}
+
+.login-btn{
+    position:relative;
+    width:100%;
+    height:57px;
+    margin-top:5px;
+    border:none;
+    border-radius:6px;
+    background:var(--yellow);
+    color:#090909;
+    font-family:"Inter", sans-serif;
+    font-size:14px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1.1px;
+    cursor:pointer;
+    overflow:hidden;
+    transition:
+        background .25s ease,
+        transform .2s ease,
+        box-shadow .25s ease;
+}
+
+.login-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:75%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.42),
+        transparent
+    );
+    transform:skewX(-20deg);
+    transition:left .6s ease;
+}
+
+.login-btn:hover{
+    background:var(--yellow-light);
+    box-shadow:0 12px 30px rgba(227,183,58,.18);
+    transform:translateY(-2px);
+}
+
+.login-btn:hover::before{
+    left:140%;
+}
+
+.login-btn:active{
+    transform:translateY(0);
+}
+
+.login-btn:disabled{
+    cursor:not-allowed;
+    opacity:.65;
+    transform:none;
+    box-shadow:none;
+}
+
+.btn-content{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
+
+.spinner{
+    width:18px;
+    height:18px;
+    border:2px solid rgba(0,0,0,.25);
+    border-top-color:#090909;
+    border-radius:50%;
+    animation:spin .75s linear infinite;
+    display:none;
+}
+
+.login-btn.loading .spinner{
+    display:block;
+}
+
+.login-btn.loading .btn-arrow{
+    display:none;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.login-message{
+    display:none;
+    padding:13px 15px;
+    border-radius:6px;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.login-message.error{
+    display:block;
+    background:rgba(255,87,87,.1);
+    border:1px solid rgba(255,87,87,.25);
+    color:var(--danger);
+}
+
+.login-message.success{
+    display:block;
+    background:rgba(70,215,118,.1);
+    border:1px solid rgba(70,215,118,.25);
+    color:var(--success);
+}
+
+.login-help{
+    margin-top:30px;
+    padding-top:24px;
+    border-top:1px solid var(--border);
+    color:rgba(255,255,255,.4);
+    font-size:12px;
+    line-height:1.7;
+}
+
+.login-help strong{
+    color:rgba(255,255,255,.7);
+}
+
+.security-note{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-top:22px;
+    color:rgba(255,255,255,.3);
+    font-size:11px;
+}
+
+.security-note svg{
+    flex-shrink:0;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+    .login-page{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .login-visual{
+        padding:32px 35px 40px;
+    }
+
+    .visual-content h1{
+        font-size:67px;
+    }
+
+    
+    .login-section{
+        padding:45px 35px;
+    }
+}
+
+@media(max-width:800px){
+    .login-page{
+        display:block;
+    }
+
+    .login-visual{
+        display:none;
+    }
+
+    .login-section{
+        min-height:100vh;
+        padding:35px 24px;
+    }
+
+    .mobile-brand{
+        display:flex;
+    }
+
+    .back-link{
+        top:26px;
+        right:24px;
+    }
+
+    .login-container{
+        max-width:480px;
+    }
+}
+
+@media(max-width:480px){
+    .login-section{
+        align-items:flex-start;
+        padding-top:30px;
+    }
+
+    .back-link{
+        position:static;
+        justify-content:flex-end;
+        margin-bottom:38px;
+    }
+
+    .mobile-brand{
+        margin-bottom:42px;
+    }
+
+    .login-container h2{
+        font-size:44px;
+    }
+
+    .form-options{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+/* ==================================================
+   PARTNER PROGRAM — LEVA STRANA
+================================================== */
+
+.partner-panels{
+    position:relative;
+    z-index:2;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    padding:20px 40px;
+}
+.partner-intro,
+.partner-form-panel{
+    width:100%;
+    transition:
+        opacity .45s ease,
+        transform .55s cubic-bezier(.22,.8,.25,1),
+        visibility .45s ease;
+}
+
+.partner-intro{
+    width:100%;
+    max-width:780px;
+    margin:auto;
+    opacity:1;
+    visibility:visible;
+    transform:translateX(0);
+    }
+.partner-intro.hidden-panel{
+    position:absolute;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateX(-70px);
+}
+
+.partner-description{
+    max-width:550px;
+    color:rgba(255,255,255,.72);
+    font-size:15px;
+    line-height:1.75;
+}
+
+.partner-benefits{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:14px;
+    width:100%;
+    max-width:760px;
+    margin-top:30px;
+}
+
+.partner-benefit{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:flex-start;
+    gap:14px;
+    min-height:165px;
+    padding:22px 20px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:8px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.015)
+        ),
+        rgba(8,8,8,.62);
+    backdrop-filter:blur(10px);
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background .25s ease;
+}
+
+.partner-benefit:hover{
+    transform:translateY(-4px);
+    border-color:rgba(227,183,58,.5);
+    background:rgba(18,18,18,.82);
+}
+
+.benefit-check{
+    flex:0 0 38px;
+    width:38px;
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:rgba(227,183,58,.14);
+    border:1px solid rgba(227,183,58,.24);
+    color:var(--yellow);
+    font-size:17px;
+    font-weight:800;
+}
+
+.partner-benefit strong{
+    display:block;
+    color:#fff;
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:7px;
+}
+
+.partner-benefit small{
+    display:block;
+    color:rgba(255,255,255,.52);
+    font-size:12px;
+    line-height:1.55;
+}
+
+.partner-open-btn,
+.partner-submit-btn{
+    position:relative;
+    overflow:hidden;
+    border:none;
+    border-radius:6px;
+    background:var(--yellow);
+    color:#090909;
+    font-family:"Inter", sans-serif;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:
+        transform .2s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+}
+
+.partner-open-btn{
+    height:58px;
+    min-width:255px;
+    margin-top:25px;
+    padding:0 25px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:35px;
+    font-size:13px;
+}
+
+.partner-open-btn:hover,
+.partner-submit-btn:hover{
+    transform:translateY(-2px);
+    background:var(--yellow-light);
+    box-shadow:0 15px 35px rgba(227,183,58,.2);
+}
+
+
+/* FORMA */
+
+.partner-form-panel{
+    position:absolute;
+    max-width:760px;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateX(80px);
+}
+
+.partner-form-panel.active-panel{
+    position:relative;
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transform:translateX(0);
+}
+
+.partner-back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    border:none;
+    background:transparent;
+    color:rgba(255,255,255,.58);
+    font-family:"Inter", sans-serif;
+    font-size:12px;
+    cursor:pointer;
+    margin-bottom:22px;
+    transition:color .2s ease;
+}
+
+.partner-back-btn:hover{
+    color:var(--yellow);
+}
+
+.partner-form-heading .eyebrow{
+    margin-bottom:12px;
+}
+
+.partner-form-heading h2{
+    font-family:"Bebas Neue", sans-serif;
+    font-size:clamp(58px, 6vw, 82px);
+    line-height:.95;
+    letter-spacing:1px;
+    margin-bottom:12px;
+}
+
+.partner-form-heading h2 span{
+    color:var(--yellow);
+}
+
+.partner-form-heading p{
+    max-width:610px;
+    color:rgba(255,255,255,.58);
+    font-size:14px;
+    line-height:1.65;
+}
+
+.partner-steps{
+    display:flex;
+    align-items:center;
+    gap:17px;
+    padding:16px 0;
+    margin:17px 0;
+    border-top:1px solid rgba(255,255,255,.09);
+    border-bottom:1px solid rgba(255,255,255,.09);
+}
+
+.partner-steps span{
+    color:rgba(255,255,255,.32);
+     font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.partner-steps span.current{
+    color:var(--yellow);
+}
+
+.partner-form-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:13px;
+}
+
+.partner-field{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.partner-field-full{
+    margin-top:13px;
+}
+
+.partner-field label{
+    color:rgba(255,255,255,.76);
+    font-size:13px;
+    font-weight:600;
+}
+
+.partner-field input,
+.partner-field select,
+.partner-field textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:6px;
+    outline:none;
+    background:#0d0d0d;
+    color:#fff;
+    font-family:"Inter",sans-serif;
+    font-size:14px;
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.partner-field input,
+.partner-field select{
+    height:56px;
+    padding:0 17px;
+}
+
+.partner-field textarea{
+    min-height:120px;
+    padding:17px;
+    resize:vertical;
+}
+.partner-field select{
+    cursor:pointer;
+}
+
+.partner-field select option{
+    background:#111;
+    color:#fff;
+}
+
+.partner-field input::placeholder,
+.partner-field textarea::placeholder{
+    color:rgba(255,255,255,.28);
+}
+.partner-field input:focus,
+.partner-field select:focus,
+.partner-field textarea:focus{
+    border-color:var(--yellow);
+    background:#101010;
+    box-shadow:0 0 0 3px rgba(227,183,58,.1);
+}
+
+.partner-consent{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-top:14px;
+    color:rgba(255,255,255,.48);
+    font-size:12px;
+    line-height:1.6;
+    cursor:pointer;
+}
+
+.partner-consent input{
+    flex:0 0 auto;
+    width:14px;
+    height:14px;
+    margin-top:1px;
+    accent-color:var(--yellow);
+}
+
+.partner-submit-btn{
+    width:100%;
+    height:56px;
+    margin-top:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-size:13px;
+}
+
+.partner-submit-btn:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.partner-submit-spinner{
+    display:none;
+    width:16px;
+    height:16px;
+    border:2px solid rgba(0,0,0,.25);
+    border-top-color:#090909;
+    border-radius:50%;
+    animation:partnerSpin .7s linear infinite;
+}
+
+.partner-submit-btn.loading .partner-submit-spinner{
+    display:block;
+}
+
+.partner-submit-btn.loading .partner-submit-arrow{
+    display:none;
+}
+
+@keyframes partnerSpin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.partner-form-message{
+    display:none;
+    margin-top:13px;
+    padding:11px 13px;
+    border-radius:5px;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.partner-form-message.error{
+    display:block;
+    color:var(--danger);
+    background:rgba(255,87,87,.1);
+    border:1px solid rgba(255,87,87,.24);
+}
+
+.partner-form-message.success{
+    display:block;
+    color:var(--success);
+    background:rgba(70,215,118,.1);
+    border:1px solid rgba(70,215,118,.24);
+}
+
+.partner-honeypot{
+    position:absolute !important;
+    left:-9999px !important;
+    opacity:0 !important;
+    pointer-events:none !important;
+}
+
+
+/* Kada je forma otvorena, dozvoli skrol leve strane */
+
+.login-visual.form-open{
+    overflow-y:auto;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media(max-width:1100px){
+
+    .login-page{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .login-visual{
+        padding-left:35px;
+        padding-right:35px;
+    }
+
+    .partner-form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .partner-form-panel{
+        padding:25px 0;
+    
+    }
+
+    .partner-benefits{
+    grid-template-columns:1fr;
+}
+
+.partner-benefit{
+    min-height:auto;
+    flex-direction:row;
+    align-items:center;
+}
+}
+
+@media(max-width:800px){
+
+    /*
+       U starom CSS-u .login-visual je sakriven.
+       Ovo ga ponovo prikazuje na telefonu.
+    */
+
+    .login-visual{
+        display:flex;
+        min-height:auto;
+        padding:30px 24px 38px;
+    }
+
+    .partner-panels{
+        padding:70px 0 45px;
+    }
+
+    .partner-intro{
+        max-width:none;
+    }
+
+    .partner-intro h1{
+    font-size:clamp(58px, 5.5vw, 88px);
+    line-height:.9;
+    margin-bottom:18px;
+}
+
+    .partner-form-panel{
+        max-width:none;
+    }
+
+    .visual-footer{
+        margin-top:15px;
+    }
+
+    .login-section{
+        min-height:auto;
+        padding-top:75px;
+        padding-bottom:75px;
+    }
+
+    .partner-benefits{
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+}
+
+.partner-benefit{
+    min-height:145px;
+    flex-direction:column;
+    align-items:flex-start;
+}
+}
+
+@media(max-width:600px){
+
+    .partner-benefits{
+        grid-template-columns:1fr;
+    }
+
+    .partner-benefit{
+        min-height:auto;
+        flex-direction:row;
+        align-items:center;
+    }
+}
+
+@media(max-width:480px){
+
+    .partner-intro h1{
+        font-size:53px;
+    }
+
+    .partner-benefits{
+        gap:9px;
+    }
+
+  
+    .partner-open-btn{
+        width:100%;
+    }
+
+    .partner-form-heading h2{
+        font-size:48px;
+    }
+
+    .partner-steps{
+        gap:9px;
+        flex-wrap:wrap;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-page">
+
+   <!-- LEVA STRANA -->
+
+<section class="login-visual" id="partnerPanel">
+
+    <a href="index.html" class="brand">
+    <img src="images/cropped-logo-png.webp" alt="Giga Centar" class="brand-logo">
+</a>
+
+    <div class="partner-panels">
+
+        <!-- POČETNI PARTNER SADRŽAJ -->
+
+        <div class="partner-intro active-panel" id="partnerIntro">
+
+            <div class="eyebrow">
+                Partner program
+            </div>
+
+           
+
+            <p class="partner-description">
+                Postani deo Giga Centar partner programa,
+                preporuči proizvode svojoj publici i prati
+                rezultate preko sopstvenog influencer panela.
+            </p>
+
+            <div class="partner-benefits">
+
+                <div class="partner-benefit">
+                    <span class="benefit-check">✓</span>
+
+                    <div>
+                        <strong>Sopstveni referral link</strong>
+                        <small>Jedinstveni link za tvoju publiku</small>
+                    </div>
+                </div>
+
+                <div class="partner-benefit">
+                    <span class="benefit-check">✓</span>
+
+                    <div>
+                        <strong>Pregled rezultata</strong>
+                        <small>Prati klikove i preporuke u panelu</small>
+                    </div>
+                </div>
+
+                <div class="partner-benefit">
+                    <span class="benefit-check">✓</span>
+
+                    <div>
+                        <strong>Zarada od preporuka</strong>
+                        <small>Transparentan partnerski sistem</small>
+                    </div>
+                </div>
+
+            </div>
+
+           <button
+    type="button"
+    class="partner-open-btn"
+    id="openPartnerForm"
+>
+    <span>Postani partner</span>
+    <span aria-hidden="true">→</span>
+</button>
+
+</div>
+
+<!-- PARTNER FORMA -->
+            
+
+        <!-- PARTNER FORMA -->
+
+        <div class="partner-form-panel" id="partnerFormPanel">
+
+            <button
+                type="button"
+                class="partner-back-btn"
+                id="closePartnerForm"
+            >
+                <span>←</span>
+                Nazad na partner program
+            </button>
+
+            <div class="partner-form-heading">
+
+                <div class="eyebrow">
+                    Prijava za saradnju
+                </div>
+
+                <h2>
+                    POSTANI <span>PARTNER.</span>
+                </h2>
+
+                <p>
+                    Pošalji nam osnovne informacije. Giga Centar
+                    tim će pregledati prijavu i kontaktirati te
+                    ukoliko postoji mogućnost za saradnju.
+                </p>
+
+            </div>
+
+          
+
+            <form id="partnerApplicationForm">
+
+                <div class="partner-form-grid">
+
+                    <div class="partner-field">
+                        <label for="partnerName">
+                            Ime i prezime *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="partnerName"
+                            placeholder="Petar Petrović"
+                            required
+                        >
+                    </div>
+
+                    <div class="partner-field">
+                        <label for="partnerEmail">
+                            Email adresa *
+                        </label>
+
+                        <input
+                            type="email"
+                            id="partnerEmail"
+                            placeholder="ime@email.com"
+                            required
+                        >
+                    </div>
+
+                    <div class="partner-field">
+                        <label for="partnerPhone">
+                            Telefon *
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="partnerPhone"
+                            placeholder="+381 6..."
+                            required
+                        >
+                    </div>
+
+                    <div class="partner-field">
+                        <label for="partnerCity">
+                            Grad
+                        </label>
+
+                        <input
+                            type="text"
+                            id="partnerCity"
+                            placeholder="Kragujevac"
+                        >
+                    </div>
+
+                    <div class="partner-field">
+                        <label for="partnerInstagram">
+                            Instagram profil
+                        </label>
+
+                        <input
+                            type="text"
+                            id="partnerInstagram"
+                            placeholder="@korisnickoime ili link"
+                        >
+                    </div>
+
+                    <div class="partner-field">
+                        <label for="partnerTikTok">
+                            TikTok profil
+                        </label>
+
+                        <input
+                            type="text"
+                            id="partnerTikTok"
+                            placeholder="@korisnickoime ili link"
+                        >
+                    </div>
+
+                    <div class="partner-field">
+                        <label for="partnerFollowers">
+                            Broj pratilaca
+                        </label>
+
+                        <input
+                            type="text"
+                            id="partnerFollowers"
+                            placeholder="Na primer: 12.000"
+                        >
+                    </div>
+
+                    <div class="partner-field">
+                        <label for="partnerCategory">
+                            Vrsta sadržaja
+                        </label>
+
+                        <select id="partnerCategory">
+                            <option value="">
+                                Izaberi oblast
+                            </option>
+
+                            <option value="automobili">
+                                Automobili i gume
+                            </option>
+
+                            <option value="parfemi">
+                                Parfemi i lifestyle
+                            </option>
+
+                            <option value="moda">
+                                Moda i lepota
+                            </option>
+
+                            <option value="sport">
+                                Sport i fitness
+                            </option>
+
+                            <option value="zabava">
+                                Zabava
+                            </option>
+
+                            <option value="ostalo">
+                                Ostalo
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="partner-field partner-field-full">
+                    <label for="partnerMessage">
+                        Ukratko nam predstavi svoj profil
+                    </label>
+
+                    <textarea
+                        id="partnerMessage"
+                        rows="4"
+                        placeholder="Napiši kakav sadržaj objavljuješ i zašto želiš saradnju sa Giga Centrom..."
+                    ></textarea>
+                </div>
+
+                <!-- Skriveno anti-spam polje -->
+                <input
+                    type="text"
+                    id="partnerWebsite"
+                    class="partner-honeypot"
+                    tabindex="-1"
+                    autocomplete="off"
+                >
+
+                <label class="partner-consent">
+                    <input
+                        type="checkbox"
+                        id="partnerConsent"
+                        required
+                    >
+
+                    <span>
+                        Saglasan/na sam da Giga Centar koristi
+                        navedene podatke radi razmatranja prijave
+                        i kontakta u vezi sa saradnjom.
+                    </span>
+                </label>
+
+                <div
+                    class="partner-form-message"
+                    id="partnerFormMessage"
+                    role="alert"
+                ></div>
+
+                <button
+                    type="submit"
+                    class="partner-submit-btn"
+                    id="partnerSubmitBtn"
+                >
+                    <span id="partnerSubmitText">
+                        Pošalji prijavu
+                    </span>
+
+                    <span class="partner-submit-spinner"></span>
+
+                    <span
+                        class="partner-submit-arrow"
+                        aria-hidden="true"
+                    >
+                        →
+                    </span>
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="visual-footer">
+        © 2026 Giga Centar. Sva prava zadržana.
+    </div>
+
+</section>
+
+
+    <!-- DESNA STRANA -->
+
+    <section class="login-section">
+
+        <a href="index.html" class="back-link">
+            <span>←</span>
+            Nazad na sajt
+        </a>
+
+        <div class="login-container">
+
+          <a href="index.html" class="brand mobile-brand">
+    <img src="images/logo.svg" alt="Giga Centar" class="brand-logo">
+</a>
+
+            <div class="login-label">
+                Influencer pristup
+            </div>
+
+            <h2>PRIJAVA NA PANEL</h2>
+
+            <p class="login-description">
+                Unesite podatke koje ste dobili od Giga Centar
+                tima kako biste pristupili svom influencer panelu.
+            </p>
+
+            <form class="login-form" id="loginForm">
+
+                <div
+                    id="loginMessage"
+                    class="login-message"
+                    role="alert"
+                ></div>
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email adresa
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="vas@email.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                        <span class="input-icon">
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path d="M4 4h16v16H4z"/>
+                                <path d="m4 6 8 6 8-6"/>
+                            </svg>
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Lozinka
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Unesite lozinku"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                            aria-label="Prikaži lozinku"
+                        >
+                            <svg
+                                id="eyeIcon"
+                                width="19"
+                                height="19"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path
+                                    d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"
+                                />
+                                <circle cx="12" cy="12" r="2.5"/>
+                            </svg>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="form-options">
+
+                    <label class="remember">
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                        >
+                        Zapamti email
+                    </label>
+
+                    <a
+                        href="mailto:info@gigacentar.rs"
+                        class="support-link"
+                    >
+                        Problem sa prijavom?
+                    </a>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                    id="loginBtn"
+                >
+                    <span class="btn-content">
+
+                        <span class="spinner"></span>
+
+                        <span id="buttonText">
+                            Prijavi se
+                        </span>
+
+                        <span class="btn-arrow">
+                            →
+                        </span>
+
+                    </span>
+                </button>
+
+            </form>
+
+            <div class="login-help">
+                <strong>Nemaš podatke za pristup?</strong><br>
+                Influencer naloge kreira Giga Centar tim nakon
+                dogovorene saradnje.
+            </div>
+
+            <div class="security-note">
+
+                <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                >
+                    <rect
+                        x="5"
+                        y="10"
+                        width="14"
+                        height="10"
+                        rx="2"
+                    />
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                </svg>
+
+                Sigurna prijava putem zaštićenog sistema.
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+const SUPABASE_URL =
+    "https://chbtavedibqievvnpydb.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_BuU1ofP6YcAae8-R7fBLpA_6Qy1ctYS";
+
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+const loginForm =
+    document.getElementById("loginForm");
+
+const loginButton =
+    document.getElementById("loginBtn");
+
+const buttonText =
+    document.getElementById("buttonText");
+
+const loginMessage =
+    document.getElementById("loginMessage");
+
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
+const passwordToggle =
+    document.getElementById("passwordToggle");
+
+const rememberMe =
+    document.getElementById("rememberMe");
+
+
+/* ZAPAMĆEN EMAIL */
+
+const savedEmail =
+    localStorage.getItem(
+        "gigaInfluencerEmail"
+    );
+
+if(savedEmail){
+    emailInput.value = savedEmail;
+    rememberMe.checked = true;
+}
+
+
+/* PRIKAZ LOZINKE */
+
+passwordToggle.addEventListener(
+    "click",
+    () => {
+
+        const isPassword =
+            passwordInput.type === "password";
+
+        passwordInput.type =
+            isPassword
+                ? "text"
+                : "password";
+
+        passwordToggle.setAttribute(
+            "aria-label",
+            isPassword
+                ? "Sakrij lozinku"
+                : "Prikaži lozinku"
+        );
+    }
+);
+
+
+/* PROVERA POSTOJEĆE SESIJE */
+
+async function checkExistingSession(){
+
+    const {
+        data: { session },
+        error: sessionError
+    } = await supabaseClient
+        .auth
+        .getSession();
+
+    if(sessionError || !session){
+        return;
+    }
+
+    const {
+        data: influencer,
+        error: influencerError
+    } = await supabaseClient
+        .from("influencers")
+        .select("id, name, email, ref_code")
+        .eq("email", session.user.email)
+        .maybeSingle();
+
+    if(influencerError || !influencer){
+        await supabaseClient.auth.signOut();
+        localStorage.removeItem("influencer");
+        return;
+    }
+
+    localStorage.setItem(
+        "influencer",
+        JSON.stringify(influencer)
+    );
+
+    window.location.href = "dashboard.html";
+}
+
+checkExistingSession();
+
+checkExistingSession();
+
+
+/* PRIJAVA */
+
+loginForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+        clearMessage();
+
+        const email =
+            emailInput.value
+                .trim()
+                .toLowerCase();
+
+        const password =
+            passwordInput.value;
+
+        if(!email || !password){
+            showMessage(
+                "Unesite email adresu i lozinku.",
+                "error"
+            );
+
+            return;
+        }
+
+        setLoading(true);
+
+        try{
+
+            const {
+                data,
+                error
+            } = await supabaseClient
+                .auth
+                .signInWithPassword({
+                    email,
+                    password
+                });
+
+            if(error){
+                throw error;
+            }
+
+            if(!data.user){
+                throw new Error(
+                    "Prijava nije uspela."
+                );
+            }
+
+            /*
+                Proveravamo da li je prijavljeni korisnik
+                zaista registrovan kao influencer.
+            */
+
+            const {
+                data: influencer,
+                error: influencerError
+            } = await supabaseClient
+                .from("influencers")
+                .select("id, name, email")
+                .eq("email", data.user.email)
+                .maybeSingle();
+
+            if(
+                influencerError ||
+                !influencer
+            ){
+                await supabaseClient
+                    .auth
+                    .signOut();
+
+                throw new Error(
+                    "Ovaj nalog nema pristup influencer panelu."
+                );
+            }
+
+            localStorage.setItem(
+    "influencer",
+    JSON.stringify(influencer)
+);
+
+            if(rememberMe.checked){
+                localStorage.setItem(
+                    "gigaInfluencerEmail",
+                    email
+                );
+            }else{
+                localStorage.removeItem(
+                    "gigaInfluencerEmail"
+                );
+            }
+
+            showMessage(
+                `Dobrodošli, ${influencer.name}. Otvaramo vaš panel...`,
+                "success"
+            );
+
+            setTimeout(() => {
+                window.location.href =
+                    "dashboard.html";
+            }, 650);
+
+        }catch(error){
+
+            console.error(
+                "Influencer login error:",
+                error
+            );
+
+            let message =
+                "Prijava nije uspela. Proverite email i lozinku.";
+
+            if(
+                error.message ===
+                "Ovaj nalog nema pristup influencer panelu."
+            ){
+                message = error.message;
+            }
+
+            showMessage(
+                message,
+                "error"
+            );
+
+            setLoading(false);
+        }
+    }
+);
+
+
+function setLoading(isLoading){
+
+    loginButton.disabled =
+        isLoading;
+
+    loginButton.classList.toggle(
+        "loading",
+        isLoading
+    );
+
+    buttonText.textContent =
+        isLoading
+            ? "Prijavljivanje..."
+            : "Prijavi se";
+}
+
+
+function showMessage(text, type){
+
+    loginMessage.textContent =
+        text;
+
+    loginMessage.className =
+        `login-message ${type}`;
+}
+
+
+function clearMessage(){
+
+    loginMessage.textContent = "";
+
+    loginMessage.className =
+        "login-message";
+}
+
+/* OTVARANJE I ZATVARANJE PARTNER FORME */
+
+const openPartnerFormButton =
+    document.getElementById("openPartnerForm");
+
+const closePartnerFormButton =
+    document.getElementById("closePartnerForm");
+
+const partnerIntro =
+    document.getElementById("partnerIntro");
+
+const partnerFormPanel =
+    document.getElementById("partnerFormPanel");
+
+const partnerPanel =
+    document.getElementById("partnerPanel");
+
+
+openPartnerFormButton.addEventListener("click", function () {
+
+    partnerIntro.classList.add("hidden-panel");
+
+    partnerFormPanel.classList.add("active-panel");
+
+    partnerPanel.classList.add("form-open");
+
+});
+
+
+closePartnerFormButton.addEventListener("click", function () {
+
+    partnerFormPanel.classList.remove("active-panel");
+
+    partnerIntro.classList.remove("hidden-panel");
+
+    partnerPanel.classList.remove("form-open");
+
+});
+
+/* ==================================================
+   SLANJE PARTNER PRIJAVE U SUPABASE
+================================================== */
+
+const partnerApplicationForm =
+    document.getElementById("partnerApplicationForm");
+
+const partnerSubmitBtn =
+    document.getElementById("partnerSubmitBtn");
+
+const partnerSubmitText =
+    document.getElementById("partnerSubmitText");
+
+const partnerFormMessage =
+    document.getElementById("partnerFormMessage");
+
+
+partnerApplicationForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+        clearPartnerMessage();
+
+        /* Honeypot zaštita od botova */
+        const website =
+            document.getElementById("partnerWebsite")
+                .value
+                .trim();
+
+        if (website) {
+            return;
+        }
+
+
+        const fullName =
+            document.getElementById("partnerName")
+                .value
+                .trim();
+
+        const email =
+            document.getElementById("partnerEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+        const phone =
+            document.getElementById("partnerPhone")
+                .value
+                .trim();
+
+        const city =
+            document.getElementById("partnerCity")
+                .value
+                .trim();
+
+        const instagramUrl =
+            document.getElementById("partnerInstagram")
+                .value
+                .trim();
+
+        const tiktokUrl =
+            document.getElementById("partnerTikTok")
+                .value
+                .trim();
+
+        const followersCount =
+            document.getElementById("partnerFollowers")
+                .value
+                .trim();
+
+        const contentCategory =
+            document.getElementById("partnerCategory")
+                .value;
+
+        const message =
+            document.getElementById("partnerMessage")
+                .value
+                .trim();
+
+        const consent =
+            document.getElementById("partnerConsent")
+                .checked;
+
+
+        if (!fullName || !email || !phone) {
+
+            showPartnerMessage(
+                "Popunite ime i prezime, email i telefon.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!consent) {
+
+            showPartnerMessage(
+                "Potrebno je da prihvatite saglasnost za obradu podataka.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        setPartnerLoading(true);
+
+
+        try {
+
+            const {
+                error
+            } = await supabaseClient
+                .from("partner_applications")
+                .insert([
+                    {
+                        full_name: fullName,
+                        email: email,
+                        phone: phone,
+                        city: city || null,
+                        instagram_url: instagramUrl || null,
+                        tiktok_url: tiktokUrl || null,
+                        followers_count: followersCount || null,
+                        content_category: contentCategory || null,
+                        message: message || null
+                    }
+                ]);
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            showPartnerMessage(
+                "Hvala! Vaša prijava je uspešno poslata. Giga Centar tim će vas kontaktirati nakon pregleda prijave.",
+                "success"
+            );
+
+            partnerApplicationForm.reset();
+
+
+        } catch (error) {
+
+            console.error(
+                "Greška prilikom slanja partner prijave:",
+                error
+            );
+
+            showPartnerMessage(
+                "Prijava trenutno nije poslata. Pokušajte ponovo.",
+                "error"
+            );
+
+        } finally {
+
+            setPartnerLoading(false);
+
+        }
+    }
+);
+
+
+function setPartnerLoading(isLoading) {
+
+    partnerSubmitBtn.disabled =
+        isLoading;
+
+    partnerSubmitBtn.classList.toggle(
+        "loading",
+        isLoading
+    );
+
+    partnerSubmitText.textContent =
+        isLoading
+            ? "Slanje prijave..."
+            : "Pošalji prijavu";
+}
+
+
+function showPartnerMessage(text, type) {
+
+    partnerFormMessage.textContent =
+        text;
+
+    partnerFormMessage.className =
+        `partner-form-message ${type}`;
+}
+
+
+function clearPartnerMessage() {
+
+    partnerFormMessage.textContent =
+        "";
+
+    partnerFormMessage.className =
+        "partner-form-message";
+}
+
+</script>
+
+</body>
+</html>

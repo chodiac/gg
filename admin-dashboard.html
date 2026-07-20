@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Giga Centar — Admin panel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+    --black:#080808;
+    --black-soft:#111111;
+    --card:#171717;
+    --border:rgba(255,255,255,.1);
+    --yellow:#e3b73a;
+    --yellow-light:#f4d35e;
+    --white:#fff;
+    --muted:rgba(255,255,255,.56);
+    --success:#79e69c;
+    --danger:#ff8383;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 90% 0%,rgba(227,183,58,.11),transparent 30%),
+        var(--black);
+    color:var(--white);
+    font-family:"Inter",sans-serif;
+}
+
+button,input{font:inherit}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    min-height:82px;
+    padding:18px clamp(22px,4vw,55px);
+    border-bottom:1px solid var(--border);
+    background:rgba(8,8,8,.92);
+    backdrop-filter:blur(14px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:28px;
+    letter-spacing:1.4px;
+}
+
+.logo::before{
+    content:"GC";
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:4px;
+    background:var(--yellow);
+    color:#090909;
+    font-size:24px;
+    transform:skew(-5deg);
+}
+
+.logo span{color:var(--yellow)}
+
+.logout-btn{
+    height:44px;
+    padding:0 18px;
+    border:1px solid rgba(227,183,58,.45);
+    border-radius:6px;
+    background:transparent;
+    color:var(--yellow);
+    cursor:pointer;
+    font-weight:700;
+    transition:.2s ease;
+}
+
+.logout-btn:hover{
+    background:var(--yellow);
+    color:#090909;
+}
+
+main{
+    width:min(1500px,94%);
+    margin:42px auto 70px;
+}
+
+.admin-tabs{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-bottom:32px;
+}
+
+.admin-tab{
+    min-height:44px;
+    padding:0 18px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    background:#111;
+    color:var(--muted);
+    cursor:pointer;
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+
+.admin-tab.active{
+    background:var(--yellow);
+    border-color:var(--yellow);
+    color:#090909;
+}
+
+.admin-panel{display:none}
+.admin-panel.active{display:block}
+
+.page-head{margin-bottom:28px}
+
+.page-eyebrow{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    color:var(--yellow);
+    text-transform:uppercase;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:2px;
+    margin-bottom:12px;
+}
+
+.page-eyebrow::before{
+    content:"";
+    width:34px;
+    height:2px;
+    background:var(--yellow);
+}
+
+.page-head h1{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:clamp(48px,5vw,72px);
+    line-height:.95;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
+
+.page-head h1 span{color:var(--yellow)}
+
+.page-head p{
+    max-width:720px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.75;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:15px;
+    margin-bottom:24px;
+}
+
+.stat-card{
+    position:relative;
+    overflow:hidden;
+    min-height:125px;
+    padding:21px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.01)),
+        rgba(17,17,17,.88);
+}
+
+.stat-card::after{
+    content:"";
+    position:absolute;
+    width:95px;
+    height:95px;
+    right:-42px;
+    bottom:-48px;
+    border-radius:50%;
+    background:rgba(227,183,58,.13);
+    filter:blur(10px);
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    font-weight:700;
+    margin-bottom:13px;
+}
+
+.stat-number{
+    position:relative;
+    z-index:1;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:42px;
+    line-height:1;
+    color:var(--yellow);
+}
+
+.toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+}
+
+.filters{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-bottom:0;
+}
+
+.filter-btn{
+    min-height:40px;
+    padding:0 15px;
+    border:1px solid var(--border);
+    border-radius:5px;
+    background:#121212;
+    color:var(--muted);
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+}
+
+.filter-btn.active{
+    background:var(--yellow);
+    color:#090909;
+    border-color:var(--yellow);
+}
+
+.search-input{
+    width:min(330px,100%);
+    height:42px;
+    padding:0 15px;
+    border:1px solid var(--border);
+    border-radius:5px;
+    outline:none;
+    background:#0d0d0d;
+    color:#fff;
+    font-size:13px;
+}
+
+.search-input:focus{
+    border-color:var(--yellow);
+    box-shadow:0 0 0 3px rgba(227,183,58,.1);
+}
+
+.table-wrap{
+    overflow-x:auto;
+    background:rgba(14,14,14,.94);
+    border:1px solid var(--border);
+    border-radius:8px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1180px;
+}
+
+th,td{
+    padding:15px 14px;
+    text-align:left;
+    border-bottom:1px solid var(--border);
+    vertical-align:middle;
+    font-size:13px;
+}
+
+th{
+    color:rgba(255,255,255,.45);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    background:#181818;
+}
+
+tbody tr:hover{background:rgba(255,255,255,.025)}
+
+.cell-main{font-weight:700;margin-bottom:4px}
+.cell-sub{color:var(--muted);font-size:11px;line-height:1.45}
+.profile-link{color:var(--yellow);text-decoration:none}
+.profile-link:hover{text-decoration:underline}
+
+.status{
+    display:inline-flex;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+}
+
+.status-pending{
+    background:rgba(227,183,58,.14);
+    color:var(--yellow-light);
+    border:1px solid rgba(227,183,58,.22);
+}
+
+.status-approved{
+    background:rgba(70,215,118,.12);
+    color:var(--success);
+    border:1px solid rgba(70,215,118,.22);
+}
+
+.status-rejected{
+    background:rgba(255,87,87,.11);
+    color:var(--danger);
+    border:1px solid rgba(255,87,87,.22);
+}
+
+.type{font-weight:800}
+.type-tire{color:#72b7ff}
+.type-scent{color:#d69cff}
+
+.actions{display:flex;gap:7px}
+
+.action-btn{
+    height:34px;
+    padding:0 11px;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+}
+
+.approve-btn{
+    border:1px solid rgba(70,215,118,.32);
+    background:rgba(70,215,118,.1);
+    color:var(--success);
+}
+
+.reject-btn{
+    border:1px solid rgba(255,87,87,.32);
+    background:rgba(255,87,87,.08);
+    color:var(--danger);
+}
+
+.action-btn:disabled{opacity:.35;cursor:not-allowed}
+
+.message{
+    padding:13px 15px;
+    margin-bottom:18px;
+    border-radius:6px;
+    display:none;
+    font-size:13px;
+}
+
+.message.error{
+    display:block;
+    background:rgba(255,87,87,.1);
+    border:1px solid rgba(255,87,87,.24);
+    color:var(--danger);
+}
+
+.message.success{
+    display:block;
+    background:rgba(70,215,118,.1);
+    border:1px solid rgba(70,215,118,.24);
+    color:var(--success);
+}
+
+.loading,.empty{
+    padding:48px 24px;
+    text-align:center;
+    color:var(--muted);
+}
+
+@media(max-width:900px){
+    .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:520px){
+    header{padding:16px 18px}
+    .logo{font-size:23px}
+    main{margin-top:28px}
+    .stats{grid-template-columns:1fr}
+    .toolbar{align-items:stretch;flex-direction:column}
+    .search-input{width:100%}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        GIGA <span>CENTAR</span> — Admin
+    </div>
+
+    <button class="logout-btn" id="logoutBtn">
+        Odjavi se
+    </button>
+</header>
+
+<main>
+
+    <div id="message" class="message"></div>
+
+    <div class="admin-tabs">
+        <button class="admin-tab active" data-panel="applicationsPanel">
+            Partner prijave
+        </button>
+
+        <button class="admin-tab" data-panel="referralsPanel">
+            Preporuke influensera
+        </button>
+    </div>
+
+    <section class="admin-panel active" id="applicationsPanel">
+
+        <div class="page-head">
+            <div class="page-eyebrow">Admin panel</div>
+            <h1>PARTNER <span>PRIJAVE.</span></h1>
+            <p>Pregledaj prijave za saradnju, proveri profile i odobri ili odbij kandidata.</p>
+        </div>
+
+        <section class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Ukupno prijava</div>
+                <div class="stat-number" id="appTotalCount">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Na čekanju</div>
+                <div class="stat-number" id="appPendingCount">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Odobreno</div>
+                <div class="stat-number" id="appApprovedCount">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Odbijeno</div>
+                <div class="stat-number" id="appRejectedCount">0</div>
+            </div>
+        </section>
+
+        <div class="toolbar">
+            <div class="filters" id="applicationFilters">
+                <button class="filter-btn active" data-filter="all">Sve</button>
+                <button class="filter-btn" data-filter="pending">Na čekanju</button>
+                <button class="filter-btn" data-filter="approved">Odobreno</button>
+                <button class="filter-btn" data-filter="rejected">Odbijeno</button>
+            </div>
+
+            <input
+                class="search-input"
+                id="applicationSearch"
+                type="search"
+                placeholder="Pretraži ime, email ili profil..."
+            >
+        </div>
+
+        <div class="table-wrap">
+            <div class="loading" id="applicationLoading">Učitavanje partner prijava...</div>
+
+            <table id="applicationTable" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Partner</th>
+                        <th>Kontakt</th>
+                        <th>Profili</th>
+                        <th>Pratioci</th>
+                        <th>Kategorija</th>
+                        <th>Poruka</th>
+                        <th>Status</th>
+                        <th>Akcije</th>
+                    </tr>
+                </thead>
+
+                <tbody id="applicationRows"></tbody>
+            </table>
+
+            <div class="empty" id="applicationEmpty" style="display:none;">
+                Nema partner prijava za prikaz.
+            </div>
+        </div>
+
+    </section>
+
+    <section class="admin-panel" id="referralsPanel">
+
+        <div class="page-head">
+            <div class="page-eyebrow">Admin panel</div>
+            <h1>PREPORUKE <span>INFLUENSERA.</span></h1>
+            <p>Odobravanje i odbijanje realizovanih preporuka.</p>
+        </div>
+
+        <section class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Ukupno</div>
+                <div class="stat-number" id="totalCount">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Na čekanju</div>
+                <div class="stat-number" id="pendingCount">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Odobreno</div>
+                <div class="stat-number" id="approvedCount">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Ukupna provizija</div>
+                <div class="stat-number" id="commissionTotal">0 RSD</div>
+            </div>
+        </section>
+
+        <div class="filters" id="referralFilters">
+            <button class="filter-btn active" data-filter="all">Sve</button>
+            <button class="filter-btn" data-filter="pending">Na čekanju</button>
+            <button class="filter-btn" data-filter="approved">Odobreno</button>
+            <button class="filter-btn" data-filter="rejected">Odbijeno</button>
+        </div>
+
+        <div class="table-wrap">
+            <div class="loading" id="loading">Učitavanje preporuka...</div>
+
+            <table id="referralTable" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Influencer</th>
+                        <th>Kod</th>
+                        <th>Tip</th>
+                        <th>Email kupca</th>
+                        <th>Telefon</th>
+                        <th>Status</th>
+                        <th>Provizija</th>
+                        <th>Akcije</th>
+                    </tr>
+                </thead>
+
+                <tbody id="referralRows"></tbody>
+            </table>
+
+            <div class="empty" id="emptyState" style="display:none;">
+                Nema preporuka za prikaz.
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+const SUPABASE_URL =
+    "https://chbtavedibqievvnpydb.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_BuU1ofP6YcAae8-R7fBLpA_6Qy1ctYS";
+
+const supabaseClient =
+    supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+let referrals = [];
+let applications = [];
+let currentFilter = "all";
+let applicationFilter = "all";
+let applicationSearch = "";
+
+
+async function checkAdminSession(){
+
+    const {
+        data:{session},
+        error
+    } = await supabaseClient.auth.getSession();
+
+    if(error || !session){
+        window.location.href = "admin-login.html";
+        return false;
+    }
+
+    return true;
+}
+
+
+/* PARTNER PRIJAVE */
+
+async function loadApplications(){
+
+    document.getElementById("applicationLoading").style.display = "block";
+    document.getElementById("applicationTable").style.display = "none";
+    document.getElementById("applicationEmpty").style.display = "none";
+
+    const {data,error} =
+        await supabaseClient
+            .from("partner_applications")
+            .select(`
+                id,
+                full_name,
+                email,
+                phone,
+                city,
+                instagram_url,
+                tiktok_url,
+                followers_count,
+                content_category,
+                message,
+                status,
+                created_at
+            `)
+            .order("created_at",{ascending:false});
+
+    document.getElementById("applicationLoading").style.display = "none";
+
+    if(error){
+        console.error("Application loading error:",error);
+        showMessage(
+            "Partner prijave nisu učitane. Proveri RLS admin dozvole.",
+            "error"
+        );
+        return;
+    }
+
+    applications = data || [];
+    updateApplicationStats();
+    renderApplications();
+}
+
+
+function updateApplicationStats(){
+
+    document.getElementById("appTotalCount").textContent =
+        applications.length;
+
+    document.getElementById("appPendingCount").textContent =
+        applications.filter(item => item.status === "pending").length;
+
+    document.getElementById("appApprovedCount").textContent =
+        applications.filter(item => item.status === "approved").length;
+
+    document.getElementById("appRejectedCount").textContent =
+        applications.filter(item => item.status === "rejected").length;
+}
+
+
+function renderApplications(){
+
+    const tbody = document.getElementById("applicationRows");
+    const table = document.getElementById("applicationTable");
+    const empty = document.getElementById("applicationEmpty");
+    const search = applicationSearch.trim().toLowerCase();
+
+    const filtered =
+        applications.filter(item => {
+
+            const matchesStatus =
+                applicationFilter === "all"
+                || item.status === applicationFilter;
+
+            const haystack = [
+                item.full_name,
+                item.email,
+                item.phone,
+                item.city,
+                item.instagram_url,
+                item.tiktok_url,
+                item.content_category
+            ].join(" ").toLowerCase();
+
+            return matchesStatus
+                && (!search || haystack.includes(search));
+        });
+
+    tbody.innerHTML = "";
+
+    if(filtered.length === 0){
+        table.style.display = "none";
+        empty.style.display = "block";
+        return;
+    }
+
+    empty.style.display = "none";
+    table.style.display = "table";
+
+    filtered.forEach(item => {
+
+        const tr = document.createElement("tr");
+
+        const date =
+            item.created_at
+            ? new Date(item.created_at).toLocaleString("sr-RS")
+            : "—";
+
+        const status = item.status || "pending";
+
+        const statusText = {
+            pending:"Na čekanju",
+            approved:"Odobreno",
+            rejected:"Odbijeno"
+        }[status] || status;
+
+        tr.innerHTML = `
+            <td>${escapeHtml(date)}</td>
+
+            <td>
+                <div class="cell-main">${escapeHtml(item.full_name || "Bez imena")}</div>
+                <div class="cell-sub">${escapeHtml(item.city || "Grad nije naveden")}</div>
+            </td>
+
+            <td>
+                <div class="cell-main">${escapeHtml(item.email || "—")}</div>
+                <div class="cell-sub">${escapeHtml(item.phone || "—")}</div>
+            </td>
+
+            <td>
+                <div>${createProfileLink(item.instagram_url,"Instagram")}</div>
+                <div class="cell-sub">${createProfileLink(item.tiktok_url,"TikTok")}</div>
+            </td>
+
+            <td>${escapeHtml(item.followers_count || "—")}</td>
+            <td>${escapeHtml(formatCategory(item.content_category))}</td>
+
+            <td>
+                <div class="cell-sub" title="${escapeHtml(item.message || "")}">
+                    ${escapeHtml(shorten(item.message || "—",70))}
+                </div>
+            </td>
+
+            <td>
+                <span class="status status-${escapeHtml(status)}">
+                    ${escapeHtml(statusText)}
+                </span>
+            </td>
+
+            <td>
+                <div class="actions">
+                    <button
+                        class="action-btn approve-btn"
+                        onclick="changeApplicationStatus('${escapeHtml(item.id)}','approved')"
+                        ${status === "approved" ? "disabled" : ""}
+                    >
+                        Odobri
+                    </button>
+
+                    <button
+                        class="action-btn reject-btn"
+                        onclick="changeApplicationStatus('${escapeHtml(item.id)}','rejected')"
+                        ${status === "rejected" ? "disabled" : ""}
+                    >
+                        Odbij
+                    </button>
+                </div>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
+
+async function changeApplicationStatus(
+    applicationId,
+    newStatus
+){
+
+    const confirmed = confirm(
+        newStatus === "approved"
+            ? "Odobriti prijavu i kreirati influencer nalog?"
+            : "Odbiti ovu partner prijavu?"
+    );
+
+    if(!confirmed){
+        return;
+    }
+
+
+    /* ODOBRAVANJE PARTNERA */
+
+    if(newStatus === "approved"){
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .functions
+            .invoke(
+                "approve-partner",
+                {
+                    body:{
+                        applicationId:
+                            applicationId
+                    }
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Approve function error:",
+                error
+            );
+
+            showMessage(
+                "Nalog nije kreiran. Proveri Edge Function logove.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(!data?.success){
+
+            showMessage(
+                data?.error ||
+                "Nalog nije kreiran.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        applications =
+            applications.map(item => {
+
+                if(
+                    String(item.id) ===
+                    String(applicationId)
+                ){
+                    return {
+                        ...item,
+                        status:"approved"
+                    };
+                }
+
+                return item;
+            });
+
+
+        updateApplicationStats();
+        renderApplications();
+
+
+        if(data.alreadyExists){
+
+            showMessage(
+                data.message ||
+                "Influencer već postoji.",
+                "success"
+            );
+
+            return;
+        }
+
+
+        alert(
+            "INFLUENCER NALOG JE KREIRAN\n\n" +
+            "Email: " +
+            data.email +
+            "\n\nReferral kod: " +
+            data.refCode +
+            "\n\nPrivremena lozinka: " +
+            data.temporaryPassword
+        );
+
+
+        showMessage(
+            "Partner je odobren i influencer nalog je kreiran.",
+            "success"
+        );
+
+        return;
+    }
+
+
+    /* ODBIJANJE PARTNERA */
+
+    const {
+        error
+    } = await supabaseClient
+        .from("partner_applications")
+        .update({
+            status:"rejected"
+        })
+        .eq(
+            "id",
+            applicationId
+        );
+
+
+    if(error){
+
+        console.error(
+            "Application rejection error:",
+            error
+        );
+
+        showMessage(
+            "Prijava nije odbijena. Proveri admin dozvole.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    applications =
+        applications.map(item => {
+
+            if(
+                String(item.id) ===
+                String(applicationId)
+            ){
+                return {
+                    ...item,
+                    status:"rejected"
+                };
+            }
+
+            return item;
+        });
+
+
+    updateApplicationStats();
+    renderApplications();
+
+
+    showMessage(
+        "Partner prijava je odbijena.",
+        "success"
+    );
+}
+
+
+/* PREPORUKE */
+
+async function loadReferrals(){
+
+    const isLoggedIn = await checkAdminSession();
+
+    if(!isLoggedIn){
+        return;
+    }
+
+    showLoading(true);
+
+    const {data,error} =
+        await supabaseClient
+            .from("referrals")
+            .select(`
+                id,
+                influencer_id,
+                referral_code,
+                referral_type,
+                customer_email,
+                customer_phone,
+                commission,
+                status,
+                created_at,
+                influencers(name)
+            `)
+            .order("created_at",{ascending:false});
+
+    showLoading(false);
+
+    if(error){
+        console.error("Referral loading error:",error);
+        showMessage(
+            "Preporuke nisu učitane. Proveri RLS admin dozvole.",
+            "error"
+        );
+        return;
+    }
+
+    referrals = data || [];
+    updateStats();
+    renderReferrals();
+}
+
+
+function updateStats(){
+
+    const approved =
+        referrals.filter(item => item.status === "approved");
+
+    const totalCommission =
+        approved.reduce(
+            (sum,item) => sum + Number(item.commission || 0),
+            0
+        );
+
+    document.getElementById("totalCount").textContent =
+        referrals.length;
+
+    document.getElementById("pendingCount").textContent =
+        referrals.filter(item => item.status === "pending").length;
+
+    document.getElementById("approvedCount").textContent =
+        approved.length;
+
+    document.getElementById("commissionTotal").textContent =
+        totalCommission.toLocaleString("sr-RS") + " RSD";
+}
+
+
+function renderReferrals(){
+
+    const tbody = document.getElementById("referralRows");
+    const table = document.getElementById("referralTable");
+    const empty = document.getElementById("emptyState");
+
+    const filtered =
+        currentFilter === "all"
+        ? referrals
+        : referrals.filter(item => item.status === currentFilter);
+
+    tbody.innerHTML = "";
+
+    if(filtered.length === 0){
+        table.style.display = "none";
+        empty.style.display = "block";
+        return;
+    }
+
+    empty.style.display = "none";
+    table.style.display = "table";
+
+    filtered.forEach(item => {
+
+        const tr = document.createElement("tr");
+
+        const date =
+            item.created_at
+            ? new Date(item.created_at).toLocaleString("sr-RS")
+            : "—";
+
+        const influencerName =
+            item.influencers?.name || "Nepoznat";
+
+        const typeText =
+            item.referral_type === "tire"
+            ? "Gume"
+            : "Parfemi";
+
+        const statusText = {
+            pending:"Na čekanju",
+            approved:"Odobreno",
+            rejected:"Odbijeno"
+        }[item.status] || item.status;
+
+        const commission =
+            item.status === "approved"
+            ? Number(item.commission || 0).toLocaleString("sr-RS") + " RSD"
+            : "0 RSD";
+
+        tr.innerHTML = `
+            <td>${escapeHtml(date)}</td>
+            <td><div class="cell-main">${escapeHtml(influencerName)}</div></td>
+            <td>${escapeHtml(item.referral_code || "—")}</td>
+
+            <td>
+                <span class="type type-${escapeHtml(item.referral_type)}">
+                    ${escapeHtml(typeText)}
+                </span>
+            </td>
+
+            <td>${escapeHtml(item.customer_email || "—")}</td>
+            <td>${escapeHtml(item.customer_phone || "—")}</td>
+
+            <td>
+                <span class="status status-${escapeHtml(item.status)}">
+                    ${escapeHtml(statusText)}
+                </span>
+            </td>
+
+            <td>${escapeHtml(commission)}</td>
+
+            <td>
+                <div class="actions">
+                    <button
+                        class="action-btn approve-btn"
+                        onclick="changeStatus('${escapeHtml(item.id)}','approved')"
+                        ${item.status === "approved" ? "disabled" : ""}
+                    >
+                        Odobri
+                    </button>
+
+                    <button
+                        class="action-btn reject-btn"
+                        onclick="changeStatus('${escapeHtml(item.id)}','rejected')"
+                        ${item.status === "rejected" ? "disabled" : ""}
+                    >
+                        Odbij
+                    </button>
+                </div>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
+
+async function changeStatus(referralId,newStatus){
+
+    const confirmed = confirm(
+        newStatus === "approved"
+        ? "Odobriti ovu preporuku?"
+        : "Odbiti ovu preporuku?"
+    );
+
+    if(!confirmed){
+        return;
+    }
+
+    const {error} =
+        await supabaseClient
+            .from("referrals")
+            .update({status:newStatus})
+            .eq("id",referralId);
+
+    if(error){
+        console.error("Status update error:",error);
+        showMessage("Status nije promenjen.","error");
+        return;
+    }
+
+    referrals = referrals.map(item =>
+        String(item.id) === String(referralId)
+        ? {...item,status:newStatus}
+        : item
+    );
+
+    updateStats();
+    renderReferrals();
+
+    showMessage(
+        newStatus === "approved"
+        ? "Preporuka je odobrena."
+        : "Preporuka je odbijena.",
+        "success"
+    );
+}
+
+
+/* NAVIGACIJA */
+
+document
+    .querySelectorAll(".admin-tab")
+    .forEach(button => {
+
+        button.addEventListener("click",() => {
+
+            document
+                .querySelectorAll(".admin-tab")
+                .forEach(item => item.classList.remove("active"));
+
+            document
+                .querySelectorAll(".admin-panel")
+                .forEach(panel => panel.classList.remove("active"));
+
+            button.classList.add("active");
+
+            document
+                .getElementById(button.dataset.panel)
+                .classList.add("active");
+        });
+    });
+
+
+document
+    .querySelectorAll("#applicationFilters .filter-btn")
+    .forEach(button => {
+
+        button.addEventListener("click",() => {
+
+            document
+                .querySelectorAll("#applicationFilters .filter-btn")
+                .forEach(item => item.classList.remove("active"));
+
+            button.classList.add("active");
+            applicationFilter = button.dataset.filter;
+            renderApplications();
+        });
+    });
+
+
+document
+    .querySelectorAll("#referralFilters .filter-btn")
+    .forEach(button => {
+
+        button.addEventListener("click",() => {
+
+            document
+                .querySelectorAll("#referralFilters .filter-btn")
+                .forEach(item => item.classList.remove("active"));
+
+            button.classList.add("active");
+            currentFilter = button.dataset.filter;
+            renderReferrals();
+        });
+    });
+
+
+document
+    .getElementById("applicationSearch")
+    .addEventListener("input",event => {
+        applicationSearch = event.target.value;
+        renderApplications();
+    });
+
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click",async () => {
+
+        await supabaseClient.auth.signOut();
+        window.location.href = "admin-login.html";
+    });
+
+
+function showLoading(show){
+    document.getElementById("loading").style.display =
+        show ? "block" : "none";
+}
+
+
+function showMessage(text,type){
+
+    const message = document.getElementById("message");
+
+    message.textContent = text;
+    message.className = `message ${type}`;
+
+    setTimeout(() => {
+        message.className = "message";
+        message.textContent = "";
+    },4000);
+}
+
+
+function formatCategory(value){
+
+    const categories = {
+        automobili:"Automobili i gume",
+        parfemi:"Parfemi i lifestyle",
+        moda:"Moda i lepota",
+        sport:"Sport i fitness",
+        zabava:"Zabava",
+        ostalo:"Ostalo"
+    };
+
+    return categories[value] || value || "—";
+}
+
+
+function createProfileLink(value,label){
+
+    if(!value){
+        return `<span class="cell-sub">${label}: —</span>`;
+    }
+
+    const trimmed = String(value).trim();
+    let url = trimmed;
+
+    if(trimmed.startsWith("@")){
+        const username = trimmed.slice(1);
+
+        url =
+            label === "Instagram"
+            ? `https://instagram.com/${encodeURIComponent(username)}`
+            : `https://tiktok.com/@${encodeURIComponent(username)}`;
+    }else if(
+        !trimmed.startsWith("http://")
+        && !trimmed.startsWith("https://")
+    ){
+        url = `https://${trimmed}`;
+    }
+
+    return `
+        <a
+            class="profile-link"
+            href="${escapeHtml(url)}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            ${escapeHtml(label)}
+        </a>
+    `;
+}
+
+
+function shorten(value,maxLength){
+
+    const text = String(value || "");
+
+    return text.length > maxLength
+        ? text.slice(0,maxLength) + "…"
+        : text;
+}
+
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+async function init(){
+
+    const isLoggedIn = await checkAdminSession();
+
+    if(!isLoggedIn){
+        return;
+    }
+
+    await Promise.all([
+        loadApplications(),
+        loadReferrals()
+    ]);
+}
+
+init();
+</script>
+
+</body>
+</html>

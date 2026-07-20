@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Influencer Dashboard - Giga Centar</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root{
+    --black:#080808;
+    --black-soft:#111111;
+    --card:#171717;
+    --card-light:#1d1d1d;
+    --yellow:#e3b73a;
+    --yellow-light:#f4d35e;
+    --white:#ffffff;
+    --muted:rgba(255,255,255,.58);
+    --border:rgba(255,255,255,.10);
+    --success:#79e69c;
+    --danger:#ff7c7c;
+    --pending:#ffd56a;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 10% 0%,rgba(227,183,58,.10),transparent 28%),
+        radial-gradient(circle at 100% 100%,rgba(227,183,58,.05),transparent 25%),
+        var(--black);
+    color:var(--white);
+    font-family:"Inter",sans-serif;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+.dashboard-shell{
+    width:100%;
+    max-width:1500px;
+    margin:auto;
+    padding:28px;
+}
+
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    padding:18px 22px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.01)),
+        rgba(17,17,17,.92);
+    box-shadow:0 20px 50px rgba(0,0,0,.30);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.brand-mark{
+    width:46px;
+    height:46px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:0 0 auto;
+    border-radius:5px;
+    background:var(--yellow);
+    color:#090909;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:26px;
+    letter-spacing:1px;
+    transform:skew(-5deg);
+}
+
+.brand-copy strong{
+    display:block;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:27px;
+    letter-spacing:1.2px;
+    line-height:1;
+}
+
+.brand-copy strong span{
+    color:var(--yellow);
+}
+
+.brand-copy small{
+    display:block;
+    margin-top:5px;
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+}
+
+.topbar-actions{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.partner-pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 14px;
+    border:1px solid rgba(121,230,156,.20);
+    border-radius:999px;
+    background:rgba(121,230,156,.08);
+    color:var(--success);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+}
+
+.partner-pill::before{
+    content:"";
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--success);
+    box-shadow:0 0 12px rgba(121,230,156,.6);
+}
+
+.logout-button{
+    height:42px;
+    padding:0 18px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    background:#121212;
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:.22s ease;
+}
+
+.logout-button:hover{
+    border-color:var(--yellow);
+    color:var(--yellow);
+    transform:translateY(-1px);
+}
+
+.hero{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:22px;
+    margin-top:22px;
+}
+
+.hero-main,
+.ref-card{
+    position:relative;
+    overflow:hidden;
+    min-height:220px;
+    padding:32px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01)),
+        var(--black-soft);
+}
+
+.hero-main::after{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-85px;
+    bottom:-120px;
+    border-radius:50%;
+    background:rgba(227,183,58,.12);
+    filter:blur(25px);
+}
+
+.eyebrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+    color:var(--yellow);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.eyebrow::before{
+    content:"";
+    width:30px;
+    height:2px;
+    background:var(--yellow);
+}
+
+.hero-main h1{
+    position:relative;
+    z-index:1;
+    max-width:760px;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:clamp(48px,6vw,76px);
+    line-height:.94;
+    letter-spacing:1px;
+}
+
+.hero-main h1 span{
+    color:var(--yellow);
+}
+
+.hero-main p{
+    position:relative;
+    z-index:1;
+    max-width:650px;
+    margin-top:18px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.75;
+}
+
+.ref-card{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.ref-card-label{
+    color:var(--muted);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.ref-code{
+    margin-top:10px;
+    color:var(--yellow);
+    font-family:"Bebas Neue",sans-serif;
+    font-size:52px;
+    line-height:1;
+    letter-spacing:2px;
+    word-break:break-word;
+}
+
+.ref-link-wrap{
+    display:flex;
+    gap:10px;
+    margin-top:22px;
+}
+
+.ref-link{
+    flex:1;
+    min-width:0;
+    height:46px;
+    padding:0 14px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    outline:none;
+    background:#0d0d0d;
+    color:rgba(255,255,255,.72);
+    font-size:12px;
+}
+
+.copy-button{
+    height:46px;
+    padding:0 18px;
+    border:none;
+    border-radius:6px;
+    background:var(--yellow);
+    color:#090909;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:.22s ease;
+}
+
+.copy-button:hover{
+    background:var(--yellow-light);
+    transform:translateY(-1px);
+}
+
+.copy-message{
+    min-height:18px;
+    margin-top:10px;
+    color:var(--success);
+    font-size:11px;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:16px;
+    margin-top:22px;
+}
+
+.stat-card{
+    position:relative;
+    min-height:150px;
+    padding:22px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:9px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008)),
+        var(--card);
+    transition:.22s ease;
+}
+
+.stat-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(227,183,58,.35);
+}
+
+.stat-card::after{
+    content:"";
+    position:absolute;
+    width:80px;
+    height:80px;
+    right:-35px;
+    bottom:-35px;
+    border-radius:50%;
+    background:rgba(227,183,58,.08);
+}
+
+.stat-label{
+    position:relative;
+    z-index:1;
+    color:var(--muted);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+}
+
+.stat-number{
+    position:relative;
+    z-index:1;
+    margin-top:18px;
+    color:#fff;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:42px;
+    line-height:1;
+    letter-spacing:1px;
+}
+
+.stat-number.accent{
+    color:var(--yellow);
+}
+
+.content-card{
+    margin-top:22px;
+    padding:26px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.03),rgba(255,255,255,.008)),
+        var(--black-soft);
+}
+
+.section-heading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:22px;
+}
+
+.section-heading h2{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:34px;
+    letter-spacing:1px;
+}
+
+.section-heading p{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+    border:1px solid var(--border);
+    border-radius:8px;
+}
+
+table{
+    width:100%;
+    min-width:720px;
+    border-collapse:collapse;
+    background:#101010;
+}
+
+thead{
+    background:#1a1a1a;
+}
+
+th{
+    padding:15px 17px;
+    color:rgba(255,255,255,.55);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1px;
+    text-align:left;
+    text-transform:uppercase;
+}
+
+td{
+    padding:16px 17px;
+    border-top:1px solid rgba(255,255,255,.07);
+    color:rgba(255,255,255,.78);
+    font-size:13px;
+}
+
+tbody tr{
+    transition:.18s ease;
+}
+
+tbody tr:hover{
+    background:rgba(255,255,255,.025);
+}
+
+.status-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 10px;
+    border-radius:999px;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+}
+
+.status-badge::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+}
+
+.status-approved{
+    color:var(--success);
+    background:rgba(121,230,156,.08);
+    border:1px solid rgba(121,230,156,.18);
+}
+
+.status-approved::before{
+    background:var(--success);
+}
+
+.status-pending{
+    color:var(--pending);
+    background:rgba(255,213,106,.08);
+    border:1px solid rgba(255,213,106,.18);
+}
+
+.status-pending::before{
+    background:var(--pending);
+}
+
+.status-rejected{
+    color:var(--danger);
+    background:rgba(255,124,124,.08);
+    border:1px solid rgba(255,124,124,.18);
+}
+
+.status-rejected::before{
+    background:var(--danger);
+}
+
+.type-badge{
+    display:inline-flex;
+    padding:6px 9px;
+    border-radius:5px;
+    background:rgba(227,183,58,.09);
+    color:var(--yellow);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.4px;
+    text-transform:uppercase;
+}
+
+.empty-message{
+    padding:34px;
+    text-align:center;
+    color:rgba(255,255,255,.38);
+}
+
+.error-message{
+    min-height:20px;
+    margin-top:16px;
+    color:var(--danger);
+    font-size:12px;
+}
+
+.footer{
+    padding:24px 5px 5px;
+    color:rgba(255,255,255,.28);
+    font-size:10px;
+    text-align:center;
+}
+
+@media(max-width:1150px){
+
+    .stats-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
+
+@media(max-width:850px){
+
+    .dashboard-shell{
+        padding:18px;
+    }
+
+    .hero{
+        grid-template-columns:1fr;
+    }
+
+    .stats-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:620px){
+
+    .dashboard-shell{
+        padding:12px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .topbar-actions{
+        width:100%;
+        justify-content:space-between;
+    }
+
+    .hero-main,
+    .ref-card,
+    .content-card{
+        padding:22px;
+    }
+
+    .hero-main h1{
+        font-size:48px;
+    }
+
+    .ref-code{
+        font-size:42px;
+    }
+
+    .ref-link-wrap{
+        flex-direction:column;
+    }
+
+    .copy-button{
+        width:100%;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .section-heading{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard-shell">
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-mark">GC</div>
+
+            <div class="brand-copy">
+                <strong>GIGA <span>CENTAR</span></strong>
+                <small>Influencer dashboard</small>
+            </div>
+
+        </div>
+
+        <div class="topbar-actions">
+
+            <div class="partner-pill">
+                Aktivan partner
+            </div>
+
+            <button class="logout-button" onclick="logout()">
+                Izloguj se
+            </button>
+
+        </div>
+
+    </header>
+
+    <section class="hero">
+
+        <div class="hero-main">
+
+            <div class="eyebrow">
+                Dobrodošli nazad
+            </div>
+
+            <h1 id="welcome">
+                ZDRAVO, <span>PARTNERU.</span>
+            </h1>
+
+            <p>
+                Ovde možete pratiti svoje preporuke, ostvarene provizije
+                i rezultate Giga Centar partner programa.
+            </p>
+
+        </div>
+
+        <div class="ref-card">
+
+            <div class="ref-card-label">
+                Tvoj influencer kod
+            </div>
+
+            <div class="ref-code" id="refCode">
+                -
+            </div>
+
+            <div class="ref-link-wrap">
+
+                <input
+                    type="text"
+                    id="referralLink"
+                    class="ref-link"
+                    readonly
+                    value=""
+                >
+
+                <button
+                    type="button"
+                    class="copy-button"
+                    onclick="copyReferralLink()"
+                >
+                    Kopiraj link
+                </button>
+
+            </div>
+
+            <div id="copyMessage" class="copy-message"></div>
+
+        </div>
+
+    </section>
+
+    <section class="stats-grid">
+
+        <article class="stat-card">
+            <div class="stat-label">Ukupno preporuka</div>
+            <div class="stat-number accent" id="totalReferrals">0</div>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-label">Preporuke za gume</div>
+            <div class="stat-number" id="tireReferrals">0</div>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-label">Preporuke za parfeme</div>
+            <div class="stat-number" id="scentReferrals">0</div>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-label">Odobrene preporuke</div>
+            <div class="stat-number" id="approvedReferrals">0</div>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-label">Ukupna zarada</div>
+            <div class="stat-number accent" id="totalEarnings">0 RSD</div>
+        </article>
+
+    </section>
+
+    <section class="content-card">
+
+        <div class="section-heading">
+
+            <div>
+                <div class="eyebrow">Pregled aktivnosti</div>
+                <h2>ISTORIJA PREPORUKA</h2>
+            </div>
+
+            <p>
+                Najnovije preporuke prikazane su prve.
+            </p>
+
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Tip preporuke</th>
+                        <th>Status</th>
+                        <th>Provizija</th>
+                    </tr>
+                </thead>
+
+                <tbody id="referralsTable">
+
+                    <tr>
+                        <td colspan="4" class="empty-message">
+                            Učitavanje preporuka...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <p id="errorMessage" class="error-message"></p>
+
+    </section>
+
+    <footer class="footer">
+        © 2026 Giga Centar. Sva prava zadržana.
+    </footer>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+"https://chbtavedibqievvnpydb.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_BuU1ofP6YcAae8-R7fBLpA_6Qy1ctYS";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+const influencer = JSON.parse(
+    localStorage.getItem("influencer")
+);
+
+
+if(!influencer){
+
+    window.location.href = "influencer-login.html";
+
+}else{
+
+    document.getElementById("welcome").innerHTML =
+    "ZDRAVO, <span>" + escapeHtml(influencer.name) + ".</span>";
+
+    document.getElementById("refCode").textContent =
+    influencer.ref_code || "-";
+
+    const referralLink =
+    window.location.origin +
+    "/?ref=" +
+    encodeURIComponent(influencer.ref_code || "");
+
+    document.getElementById("referralLink").value =
+    referralLink;
+
+    loadReferrals();
+
+}
+
+
+async function loadReferrals(){
+
+    const table =
+    document.getElementById("referralsTable");
+
+    const errorMessage =
+    document.getElementById("errorMessage");
+
+    errorMessage.textContent = "";
+
+
+    const { data, error } = await supabaseClient
+
+    .from("referrals")
+
+    .select(`
+        id,
+        referral_type,
+        commission,
+        status,
+        created_at
+    `)
+
+    .eq("influencer_id", influencer.id)
+
+    .order("created_at", {
+        ascending:false
+    });
+
+
+    if(error){
+
+        console.error(
+            "Greška pri učitavanju preporuka:",
+            error
+        );
+
+        errorMessage.textContent =
+        "Došlo je do greške pri učitavanju preporuka.";
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="4" class="empty-message">
+                    Preporuke trenutno nisu dostupne.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    const referrals = data || [];
+
+
+    const tireReferrals = referrals.filter(
+        referral => referral.referral_type === "tire"
+    );
+
+
+    const scentReferrals = referrals.filter(
+        referral => referral.referral_type === "scent"
+    );
+
+
+    const approvedReferrals = referrals.filter(
+        referral => referral.status === "approved"
+    );
+
+
+    const totalEarnings = approvedReferrals.reduce(
+
+        (total, referral) => {
+
+            return total + Number(
+                referral.commission || 0
+            );
+
+        },
+
+        0
+
+    );
+
+
+    document.getElementById("totalReferrals").textContent =
+    referrals.length;
+
+
+    document.getElementById("tireReferrals").textContent =
+    tireReferrals.length;
+
+
+    document.getElementById("scentReferrals").textContent =
+    scentReferrals.length;
+
+
+    document.getElementById("approvedReferrals").textContent =
+    approvedReferrals.length;
+
+
+    document.getElementById("totalEarnings").textContent =
+    totalEarnings.toLocaleString("sr-RS") + " RSD";
+
+
+    if(referrals.length === 0){
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="4" class="empty-message">
+                    Još uvek nema evidentiranih preporuka.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    table.innerHTML = "";
+
+
+    referrals.forEach(referral => {
+
+        const row =
+        document.createElement("tr");
+
+
+        const date = new Date(
+            referral.created_at
+        ).toLocaleDateString("sr-RS", {
+
+            day:"2-digit",
+            month:"2-digit",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+
+        });
+
+
+        let referralType = "Nepoznato";
+
+
+        if(referral.referral_type === "tire"){
+            referralType = "Gume";
+        }
+
+
+        if(referral.referral_type === "scent"){
+            referralType = "Parfemi";
+        }
+
+
+        const commission =
+        Number(
+            referral.commission || 0
+        ).toLocaleString("sr-RS");
+
+
+        let statusText = "Na čekanju";
+        let statusClass = "status-pending";
+
+
+        if(referral.status === "approved"){
+            statusText = "Odobreno";
+            statusClass = "status-approved";
+        }
+
+
+        if(referral.status === "rejected"){
+            statusText = "Odbijeno";
+            statusClass = "status-rejected";
+        }
+
+
+        row.innerHTML = `
+            <td>${escapeHtml(date)}</td>
+
+            <td>
+                <span class="type-badge">
+                    ${escapeHtml(referralType)}
+                </span>
+            </td>
+
+            <td>
+                <span class="status-badge ${statusClass}">
+                    ${escapeHtml(statusText)}
+                </span>
+            </td>
+
+            <td>
+                ${
+                    referral.status === "approved"
+                        ? escapeHtml(commission) + " RSD"
+                        : "0 RSD"
+                }
+            </td>
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+}
+
+
+async function copyReferralLink(){
+
+    const linkInput =
+    document.getElementById("referralLink");
+
+    const copyMessage =
+    document.getElementById("copyMessage");
+
+    try{
+
+        await navigator.clipboard.writeText(
+            linkInput.value
+        );
+
+        copyMessage.textContent =
+        "Referral link je kopiran.";
+
+    }catch(error){
+
+        linkInput.select();
+
+        document.execCommand("copy");
+
+        copyMessage.textContent =
+        "Referral link je kopiran.";
+
+    }
+
+    setTimeout(() => {
+        copyMessage.textContent = "";
+    }, 2200);
+
+}
+
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+    localStorage.removeItem("influencer");
+
+    window.location.href =
+    "influencer-login.html";
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+</script>
+
+</body>
+
+</html>
