@@ -262,10 +262,7 @@ body{
     display:block;
 }
 
-.mobile-brand{
-    display:none;
-    margin-bottom:42px;
-}
+
 
 .login-label{
     color:var(--yellow);
@@ -583,9 +580,7 @@ body{
         padding:35px 24px;
     }
 
-    .mobile-brand{
-        display:flex;
-    }
+   
 
     .back-link{
         top:26px;
@@ -604,14 +599,26 @@ body{
     }
 
     .back-link{
-        position:static;
-        justify-content:flex-end;
-        margin-bottom:38px;
-    }
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    max-width:100%;
+    overflow:hidden;
+    white-space:nowrap;
+    font-size:14px;
+}
 
-    .mobile-brand{
-        margin-bottom:42px;
-    }
+.back-link img{
+    height:22px;
+    width:auto;
+}
+
+.back-link span{
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+   
 
     .login-container h2{
         font-size:44px;
@@ -1476,9 +1483,7 @@ body{
 
         <div class="login-container">
 
-          <a href="index.html" class="brand mobile-brand">
-    <img src="images/logo.svg" alt="Giga Centar" class="brand-logo">
-</a>
+          
 
             <div class="login-label">
                 Influencer pristup

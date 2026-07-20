@@ -265,33 +265,12 @@
       }
 
       @media (max-width:880px) {
-        nav.nav-links {
-          position: fixed;
-          top: 64px;
-          left: 0;
-          right: 0;
-          background: rgba(10, 10, 10, .97);
-          flex-direction: column;
-          padding: 30px;
-          gap: 22px;
-          transform: translateY(-110%);
-          transition: transform .4s;
-          border-bottom: 1px solid var(--line);
-        }
 
-        nav.nav-links.open {
-          transform: translateY(0);
-        }
-
-        .burger {
-          display: block;
-        }
-
-        header,
-        header.scrolled {
-          padding: 18px 24px;
-        }
-      }
+    header,
+    header.scrolled {
+        padding:18px 24px;
+    }
+}
 
       #hero {
         height: 100vh;
@@ -381,7 +360,7 @@
       }
 
       .hero-sub {
-        font-size: .92rem;
+        font-size: 1.1rem;
         color: rgba(255, 255, 255, .7);
         margin-bottom: 22px;
       }
@@ -2050,6 +2029,586 @@
     margin-top: 16px;
 }
 
+/* ==================================================
+   FINALNI MOBILE RESPONSIVE FIX
+================================================== */
+
+@media (max-width: 880px){
+
+    html,
+    body{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden;
+    }
+
+    .wrap{
+        width:100%;
+        max-width:100%;
+        padding-left:24px;
+        padding-right:24px;
+    }
+
+    section{
+        padding:70px 0;
+    }
+
+    /* HERO */
+
+    #hero{
+        width:100%;
+        height:auto;
+        min-height:0;
+        grid-template-columns:1fr;
+        overflow:hidden;
+    }
+
+    .hero-half{
+        width:100%;
+        height:72vh;
+        min-height:520px;
+    }
+
+    .hero-left .hero-content,
+    .hero-right .hero-content{
+        width:100%;
+        padding:0 28px;
+        text-align:left;
+    }
+
+    .hero-title{
+        font-size:clamp(3.5rem,15vw,5rem);
+    }
+
+    .hero-sub{
+        max-width:100%;
+        min-height:0;
+        font-size:1rem;
+        line-height:1.55;
+    }
+
+    .hero-right .hero-brands{
+        justify-content:flex-start;
+    }
+
+    .hero-brands{
+        width:100%;
+        max-width:100%;
+        gap:8px;
+        overflow:hidden;
+        flex-wrap:nowrap;
+    }
+
+    .hero-brand-logo{
+        flex:0 0 auto;
+        max-width:115px;
+        height:44px;
+        padding:8px 10px;
+    }
+
+    .hero-divider-logo{
+        top:72vh;
+        width:106px;
+        height:106px;
+    }
+
+    .hero-scroll{
+        display:none;
+    }
+
+    /* O NAMA */
+
+    .about-grid{
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+
+    .about-img{
+        width:100%;
+        height:auto;
+        overflow:visible;
+    }
+
+    .about-img img{
+        width:100%;
+        height:auto;
+        max-height:none;
+        object-fit:contain;
+        object-position:center;
+    }
+
+    .about-badge{
+        position:relative;
+        left:auto;
+        bottom:auto;
+        width:max-content;
+        margin-top:-1px;
+    }
+
+    /* FORMA ZA GUME */
+
+    .form-card{
+        width:100%;
+        max-width:100%;
+        grid-template-columns:1fr;
+        gap:30px;
+        padding:28px 22px;
+        overflow:hidden;
+    }
+
+    .form-pitch,
+    .form-fields{
+        width:100%;
+        min-width:0;
+    }
+
+    .field-row,
+    .field-row.cols2{
+        width:100%;
+        grid-template-columns:1fr;
+        gap:16px;
+    }
+
+    .field{
+        width:100%;
+        min-width:0;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+    }
+
+    .toggle-row{
+        display:grid;
+        width:100%;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:10px;
+    }
+
+    .toggle-btn{
+        width:100%;
+        min-width:0;
+        padding:13px 8px;
+    }
+
+    .form-submit{
+        width:100%;
+    }
+
+    /* KARTICE PARFEMA */
+
+    #scents-shop .products-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+}
+
+    .products-grid .product-card{
+        width:100%;
+        max-width:100%;
+        flex:none;
+    }
+
+    .products-grid .product-img{
+        height:auto;
+        aspect-ratio:4 / 5;
+    }
+
+    .products-grid .product-img img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+    }
+
+    .product-body{
+        height:auto;
+        min-height:240px;
+        padding:24px 22px;
+    }
+
+    /* KARTICE GUMA */
+
+    .tire-carousel-wrapper{
+        width:100%;
+        max-width:100%;
+    }
+
+    .tire-products-grid{
+        width:100%;
+        gap:16px;
+        padding-bottom:12px;
+    }
+
+    .tire-products-grid .product-card{
+        flex:0 0 92%;
+        width:92%;
+    }
+
+    .tire-products-grid .product-img{
+        height:auto;
+        aspect-ratio:1 / 1.25;
+    }
+
+    .tire-products-grid .product-img img{
+        width:90%;
+        max-height:90%;
+        object-fit:contain;
+        margin:0;
+    }
+
+    .tire-arrow-left{
+        left:8px;
+    }
+
+    .tire-arrow-right{
+        right:8px;
+    }
+
+    /* KONTAKT I MAPA */
+
+    .contact-grid{
+        width:100%;
+        grid-template-columns:1fr;
+        gap:38px;
+    }
+
+    .contact-map{
+        width:100%;
+        min-height:0;
+        height:auto;
+        display:block;
+        overflow:hidden;
+    }
+
+    .contact-map-inner{
+        width:100%;
+        height:360px;
+    }
+
+    .contact-map iframe{
+        display:block;
+        width:100% !important;
+        height:100% !important;
+        border:0;
+    }
+
+    .contact-info{
+        width:100%;
+    }
+}
+
+
+@media (max-width: 520px){
+
+    .wrap{
+        padding-left:18px;
+        padding-right:18px;
+    }
+
+    section{
+        padding:58px 0;
+    }
+
+    .headline{
+        font-size:clamp(2.6rem,13vw,3.7rem);
+    }
+
+    /* HERO NA MANJEM TELEFONU */
+
+    .hero-half{
+        height:68vh;
+        min-height:500px;
+    }
+
+    .hero-left .hero-content,
+    .hero-right .hero-content{
+        padding:0 20px;
+    }
+
+    .hero-title{
+        font-size:3.8rem;
+    }
+
+    .hero-sub{
+        font-size:.96rem;
+    }
+
+    .hero-brand-logo{
+        max-width:100px;
+        height:40px;
+        padding:7px 8px;
+    }
+
+    .hero-divider-logo{
+        top:68vh;
+        width:96px;
+        height:96px;
+    }
+
+    /* FORMA */
+
+    .form-card{
+        padding:26px 18px;
+        border-radius:4px;
+    }
+
+    .form-pitch h3{
+        font-size:2.5rem;
+    }
+
+    .toggle-row{
+        grid-template-columns:1fr 1fr;
+    }
+
+    input,
+    select,
+    textarea{
+        width:100%;
+        max-width:100%;
+    }
+
+    /* PARFEMI */
+
+    .products-grid .product-img{
+        aspect-ratio:4 / 4.8;
+    }
+
+    .product-body{
+        min-height:220px;
+    }
+
+    .product-foot{
+        align-items:flex-end;
+        gap:12px;
+    }
+
+    .product-actions{
+        flex-wrap:wrap;
+    }
+
+    /* GUME */
+
+    .tire-products-grid .product-card{
+        flex-basis:94%;
+        width:94%;
+    }
+
+    .tire-products-grid .product-img{
+        aspect-ratio:1 / 1.15;
+    }
+
+    /* MAPA */
+
+    .contact-map-inner{
+        height:310px;
+    }
+
+    .contact-method{
+        gap:14px;
+    }
+}
+
+/* ==================================================
+   MOBILE HEADER + TIRE CAROUSEL FIX
+================================================== */
+
+@media(max-width:880px){
+
+    /* NAVIGACIJA */
+
+    header,
+    header.scrolled{
+        height:72px;
+        min-height:72px;
+        padding:0 18px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        background:rgba(10,10,10,.97);
+    }
+
+    header > a{
+        height:100%;
+        display:flex;
+        align-items:center;
+    }
+
+    .site-logo{
+        width:auto;
+        height:56px;
+        max-height:56px;
+        object-fit:contain;
+    }
+
+    .header-right{
+        display:flex;
+        align-items:center;
+        gap:18px;
+        margin-left:auto;
+    }
+
+    .cart-btn{
+        flex:0 0 auto;
+    }
+
+    .burger{
+        width:28px;
+        height:28px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex:0 0 auto;
+    }
+
+    
+
+    /* GUME MORAJU OSTATI HORIZONTALNI CAROUSEL */
+
+    .products-grid.tire-products-grid,
+    .tire-products-grid{
+        display:flex !important;
+        flex-direction:row !important;
+        flex-wrap:nowrap !important;
+        grid-template-columns:none !important;
+
+        width:100%;
+        overflow-x:auto;
+        overflow-y:hidden;
+        gap:16px;
+        scroll-snap-type:x mandatory;
+    }
+
+    .tire-products-grid .product-card{
+        flex:0 0 88% !important;
+        width:88% !important;
+        min-width:88% !important;
+        max-width:88% !important;
+        scroll-snap-align:start;
+    }
+}
+
+
+@media(max-width:520px){
+
+    header,
+    header.scrolled{
+        height:64px;
+        min-height:64px;
+        padding:0 14px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        background:rgba(10,10,10,.98);
+    }
+
+    header > a{
+        height:64px;
+        display:flex;
+        align-items:center;
+        flex-shrink:0;
+    }
+
+    .site-logo{
+        height:52px;
+        width:auto;
+        max-height:52px;
+        display:block;
+        object-fit:contain;
+    }
+
+    /* SAKRIJ DESKTOP LINKOVE */
+
+    nav.nav-links{
+        position:fixed;
+        top:64px;
+        left:0;
+        right:0;
+        z-index:999;
+
+        width:100%;
+        max-height:calc(100vh - 64px);
+        padding:26px 20px;
+
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:20px;
+
+        overflow-y:auto;
+        background:rgba(10,10,10,.98);
+        border-bottom:1px solid var(--line);
+
+        transform:translateY(-120%);
+        opacity:0;
+        visibility:hidden;
+        pointer-events:none;
+
+        transition:
+            transform .3s ease,
+            opacity .3s ease,
+            visibility .3s ease;
+    }
+
+    nav.nav-links.open{
+        transform:translateY(0);
+        opacity:1;
+        visibility:visible;
+        pointer-events:auto;
+    }
+
+    nav.nav-links a{
+        width:100%;
+        text-align:center;
+        font-size:.82rem;
+    }
+
+    nav.nav-links .influencer-link{
+        width:auto;
+        padding:12px 22px;
+    }
+
+    .header-right{
+        display:flex;
+        align-items:center;
+        gap:15px;
+        margin-left:auto;
+    }
+
+    .cart-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex:0 0 auto;
+    }
+
+    .burger{
+        width:30px;
+        height:30px;
+        padding:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex:0 0 auto;
+    }
+
+    .burger svg{
+        width:25px;
+        height:25px;
+    }
+
+    /* ZADRŽAVAŠ POSTOJEĆI MOBILE CAROUSEL */
+
+    .tire-products-grid .product-card{
+        flex-basis:90% !important;
+        width:90% !important;
+        min-width:90% !important;
+        max-width:90% !important;
+    }
+}
 
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2976,14 +3535,14 @@
               <div class="cm-icon">📞</div>
               <div>
                 <div class="cm-label">Telefon</div>
-                <div class="cm-val">069 / 611-403</div>
+                <div class="cm-val">069 / 611-403, 069 / 381-5902</div>
               </div>
             </div>
             <div class="contact-method">
               <div class="cm-icon">✉️</div>
               <div>
                 <div class="cm-label">Email</div>
-                <div class="cm-val">ggtyres@gmail.com</div>
+                <div class="cm-val">ggtyres.hosting@gmail.com</div>
               </div>
             </div>
             <div class="contact-method">
@@ -3236,17 +3795,16 @@
   influencers.forEach(influencer => {
     const label = influencer.name || influencer.ref_code;
 
-    const tireOption = document.createElement('option');
-    tireOption.value = influencer.ref_code;
-    tireOption.textContent = label;
-    tireSelect.appendChild(tireOption);
+     const tireOption = document.createElement('option');
+  tireOption.value = influencer.ref_code;
+  tireOption.textContent = influencer.ref_code;
+  tireSelect.appendChild(tireOption);
 
-    const scentOption = document.createElement('option');
-    scentOption.value = influencer.ref_code;
-    scentOption.textContent = label;
-    scentSelect.appendChild(scentOption);
-  });
-
+  const scentOption = document.createElement('option');
+  scentOption.value = influencer.ref_code;
+  scentOption.textContent = influencer.ref_code;
+  scentSelect.appendChild(scentOption);
+});
   // Ako je kupac došao preko influencer linka ?ref=kod,
   // taj influencer se automatski bira u obe forme.
   if (ref) {
@@ -3285,68 +3843,101 @@ loadInfluencerOptions();
 
         if (!name || !email || !phone) { return; }
 
-        if (!referralCode) {
+    
+if (!referralCode) {
   alert("Izaberite preporuku influensera.");
   return;
 }
 
-if (referralCode !== 'none') {
+if (referralCode !== "none") {
   const { data: influencer, error: influencerError } =
     await supabaseClient
-      .from('influencers')
-      .select('id, ref_code')
-      .ilike('ref_code', referralCode)
+      .from("influencers")
+      .select("id, ref_code")
+      .ilike("ref_code", referralCode)
       .single();
 
   if (influencerError || !influencer) {
-    alert('Izabrani influenser nije pronađen.');
+    alert("Izabrani influenser nije pronađen.");
     return;
   }
 }
 
-        const payload = { season, vehicle, tire_width: width, tire_height: height, tire_diameter: diameter, name, email, phone, message };
+const payload = {
+  season,
+  vehicle,
+  tire_width: width,
+  tire_height: height,
+  tire_diameter: diameter,
+  name,
+  email,
+  phone,
+  message
+};
 
-        console.log("Payload:", payload);
-
-        const { error } = await supabaseClient
-          .from("tire_inquiries")
-          .insert([payload]);
+const {
+  data: { session }
+} = await supabaseClient.auth.getSession();
 
 
-        if (error) {
-          console.error("Tire inquiry error:", error);
-          return;
-        }
+const { error } = await supabaseClient
+  .from("tire_inquiries")
+  .insert([payload]);
 
-        const {
-          data: referralResult,
-          error: referralError
-        } = await supabaseClient.functions.invoke(
-          "create-referral",
-          {
-            body: {
-              referral_code: referralCode,
-              referral_type: "tire",
-              customer_email: email,
-              customer_phone: phone
-            }
-          }
-        );
+if (error) {
+  console.error("Tire inquiry error:", error);
+  return;
+}
 
-        if (referralError) {
-          console.error(
-            "Greška pri upisu preporuke:",
-            referralError
-          );
+if (referralCode !== "none") {
+  const {
+    data: referralResult,
+    error: referralError
+  } = await supabaseClient.functions.invoke(
+    "smooth-responder",
+    {
+      body: {
+        referral_code: referralCode,
+        referral_type: "tire",
+        customer_email: email,
+        customer_phone: phone
+      }
+    }
+  );
 
-          alert("Preporuka nije evidentirana.");
-          return;
-        }
+  if (referralError) {
+  console.error(
+    "Greška pri upisu preporuke:",
+    referralError
+  );
 
-        if (referralResult?.error) {
-          alert(referralResult.error);
-          return;
-        }
+  let errorMessage =
+    referralError.message ||
+    "Preporuka nije evidentirana.";
+
+  try {
+    const responseBody =
+      await referralError.context.json();
+
+    if (responseBody?.error) {
+      errorMessage = responseBody.error;
+    }
+  } catch (parseError) {
+    console.error(
+      "Nije moguće pročitati odgovor funkcije:",
+      parseError
+    );
+  }
+
+  alert(errorMessage);
+  return;
+}
+
+  if (referralResult?.error) {
+    alert(referralResult.error);
+    return;
+  }
+}
         await fetch(
           "https://chbtavedibqievvnpydb.supabase.co/functions/v1/send-inquiry-email",
           {
@@ -3544,94 +4135,114 @@ if (referralCode !== 'none') {
           .trim()
           .toLowerCase();
 
-        const { data: influencer, error: influencerError } =
-          await supabaseClient
-            .from('influencers')
-            .select('id, ref_code')
-            .ilike('ref_code', referralCode)
-            .single();
+if (!referralCode) {
+  alert("Izaberite preporuku influensera.");
+  return;
+}
 
-        if (influencerError || !influencer) {
-          alert('Kod influensera nije ispravan.');
-          return;
-        }
-        const payload = {
-          first_name: document.getElementById('scentFirstName').value.trim(),
-          last_name: document.getElementById('scentLastName').value.trim(),
-          country: document.getElementById('scentCountry').value,
-          address: document.getElementById('scentAddress').value.trim(),
-          city: document.getElementById('scentCity').value.trim(),
-          district: document.getElementById('scentDistrict').value.trim(),
-          zip: document.getElementById('scentZip').value.trim(),
-          phone: document.getElementById('scentPhone').value.trim(),
-          email: document.getElementById('scentEmail').value.trim(),
-          note: document.getElementById('scentNote').value.trim(),
-          newsletter: document.getElementById('scentNewsletter').checked,
-          items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty })),
-          total: cart.reduce((s, i) => s + i.price * i.qty, 0) + SHIPPING
-        };
+if (referralCode !== "none") {
+  const { data: influencer, error: influencerError } =
+    await supabaseClient
+      .from("influencers")
+      .select("id, ref_code")
+      .ilike("ref_code", referralCode)
+      .single();
 
-        const { error } = await supabaseClient
-          .from("scent_orders")
-          .insert([payload]);
+  if (influencerError || !influencer) {
+    alert("Izabrani influenser nije pronađen.");
+    return;
+  }
+}
 
+const payload = {
+  first_name: document.getElementById("scentFirstName").value.trim(),
+  last_name: document.getElementById("scentLastName").value.trim(),
+  country: document.getElementById("scentCountry").value,
+  address: document.getElementById("scentAddress").value.trim(),
+  city: document.getElementById("scentCity").value.trim(),
+  district: document.getElementById("scentDistrict").value.trim(),
+  zip: document.getElementById("scentZip").value.trim(),
+  phone: document.getElementById("scentPhone").value.trim(),
+  email: document.getElementById("scentEmail").value.trim(),
+  note: document.getElementById("scentNote").value.trim(),
+  newsletter: document.getElementById("scentNewsletter").checked,
+  items: cart.map(i => ({
+    id: i.id,
+    name: i.name,
+    price: i.price,
+    qty: i.qty
+  })),
+  total:
+    cart.reduce(
+      (sum, item) => sum + item.price * item.qty,
+      0
+    ) + SHIPPING
+};
 
-        if (error) {
-          console.error("Order error:", error);
-          return;
-        }
+const { error } = await supabaseClient
+  .from("scent_orders")
+  .insert([payload]);
 
-        const {
-          data: referralResult,
-          error: referralError
-        } = await supabaseClient.functions.invoke(
-          "create-referral",
-          {
-            body: {
-              referral_code: referralCode,
-              referral_type: "scent",
-              customer_email: payload.email,
-              customer_phone: payload.phone
-            }
-          }
-        );
+if (error) {
+  console.error("Order error:", error);
+  return;
+}
 
-        if (referralError) {
-          console.error(
-            "Greška pri upisu preporuke:",
-            referralError
-          );
+if (referralCode !== "none") {
+  try {
+    const referralResponse = await fetch(
+      `${SUPABASE_URL}/functions/v1/smooth-responder`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify({
+          referral_code: referralCode,
+          referral_type: "scent",
+          customer_email: payload.email,
+          customer_phone: payload.phone
+        })
+      }
+    );
 
-          alert("Preporuka nije evidentirana.");
-          return;
-        }
+    let referralResult = {};
 
-        if (referralResult?.error) {
-          alert(referralResult.error);
-          return;
-        }
+    try {
+      referralResult = await referralResponse.json();
+    } catch {
+      referralResult = {};
+    }
 
-        if (referralError) {
-          console.error(
-            "Greška pri upisu preporuke:",
-            referralError
-          );
+    if (!referralResponse.ok) {
+      console.error(
+        "Create referral greška:",
+        referralResponse.status,
+        referralResult
+      );
 
-          throw new Error(
-            referralError.message ||
-            "Preporuka nije evidentirana."
-          );
-        }
+      alert(
+        referralResult.error ||
+        `Preporuka nije evidentirana. Greška: ${referralResponse.status}`
+      );
 
-        if (referralResult?.error) {
-          throw new Error(referralResult.error);
-        }
+      return;
+    }
+  } catch (error) {
+    console.error(
+      "Neuspešno povezivanje sa create-referral funkcijom:",
+      error
+    );
 
-        if (referralError) {
-          console.error('Referral error:', referralError);
-          alert('Porudžbina je sačuvana, ali preporuka nije evidentirana.');
-          return;
-        }
+    alert(
+      "Nije moguće povezati se sa sistemom za preporuke."
+    );
+
+    return;
+  }
+}
 
         await fetch(
           "https://chbtavedibqievvnpydb.supabase.co/functions/v1/send-order-email",
@@ -3685,9 +4296,11 @@ if (referralCode !== 'none') {
 
       /* OTVARANJE FORME */
 
-      openPartnerFormButton.addEventListener(
-        "click",
-        () => {
+      if (openPartnerFormButton) {
+  openPartnerFormButton.addEventListener(
+    "click",
+    () => {
+      
 
           partnerIntro.classList.add(
             "hidden-panel"
@@ -3711,13 +4324,14 @@ if (referralCode !== 'none') {
           );
         }
       );
-
+      }
 
       /* POVRATAK NA POČETNI SADRŽAJ */
 
-      closePartnerFormButton.addEventListener(
-        "click",
-        () => {
+      if (closePartnerFormButton) {
+  closePartnerFormButton.addEventListener(
+    "click",
+    () => {
 
           partnerFormPanel.classList.remove(
             "active-panel"
@@ -3737,7 +4351,7 @@ if (referralCode !== 'none') {
           partnerFormMessage.textContent = "";
         }
       );
-
+      }
 
       /* PORUKA FORME */
 
@@ -3791,9 +4405,10 @@ if (referralCode !== 'none') {
 
       /* SLANJE PRIJAVE */
 
-      partnerApplicationForm.addEventListener(
-        "submit",
-        async event => {
+      if (partnerApplicationForm) {
+  partnerApplicationForm.addEventListener(
+    "submit",
+    async event => {
 
           event.preventDefault();
 
@@ -3997,7 +4612,7 @@ if (referralCode !== 'none') {
           }
         }
       );
-
+      }
     </script>
 
 <script>

@@ -96,6 +96,14 @@ header{
     color:#090909;
 }
 
+.header-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+
+
 main{
     width:min(1500px,94%);
     margin:42px auto 70px;
@@ -404,6 +412,81 @@ tbody tr:hover{background:rgba(255,255,255,.025)}
     .toolbar{align-items:stretch;flex-direction:column}
     .search-input{width:100%}
 }
+
+@media(max-width:380px){
+
+    body{
+        padding:10px;
+    }
+
+    .admin-login{
+        padding:30px 16px 24px;
+        border-radius:8px;
+    }
+
+    .logo{
+        gap:9px;
+        margin-bottom:22px;
+        font-size:24px;
+    }
+
+    .logo::before{
+        width:38px;
+        height:38px;
+        font-size:20px;
+    }
+
+    h2{
+        font-size:36px;
+    }
+
+    .subtitle{
+        margin-bottom:24px;
+        font-size:12px;
+    }
+
+    input,
+    button{
+        height:48px;
+    }
+
+    .login-label{
+        letter-spacing:1.5px;
+    }
+}
+
+@media(max-height:700px){
+
+    body{
+        align-items:flex-start;
+        padding-top:18px;
+        padding-bottom:18px;
+    }
+
+    .admin-login{
+        padding-top:30px;
+        padding-bottom:25px;
+    }
+
+    .logo{
+        margin-bottom:20px;
+    }
+
+    .subtitle{
+        margin-bottom:22px;
+    }
+
+    .security-note{
+        margin-top:14px;
+    }
+
+    .back-site{
+        margin-top:13px;
+    }
+}
+
+
+
 </style>
 </head>
 
@@ -414,9 +497,15 @@ tbody tr:hover{background:rgba(255,255,255,.025)}
         GIGA <span>CENTAR</span> — Admin
     </div>
 
+   <div class="header-actions">
+
+    
+
     <button class="logout-btn" id="logoutBtn">
         Odjavi se
     </button>
+
+</div>
 </header>
 
 <main>
