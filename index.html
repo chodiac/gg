@@ -170,7 +170,7 @@
       }
 
   .site-logo{
-    height:70px;
+    height:80px;
     width:auto;
     display:block;
 }
@@ -209,7 +209,7 @@
       nav.nav-links a {
         color: rgba(255, 255, 255, .75);
         text-decoration: none;
-        font-size: .78rem;
+        font-size: .90rem;
         letter-spacing: .1em;
         text-transform: uppercase;
         transition: color .25s;
@@ -225,6 +225,22 @@
         gap: 22px;
       }
 
+      .cart-shipping{
+    display:flex;
+    justify-content:space-between;
+    color:#9a9a9a;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.cart-total{
+    display:flex;
+    justify-content:space-between;
+    font-weight:700;
+    font-size:18px;
+    color:#fff;
+}
+
       .cart-btn {
         position: relative;
         background: none;
@@ -236,8 +252,8 @@
       }
 
       .cart-btn svg {
-        width: 23px;
-        height: 23px;
+        width: 28px;
+        height: 28px;
       }
 
       .cart-count {
@@ -501,7 +517,7 @@
       }
 
       .about-text p {
-        font-size: .95rem;
+        font-size: 1.10rem;
         line-height: 1.85;
         color: rgba(255, 255, 255, .6);
         max-width: 460px;
@@ -717,7 +733,7 @@
       }
 
       .field-label {
-        font-size: .74rem;
+        font-size: .84rem;
         font-weight: 600;
         color: #444;
         margin-bottom: 6px;
@@ -785,8 +801,8 @@
       }
 
       .form-note {
-        font-size: .72rem;
-        color: #777;
+        font-size: .84rem;
+        color: #677;
         margin-top: 10px;
       }
 
@@ -904,8 +920,8 @@
       }
 
       .scents-intro-text p {
-        font-size: .92rem;
-        line-height: 1.9;
+        font-size: 1.1rem;
+        line-height: 1.7;
         color: rgba(255, 255, 255, .5);
         max-width: 420px;
         margin-bottom: 30px;
@@ -981,7 +997,7 @@
       }
 
       .bundle-banner-content p {
-        font-size: .85rem;
+        font-size: 1.1rem;
         color: rgba(255, 255, 255, .7);
         margin-bottom: 28px;
         max-width: 380px;
@@ -1294,6 +1310,16 @@
     height:220px;   /* po potrebi 210-230px */
 }
 
+/* samo parfemi */
+.products-grid .product-body{
+    height:220px;
+}
+
+/* samo gume */
+.tire-products-grid .product-body{
+    height:250px;
+}
+
       .product-cat {
         font-size: .70rem;
         letter-spacing: .18em;
@@ -1304,13 +1330,14 @@
 
       .product-name {
         font-family: 'Bebas Neue', sans-serif;
-        font-size: 1.8rem;
+        font-size: 2.35rem;
         letter-spacing: .04em;
+      
         margin-bottom: 6px;
       }
 
       .product-note {
-        font-size: .90rem;
+        font-size: 1rem;
         color: rgba(255, 255, 255, .4);
         margin-bottom: 16px;
       }
@@ -1325,7 +1352,7 @@
 }
 
       .product-price-tag {
-        font-size: .76rem;
+        font-size: 1.5rem;
         color: rgba(255, 255, 255, .55);
       }
 
@@ -1333,7 +1360,7 @@
         background: none;
         border: 1px solid var(--yellow);
         color: var(--yellow);
-        font-size: .68rem;
+        font-size: .80rem;
         letter-spacing: .08em;
         text-transform: uppercase;
         padding: 9px 14px;
@@ -1464,7 +1491,7 @@
       }
 
       .cart-line-price {
-        font-size: .78rem;
+        font-size: .84rem;
         color: rgba(255, 255, 255, .5);
       }
 
@@ -1543,7 +1570,7 @@
       }
 
       .ck-field label {
-        font-size: .72rem;
+        font-size: .84rem;
         letter-spacing: .06em;
         color: rgba(255, 255, 255, .55);
         margin-bottom: 7px;
@@ -1589,14 +1616,14 @@
 
       .summary-card h4 {
         font-family: 'Bebas Neue', sans-serif;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         margin-bottom: 20px;
       }
 
       .summary-line {
         display: flex;
         justify-content: space-between;
-        font-size: .84rem;
+        font-size: .94rem;
         color: rgba(255, 255, 255, .7);
         padding: 8px 0;
         border-bottom: 1px solid var(--line);
@@ -1607,7 +1634,7 @@
         font-weight: 600;
         border-bottom: none;
         margin-top: 6px;
-        font-size: .95rem;
+        font-size: 1rem;
       }
 
       .payment-box {
@@ -1634,7 +1661,7 @@
       }
 
       .payment-box p {
-        font-size: .76rem;
+        font-size: .84rem;
         color: rgba(255, 255, 255, .45);
       }
 
@@ -2225,8 +2252,8 @@
     }
 
     .product-body{
-        height:auto;
-        min-height:240px;
+        
+        min-height:200px;
         padding:24px 22px;
     }
 
@@ -2378,7 +2405,7 @@
     }
 
     .product-body{
-        min-height:220px;
+        min-height:200px;
     }
 
     .product-foot{
@@ -2610,6 +2637,12 @@
     }
 }
 
+.eyebrow,
+.hero-tag,
+.product-cat {
+    font-size: .82rem;
+}
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
@@ -2775,7 +2808,7 @@
               <div class="product-foot">
 
                 <span class="product-price-tag">
-                  Ponuda na upit
+                  Ponudu dobijate pozivom
                 </span>
 
                 <a href="#tire-form" class="mini-btn">
@@ -2816,7 +2849,7 @@
               <div class="product-foot">
 
                 <span class="product-price-tag">
-                  Ponuda na upit
+                  Ponudu dobijate pozivom
                 </span>
 
                 <a href="#tire-form" class="mini-btn">
@@ -2857,7 +2890,7 @@
               <div class="product-foot">
 
                 <span class="product-price-tag">
-                  Ponuda na upit
+                  Ponudu dobijate pozivom
                 </span>
 
                 <a href="#tire-form" class="mini-btn">
@@ -2903,7 +2936,7 @@
               <div class="product-foot">
 
                 <span class="product-price-tag">
-                  Ponuda na upit
+                  Ponudu dobijate pozivom
                 </span>
 
                 <a href="#tire-form" class="mini-btn">
@@ -2943,7 +2976,7 @@
               <div class="product-foot">
 
                 <span class="product-price-tag">
-                  Ponuda na upit
+                  Ponudu dobijate pozivom
                 </span>
 
                 <a href="#tire-form" class="mini-btn">
@@ -2984,7 +3017,7 @@
               <div class="product-foot">
 
                 <span class="product-price-tag">
-                  Ponuda na upit
+                  Ponudu dobijate pozivom
                 </span>
 
                 <a href="#tire-form" class="mini-btn">
@@ -3025,7 +3058,7 @@
               <div class="product-foot">
 
                 <span class="product-price-tag">
-                  Ponuda na upit
+                  Ponudu dobijate pozivom
                 </span>
 
                 <a href="#tire-form" class="mini-btn">
@@ -3117,7 +3150,7 @@
             <button type="submit" class="form-submit">Pošalji upit</button>
             <div class="form-success" id="tireFormSuccess">Hvala! Vaš upit je zabeležen - javljamo se uskoro sa ponudom.
             </div>
-            <p class="form-note">* obavezna polja. Ne naplaćujemo ništa za upit - samo vam šaljemo ponudu.</p>
+            <p class="form-note">* obavezna polja. Ne naplaćujemo ništa za upit - zovemo vas sa ponudom.</p>
           </form>
         </div>
       </div>
@@ -3247,16 +3280,22 @@
               <div class="product-name">Crown</div>
               <div class="product-note">Deo GIGA Bundle ponude</div>
               <div class="product-foot">
-                <span class="product-price-tag">U bundle-u</span>
+                <span class="product-price-tag">1.190din</span>
 
                 <div class="product-actions">
                   <a href="crown.html" class="mini-btn mini-btn-outline">
                     Pogledaj
                   </a>
 
-                  <button class="mini-btn" data-add="bundle">
-                    Dodaj
-                  </button>
+                  <button
+  class="mini-btn"
+  data-add-product
+  data-id="crown"
+  data-name="Crown"
+  data-price="1190"
+>
+  Dodaj
+</button>
                 </div>
               </div>
             </div>
@@ -3282,7 +3321,7 @@
 
       <div class="product-foot">
 
-        <span class="product-price-tag">U bundle-u</span>
+        <span class="product-price-tag">1.190din</span>
 
         <div class="product-actions">
 
@@ -3293,9 +3332,15 @@
             Pogledaj
           </a>
 
-          <button class="mini-btn" data-add="bundle">
-            Dodaj
-          </button>
+          <button
+  class="mini-btn"
+  data-add-product
+  data-id="steel-throne"
+  data-name="Steel Throne"
+  data-price="1190"
+>
+  Dodaj
+</button>
 
         </div>
 
@@ -3327,7 +3372,7 @@
 
       <div class="product-foot">
 
-        <span class="product-price-tag">U bundle-u</span>
+        <span class="product-price-tag">1.190din</span>
 
         <div class="product-actions">
 
@@ -3338,9 +3383,15 @@
             Pogledaj
           </a>
 
-          <button class="mini-btn" data-add="bundle">
-            Dodaj
-          </button>
+          <button
+  class="mini-btn"
+  data-add-product
+  data-id="royal-milk"
+  data-name="Royal Milk"
+  data-price="1190"
+>
+  Dodaj
+</button>
 
         </div>
 
@@ -3424,7 +3475,7 @@
             </div>
             <div class="payment-box">
               <div class="pb-title"><span class="pb-dot"></span> Plaćanje pouzećem</div>
-              <p>Platite kada vam kurir dostavi paket.</p>
+              <p>Dostava kurirskom službom iznosi <strong>360 RSD</strong> i obračunava se prilikom porudžbine.</p>
             </div>
           </div>
         </div>
@@ -3872,7 +3923,11 @@ const payload = {
   name,
   email,
   phone,
-  message
+  message,
+  referral_code:
+    referralCode === "none"
+      ? null
+      : referralCode
 };
 
 const {
@@ -3943,10 +3998,9 @@ if (referralCode !== "none") {
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              "apikey": SUPABASE_KEY,
-              "Authorization": `Bearer ${SUPABASE_KEY}`
-            },
+  "Content-Type": "application/json",
+  "apikey": SUPABASE_KEY
+},
             body: JSON.stringify(payload)
           }
         );
@@ -3959,7 +4013,57 @@ if (referralCode !== "none") {
       const BUNDLE_PRICE = 2490;
       const SHIPPING = 360;
       let bundleQty = 1;
-      let cart = [];
+      const CART_KEY = "giga_cart";
+
+let cart = JSON.parse(
+  localStorage.getItem(CART_KEY)
+) || [];
+
+function saveCart() {
+  localStorage.setItem(
+    CART_KEY,
+    JSON.stringify(cart)
+  );
+}
+
+function calculateDiscountedSubtotal() {
+  const bundleTotal = cart
+    .filter(item => item.id === "bundle")
+    .reduce(
+      (sum, item) => sum + Number(item.price) * Number(item.qty),
+      0
+    );
+
+  const perfumeQty = cart
+    .filter(item => item.id !== "bundle")
+    .reduce(
+      (sum, item) => sum + Number(item.qty || 0),
+      0
+    );
+
+  let perfumeTotal = 0;
+
+  if (perfumeQty >= 3) {
+    const fullGroups = Math.floor(perfumeQty / 3);
+    const remainder = perfumeQty % 3;
+
+    perfumeTotal = fullGroups * 2890;
+
+    if (remainder === 2) {
+      perfumeTotal += 2090;
+    }
+
+    if (remainder === 1) {
+      perfumeTotal += 1190;
+    }
+  } else if (perfumeQty === 2) {
+    perfumeTotal = 2090;
+  } else if (perfumeQty === 1) {
+    perfumeTotal = 1190;
+  }
+
+  return bundleTotal + perfumeTotal;
+}
 
       const bundleQtyEl = document.getElementById('bundleQty');
       document.getElementById('bundlePlus').addEventListener('click', () => { bundleQty++; bundleQtyEl.textContent = bundleQty; });
@@ -3972,8 +4076,36 @@ if (referralCode !== "none") {
         renderCart();
         openCart();
       }
+
+      function addProductToCart(product) {
+  const existing = cart.find(item => item.id === product.id);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      qty: 1
+    });
+  }
+
+  renderCart();
+  openCart();
+}
+
+document.querySelectorAll("[data-add-product]").forEach(button => {
+  button.addEventListener("click", () => {
+    addProductToCart({
+      id: button.dataset.id,
+      name: button.dataset.name,
+      price: Number(button.dataset.price)
+    });
+  });
+});
       document.getElementById('bundleAddBtn').addEventListener('click', () => addBundleToCart(bundleQty));
-      document.querySelectorAll('[data-add="bundle"]').forEach(btn => btn.addEventListener('click', () => addBundleToCart(1)));
+      
 
       function escapeHtml(str) {
         const div = document.createElement('div');
@@ -3982,6 +4114,7 @@ if (referralCode !== "none") {
       }
 
       function renderCart() {
+        saveCart();
         const itemsEl = document.getElementById('cartItems');
         const countEl = document.getElementById('cartCount');
         const totalEl = document.getElementById('cartTotal');
@@ -3996,18 +4129,117 @@ if (referralCode !== "none") {
           return;
         }
 
-        itemsEl.innerHTML = cart.map(item => {
-          const safeName = escapeHtml(item.name);
-          return '<div class="cart-line"><div class="cart-line-info"><div class="cart-line-name">' + safeName + '</div><div class="cart-line-price">' + item.price.toLocaleString('sr-RS') + ' RSD × ' + item.qty + '</div><div class="cart-line-actions"><button data-act="minus" data-id="' + escapeHtml(item.id) + '">–</button><span>' + item.qty + '</span><button data-act="plus" data-id="' + escapeHtml(item.id) + '">+</button><button class="cart-remove" data-act="remove" data-id="' + escapeHtml(item.id) + '">Ukloni</button></div></div></div>';
-        }).join('');
+       const perfumeQty = cart
+  .filter(item => item.id !== "bundle")
+  .reduce(
+    (sum, item) => sum + Number(item.qty || 0),
+    0
+  );
 
-        const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-        const total = subtotal + SHIPPING;
-        totalEl.textContent = total.toLocaleString('sr-RS') + ' RSD';
+let discountedUnitPrice = 1190;
 
-        summaryEl.innerHTML = cart.map(i => '<div class="summary-line"><span>' + escapeHtml(i.name) + ' × ' + i.qty + '</span><span>' + (i.price * i.qty).toLocaleString('sr-RS') + ' RSD</span></div>').join('') +
-          '<div class="summary-line"><span>Dostava</span><span>' + SHIPPING.toLocaleString('sr-RS') + ' RSD</span></div>' +
-          '<div class="summary-line total"><span>Ukupno za plaćanje</span><span>' + total.toLocaleString('sr-RS') + ' RSD</span></div>';
+if (perfumeQty >= 3) {
+  discountedUnitPrice = 2890 / 3;
+} else if (perfumeQty === 2) {
+  discountedUnitPrice = 2090 / 2;
+}
+
+itemsEl.innerHTML = cart.map(item => {
+  const safeName = escapeHtml(item.name);
+
+  const linePrice =
+    item.id === "bundle"
+      ? Number(item.price) * Number(item.qty)
+      : Math.round(
+          discountedUnitPrice * Number(item.qty)
+        );
+
+  return (
+    '<div class="cart-line">' +
+      '<div class="cart-line-info">' +
+
+        '<div class="cart-line-name">' +
+          safeName +
+        '</div>' +
+
+        '<div class="cart-line-price">' +
+          linePrice.toLocaleString("sr-RS") +
+          ' RSD' +
+        '</div>' +
+
+        '<div class="cart-line-actions">' +
+
+          '<button data-act="minus" data-id="' +
+            escapeHtml(item.id) +
+          '">–</button>' +
+
+          '<span>' +
+            item.qty +
+          '</span>' +
+
+          '<button data-act="plus" data-id="' +
+            escapeHtml(item.id) +
+          '">+</button>' +
+
+          '<button class="cart-remove" data-act="remove" data-id="' +
+            escapeHtml(item.id) +
+          '">Ukloni</button>' +
+
+        '</div>' +
+
+      '</div>' +
+    '</div>'
+  );
+}).join('');
+
+        const regularSubtotal = cart.reduce(
+  (sum, item) => sum + Number(item.price) * Number(item.qty),
+  0
+);
+
+const subtotal = calculateDiscountedSubtotal();
+const discount = Math.max(0, regularSubtotal - subtotal);
+const total = subtotal + SHIPPING;
+        totalEl.innerHTML =
+  '<div class="cart-shipping">' +
+    '<span>Dostava</span>' +
+    '<span>+ ' + SHIPPING.toLocaleString('sr-RS') + ' RSD</span>' +
+  '</div>' +
+
+  '<div class="cart-total">' +
+    
+    '<span>' + total.toLocaleString('sr-RS') + ' RSD</span>' +
+  '</div>';
+
+       summaryEl.innerHTML =
+  cart.map(item =>
+    '<div class="summary-line">' +
+      '<span>' + escapeHtml(item.name) + ' × ' + item.qty + '</span>' +
+      '<span>' +
+        (Number(item.price) * Number(item.qty)).toLocaleString('sr-RS') +
+        ' RSD' +
+      '</span>' +
+    '</div>'
+  ).join('') +
+
+  (
+    discount > 0
+      ? '<div class="summary-line">' +
+          '<span>Bundle popust</span>' +
+          '<span>−' + discount.toLocaleString('sr-RS') + ' RSD</span>' +
+        '</div>'
+      : ''
+  ) +
+
+  '<div class="summary-line">' +
+    '<span>Dostava</span>' +
+    '<span>' + SHIPPING.toLocaleString('sr-RS') + ' RSD</span>' +
+  '</div>' +
+
+  '<div class="summary-line total">' +
+    '<span>Ukupno za plaćanje</span>' +
+    '<span>' + total.toLocaleString('sr-RS') + ' RSD</span>' +
+  '</div>';
 
         itemsEl.querySelectorAll('button[data-act]').forEach(btn => {
           btn.addEventListener('click', () => {
@@ -4154,6 +4386,11 @@ if (referralCode !== "none") {
   }
 }
 
+if (cart.length === 0) {
+  alert("Korpa je prazna. Dodajte bar jedan proizvod.");
+  return;
+}
+
 const payload = {
   first_name: document.getElementById("scentFirstName").value.trim(),
   last_name: document.getElementById("scentLastName").value.trim(),
@@ -4166,17 +4403,20 @@ const payload = {
   email: document.getElementById("scentEmail").value.trim(),
   note: document.getElementById("scentNote").value.trim(),
   newsletter: document.getElementById("scentNewsletter").checked,
+
   items: cart.map(i => ({
     id: i.id,
     name: i.name,
     price: i.price,
     qty: i.qty
   })),
-  total:
-    cart.reduce(
-      (sum, item) => sum + item.price * item.qty,
-      0
-    ) + SHIPPING
+
+ total: calculateDiscountedSubtotal() + SHIPPING,
+
+  referral_code:
+    referralCode === "none"
+      ? null
+      : referralCode
 };
 
 const { error } = await supabaseClient
@@ -4194,11 +4434,10 @@ if (referralCode !== "none") {
       `${SUPABASE_URL}/functions/v1/smooth-responder`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_KEY,
-          "Authorization": `Bearer ${SUPABASE_KEY}`
-        },
+       headers: {
+  "Content-Type": "application/json",
+  "apikey": SUPABASE_KEY
+},
         body: JSON.stringify({
           referral_code: referralCode,
           referral_type: "scent",
@@ -4249,10 +4488,9 @@ if (referralCode !== "none") {
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              "apikey": SUPABASE_KEY,
-              "Authorization": `Bearer ${SUPABASE_KEY}`
-            },
+  "Content-Type": "application/json",
+  "apikey": SUPABASE_KEY
+},
             body: JSON.stringify(payload)
           }
         );
@@ -4262,357 +4500,7 @@ if (referralCode !== "none") {
         renderCart();
       });
 
-      /* ==================================================
-        PARTNER PROGRAM
-      ================================================== */
-
-      const partnerPanel =
-        document.getElementById("partnerPanel");
-
-      const partnerIntro =
-        document.getElementById("partnerIntro");
-
-      const partnerFormPanel =
-        document.getElementById("partnerFormPanel");
-
-      const openPartnerFormButton =
-        document.getElementById("openPartnerForm");
-
-      const closePartnerFormButton =
-        document.getElementById("closePartnerForm");
-
-      const partnerApplicationForm =
-        document.getElementById("partnerApplicationForm");
-
-      const partnerSubmitButton =
-        document.getElementById("partnerSubmitBtn");
-
-      const partnerSubmitText =
-        document.getElementById("partnerSubmitText");
-
-      const partnerFormMessage =
-        document.getElementById("partnerFormMessage");
-
-
-      /* OTVARANJE FORME */
-
-      if (openPartnerFormButton) {
-  openPartnerFormButton.addEventListener(
-    "click",
-    () => {
-      
-
-          partnerIntro.classList.add(
-            "hidden-panel"
-          );
-
-          partnerFormPanel.classList.add(
-            "active-panel"
-          );
-
-          partnerPanel.classList.add(
-            "form-open"
-          );
-
-          window.setTimeout(
-            () => {
-              document
-                .getElementById("partnerName")
-                .focus();
-            },
-            450
-          );
-        }
-      );
-      }
-
-      /* POVRATAK NA POČETNI SADRŽAJ */
-
-      if (closePartnerFormButton) {
-  closePartnerFormButton.addEventListener(
-    "click",
-    () => {
-
-          partnerFormPanel.classList.remove(
-            "active-panel"
-          );
-
-          partnerIntro.classList.remove(
-            "hidden-panel"
-          );
-
-          partnerPanel.classList.remove(
-            "form-open"
-          );
-
-          partnerFormMessage.className =
-            "partner-form-message";
-
-          partnerFormMessage.textContent = "";
-        }
-      );
-      }
-
-      /* PORUKA FORME */
-
-      function showPartnerMessage(
-        message,
-        type
-      ) {
-        partnerFormMessage.textContent =
-          message;
-
-        partnerFormMessage.className =
-          `partner-form-message ${type}`;
-      }
-
-
-      /* LOADING STANJE */
-
-      function setPartnerLoading(
-        isLoading
-      ) {
-        partnerSubmitButton.disabled =
-          isLoading;
-
-        partnerSubmitButton.classList.toggle(
-          "loading",
-          isLoading
-        );
-
-        partnerSubmitText.textContent =
-          isLoading
-            ? "Slanje prijave..."
-            : "Pošalji prijavu";
-      }
-
-
-      /* NORMALIZACIJA PROFILA */
-
-      function normalizeSocialProfile(
-        value
-      ) {
-        const cleanedValue =
-          value.trim();
-
-        if (!cleanedValue) {
-          return null;
-        }
-
-        return cleanedValue;
-      }
-
-
-      /* SLANJE PRIJAVE */
-
-      if (partnerApplicationForm) {
-  partnerApplicationForm.addEventListener(
-    "submit",
-    async event => {
-
-          event.preventDefault();
-
-          partnerFormMessage.className =
-            "partner-form-message";
-
-          partnerFormMessage.textContent = "";
-
-          /*
-            Honeypot zaštita.
-            Normalan korisnik ne vidi niti popunjava ovo polje.
-          */
-
-          const website =
-            document
-              .getElementById("partnerWebsite")
-              .value
-              .trim();
-
-          if (website) {
-            return;
-          }
-
-          const fullName =
-            document
-              .getElementById("partnerName")
-              .value
-              .trim();
-
-          const email =
-            document
-              .getElementById("partnerEmail")
-              .value
-              .trim()
-              .toLowerCase();
-
-          const phone =
-            document
-              .getElementById("partnerPhone")
-              .value
-              .trim();
-
-          const city =
-            document
-              .getElementById("partnerCity")
-              .value
-              .trim();
-
-          const instagramUrl =
-            normalizeSocialProfile(
-              document
-                .getElementById(
-                  "partnerInstagram"
-                )
-                .value
-            );
-
-          const tiktokUrl =
-            normalizeSocialProfile(
-              document
-                .getElementById(
-                  "partnerTikTok"
-                )
-                .value
-            );
-
-          const followersCount =
-            document
-              .getElementById(
-                "partnerFollowers"
-              )
-              .value
-              .trim();
-
-          const contentCategory =
-            document
-              .getElementById(
-                "partnerCategory"
-              )
-              .value;
-
-          const message =
-            document
-              .getElementById(
-                "partnerMessage"
-              )
-              .value
-              .trim();
-
-          const consent =
-            document
-              .getElementById(
-                "partnerConsent"
-              )
-              .checked;
-
-
-          if (
-            !fullName ||
-            !email ||
-            !phone
-          ) {
-            showPartnerMessage(
-              "Unesite ime, email adresu i broj telefona.",
-              "error"
-            );
-
-            return;
-          }
-
-          if (
-            !instagramUrl &&
-            !tiktokUrl
-          ) {
-            showPartnerMessage(
-              "Unesite bar Instagram ili TikTok profil.",
-              "error"
-            );
-
-            return;
-          }
-
-          if (!consent) {
-            showPartnerMessage(
-              "Potrebno je da prihvatite saglasnost za obradu podataka.",
-              "error"
-            );
-
-            return;
-          }
-
-          setPartnerLoading(true);
-
-          try {
-
-            const {
-              error
-            } = await supabaseClient
-              .from(
-                "partner_applications"
-              )
-              .insert({
-                full_name:
-                  fullName,
-
-                email:
-                  email,
-
-                phone:
-                  phone,
-
-                city:
-                  city || null,
-
-                instagram_url:
-                  instagramUrl,
-
-                tiktok_url:
-                  tiktokUrl,
-
-                followers_count:
-                  followersCount || null,
-
-                content_category:
-                  contentCategory || null,
-
-                message:
-                  message || null,
-
-                status:
-                  "pending"
-              });
-
-            if (error) {
-              throw error;
-            }
-
-            showPartnerMessage(
-              "Prijava je uspešno poslata. Giga Centar tim će vas kontaktirati nakon pregleda.",
-              "success"
-            );
-
-            partnerApplicationForm.reset();
-
-          } catch (error) {
-
-            console.error(
-              "Greška pri slanju partner prijave:",
-              error
-            );
-
-            showPartnerMessage(
-              "Prijava trenutno nije poslata. Proverite podatke i pokušajte ponovo.",
-              "error"
-            );
-
-          } finally {
-
-            setPartnerLoading(false);
-
-          }
-        }
-      );
-      }
+     
     </script>
 
 <script>

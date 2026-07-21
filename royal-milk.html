@@ -529,6 +529,28 @@ h1{
     font-size:13px;
 }
 
+.cart-shipping{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    color:rgba(255,255,255,.55);
+    font-size:12px;
+    font-weight:500;
+}
+
+.cart-total-final{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+}
+
+.cart-total-final span:last-child{
+    color:var(--yellow);
+}
+
 .cart-line-price{
     margin-top:5px;
     color:var(--yellow);
@@ -896,7 +918,7 @@ const PRODUCT = {
 let quantity = 1;
 
 let cart = JSON.parse(
-    localStorage.getItem("gigaCart")
+    localStorage.getItem("giga_cart")
 ) || [];
 
 
@@ -960,14 +982,17 @@ document
 
     if(existingItem){
 
-        existingItem.quantity += quantity;
+        existingItem.qty += quantity;
 
     }else{
 
-        cart.push({
-            ...PRODUCT,
-            quantity:quantity
-        });
+  cart.push({
+    id: PRODUCT.id,
+    name: PRODUCT.name,
+    price: 1190,
+    qty: quantity,
+    image: PRODUCT.image
+});
 
     }
 
@@ -1012,7 +1037,7 @@ function calculateUnitPrice(totalPerfumes){
 function calculateTotal(){
 
     const totalPerfumes = cart.reduce(
-        (sum, item) => sum + Number(item.quantity || 0),
+        (sum, item) => sum + Number(item.qty || 0),
         0
     );
 
@@ -1059,7 +1084,7 @@ function calculateTotal(){
 function saveCart(){
 
     localStorage.setItem(
-        "gigaCart",
+        "giga_cart",
         JSON.stringify(cart)
     );
 
@@ -1071,7 +1096,7 @@ function saveCart(){
 function renderCart(){
 
     const totalItems = cart.reduce(
-        (sum, item) => sum + Number(item.quantity || 0),
+        (sum, item) => sum + Number(item.qty || 0),
         0
     );
 
@@ -1111,7 +1136,7 @@ function renderCart(){
 
 
         const linePrice =
-        Math.round(unitPrice * item.quantity);
+        Math.round(unitPrice * item.qty);
 
 
         line.innerHTML = `
@@ -1143,7 +1168,7 @@ function renderCart(){
                     </button>
 
                     <span>
-                        ${item.quantity}
+                        ${item.qty}
                     </span>
 
                     <button
@@ -1177,9 +1202,21 @@ function renderCart(){
     });
 
 
-    cartTotal.textContent =
-    calculateTotal().toLocaleString("sr-RS") +
-    " RSD";
+    const subtotal = calculateTotal();
+const totalWithShipping = subtotal + 360;
+
+cartTotal.innerHTML =
+  '<div class="cart-shipping">' +
+    '<span>Dostava</span>' +
+    '<span>+ 360 RSD</span>' +
+  '</div>' +
+
+  '<div class="cart-total-final">' +
+
+      totalWithShipping.toLocaleString("sr-RS") +
+      ' RSD' +
+    '</span>' +
+  '</div>';
 
 }
 
@@ -1195,10 +1232,10 @@ function changeCartQuantity(id, change){
     }
 
 
-    item.quantity += change;
+    item.qty += change;
 
 
-    if(item.quantity <= 0){
+    if(item.qty <= 0){
 
         cart = cart.filter(
             cartItem => cartItem.id !== id

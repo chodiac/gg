@@ -2134,6 +2134,28 @@ partnerApplicationForm.addEventListener(
                 throw error;
             }
 
+await fetch(
+    `${SUPABASE_URL}/functions/v1/swift-endpoint`,
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify({
+            full_name: fullName,
+            email,
+            phone,
+            city,
+            instagram_url: instagramUrl,
+            tiktok_url: tiktokUrl,
+            followers_count: followersCount,
+            content_category: contentCategory,
+            message
+        })
+    }
+);
 
             showPartnerMessage(
                 "Hvala! Vaša prijava je uspešno poslata. Giga Centar tim će vas kontaktirati nakon pregleda prijave.",

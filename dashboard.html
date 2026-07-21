@@ -530,6 +530,99 @@ tbody tr:hover{
     text-align:center;
 }
 
+.password-card{
+    display:grid;
+    grid-template-columns:.8fr 1.2fr;
+    gap:30px;
+    align-items:center;
+}
+
+.password-info h2{
+    margin-top:8px;
+    font-family:"Bebas Neue",sans-serif;
+    font-size:36px;
+    letter-spacing:1px;
+}
+
+.password-info p{
+    max-width:520px;
+    margin-top:10px;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.7;
+}
+
+.password-form{
+    display:grid;
+    gap:14px;
+}
+
+.password-field label{
+    display:block;
+    margin-bottom:7px;
+    color:rgba(255,255,255,.65);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.7px;
+    text-transform:uppercase;
+}
+
+.password-field input{
+    width:100%;
+    height:48px;
+    padding:0 15px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    outline:none;
+    background:#0d0d0d;
+    color:#ffffff;
+    transition:.2s ease;
+}
+
+.password-field input:focus{
+    border-color:var(--yellow);
+    box-shadow:0 0 0 3px rgba(227,183,58,.10);
+}
+
+.password-submit{
+    height:48px;
+    border:none;
+    border-radius:6px;
+    background:var(--yellow);
+    color:#090909;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.7px;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:.22s ease;
+}
+
+.password-submit:hover{
+    background:var(--yellow-light);
+    transform:translateY(-1px);
+}
+
+.password-submit:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.password-message{
+    min-height:20px;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.password-message.success{
+    color:var(--success);
+}
+
+.password-message.error{
+    color:var(--danger);
+}
+
 @media(max-width:1150px){
 
     .stats-grid{
@@ -538,6 +631,10 @@ tbody tr:hover{
 }
 
 @media(max-width:850px){
+
+.password-card{
+    grid-template-columns:1fr;
+}
 
     .dashboard-shell{
         padding:18px;
@@ -764,6 +861,76 @@ tbody tr:hover{
         <p id="errorMessage" class="error-message"></p>
 
     </section>
+
+    <section class="content-card password-card">
+
+    <div class="password-info">
+
+        <div class="eyebrow">
+            Bezbednost naloga
+        </div>
+
+        <h2>PROMENI LOZINKU</h2>
+
+        <p>
+            Unesite novu lozinku koju ćete ubuduće koristiti za
+            prijavu na influencer portal.
+        </p>
+
+    </div>
+
+    <form
+        id="passwordForm"
+        class="password-form"
+        onsubmit="changePassword(event)"
+    >
+
+        <div class="password-field">
+            <label for="newPassword">
+                Nova lozinka
+            </label>
+
+            <input
+                type="password"
+                id="newPassword"
+                minlength="8"
+                autocomplete="new-password"
+                required
+                placeholder="Najmanje 8 karaktera"
+            >
+        </div>
+
+        <div class="password-field">
+            <label for="confirmPassword">
+                Potvrdi novu lozinku
+            </label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                minlength="8"
+                autocomplete="new-password"
+                required
+                placeholder="Ponovite novu lozinku"
+            >
+        </div>
+
+        <button
+            type="submit"
+            id="passwordSubmit"
+            class="password-submit"
+        >
+            Sačuvaj novu lozinku
+        </button>
+
+        <div
+            id="passwordMessage"
+            class="password-message"
+        ></div>
+
+    </form>
+
+</section>
 
     <footer class="footer">
         © 2026 Giga Centar. Sva prava zadržana.
@@ -1054,6 +1221,108 @@ async function copyReferralLink(){
 
 }
 
+async function changePassword(event){
+
+    event.preventDefault();
+
+    const newPassword =
+        document.getElementById("newPassword").value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+    const message =
+        document.getElementById("passwordMessage");
+
+    const submitButton =
+        document.getElementById("passwordSubmit");
+
+    message.textContent = "";
+    message.className = "password-message";
+
+    if(newPassword.length < 8){
+
+        message.textContent =
+            "Lozinka mora imati najmanje 8 karaktera.";
+
+        message.classList.add("error");
+
+        return;
+    }
+
+    if(newPassword !== confirmPassword){
+
+        message.textContent =
+            "Unete lozinke se ne poklapaju.";
+
+        message.classList.add("error");
+
+        return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Čuvanje...";
+
+    try{
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } = await supabaseClient.auth.getSession();
+
+        if(
+            sessionError ||
+            !sessionData.session
+        ){
+
+            localStorage.removeItem("influencer");
+
+            window.location.href =
+                "influencer-login.html";
+
+            return;
+        }
+
+        const {
+            error
+        } = await supabaseClient.auth.updateUser({
+            password:newPassword
+        });
+
+        if(error){
+            throw error;
+        }
+
+        document.getElementById(
+            "passwordForm"
+        ).reset();
+
+        message.textContent =
+            "Lozinka je uspešno promenjena.";
+
+        message.classList.add("success");
+
+    }catch(error){
+
+        console.error(
+            "Greška pri promeni lozinke:",
+            error
+        );
+
+        message.textContent =
+            error?.message ||
+            "Lozinka nije promenjena. Pokušajte ponovo.";
+
+        message.classList.add("error");
+
+    }finally{
+
+        submitButton.disabled = false;
+
+        submitButton.textContent =
+            "Sačuvaj novu lozinku";
+    }
+}
 
 async function logout(){
 
