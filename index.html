@@ -3118,6 +3118,13 @@
               <div class="field"><label class="field-label" for="tireDiameter">Prečnik</label><select
                   id="tireDiameter"></select></div>
             </div>
+            <p class="form-note" style="margin:0 0 20px;">
+  Prepišite dimenziju sa postojeće gume.
+  Za oznake poput 11R22.5 ili 7.50R16,
+  kao i oznake C/CP i indeks nosivosti,
+  upišite celu oznaku u polje „Poruka“.
+  Ako dimenzija nije ponuđena, unesite je u poruku.
+</p>
             <div class="field-row cols2">
               <div class="field"><label class="field-label" for="tireNameInput">Vaše ime i prezime *</label><input
                   type="text" id="tireNameInput" required></div>
@@ -3816,27 +3823,83 @@
       }, { threshold: .12 });
       revealEls.forEach(el => io.observe(el));
 
-      const widths = [135, 145, 155, 165, 175, 185, 195, 205, 215, 225, 235, 245, 255, 265, 275, 285, 295, 305, 315];
-      const heights = [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
-      const diameters = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
-      function fillSelect(id, arr, suffix) {
-        const sel = document.getElementById(id);
-        sel.innerHTML = '<option value="">—</option>' + arr.map(v => '<option value="' + v + '">' + v + (suffix || '') + '</option>').join('');
-      }
-      fillSelect('tireWidth', widths);
-      fillSelect('tireHeight', heights);
-      fillSelect('tireDiameter', diameters, '"');
+      // DIMENZIJE PREMA TIPU VOZILA
+const tireDimensions = {
+  Auto: {
+    widths: [
+      135, 145, 155, 165, 175, 185, 195, 205, 215,
+      225, 235, 245, 255, 265, 275, 285, 295, 305, 315
+    ],
+    heights: [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80],
+    diameters: [13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+  },
 
-      function setupToggle(id) {
-        document.querySelectorAll('#' + id + ' .toggle-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            document.querySelectorAll('#' + id + ' .toggle-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-          });
-        });
+  SUV: {
+    widths: [
+      195, 205, 215, 225, 235, 245, 255, 265,
+      275, 285, 295, 305, 315, 325
+    ],
+    heights: [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80],
+    diameters: [15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+  },
+
+  Kombi: {
+    widths: [175, 185, 195, 205, 215, 225, 235],
+    heights: [55, 60, 65, 70, 75, 80],
+    diameters: [14, 15, 16, 17]
+  },
+
+  Kamion: {
+    widths: [
+      205, 215, 225, 235, 245, 255, 265, 275,
+      285, 295, 305, 315, 355, 385, 425, 445, 455
+    ],
+    heights: [45, 50, 55, 60, 65, 70, 75, 80],
+    diameters: [17.5, 19.5, 20, 22.5, 24]
+  }
+};
+
+function fillSelect(id, values, suffix = '') {
+  const select = document.getElementById(id);
+
+  select.replaceChildren(new Option('— Izaberite —', ''));
+
+  values.forEach(value => {
+    select.add(new Option(`${value}${suffix}`, String(value)));
+  });
+}
+
+function updateTireDimensions(vehicle) {
+  const dimensions = tireDimensions[vehicle] || tireDimensions.Auto;
+
+  // Promena tipa vozila briše prethodno izabrane dimenzije.
+  fillSelect('tireWidth', dimensions.widths);
+  fillSelect('tireHeight', dimensions.heights);
+  fillSelect('tireDiameter', dimensions.diameters, '"');
+}
+
+function setupToggle(id) {
+  const buttons = document.querySelectorAll(
+    '#' + id + ' .toggle-btn'
+  );
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      buttons.forEach(item => item.classList.remove('active'));
+      button.classList.add('active');
+
+      if (id === 'vehicleToggle') {
+        updateTireDimensions(button.dataset.val);
       }
-      setupToggle('seasonToggle');
-      setupToggle('vehicleToggle');
+    });
+  });
+}
+
+setupToggle('seasonToggle');
+setupToggle('vehicleToggle');
+
+// Početni tip vozila je Auto.
+updateTireDimensions('Auto');
       async function loadInfluencerOptions() {
   const tireSelect = document.getElementById('referralCode');
   const scentSelect = document.getElementById('scentReferralCode');
@@ -4016,6 +4079,7 @@ if (referralCode !== "none") {
         e.target.reset();
         document.querySelectorAll('#seasonToggle .toggle-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
         document.querySelectorAll('#vehicleToggle .toggle-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+        updateTireDimensions('Auto');
       });
 
       const BUNDLE_PRICE = 2490;
